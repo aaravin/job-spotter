@@ -1,7 +1,7 @@
-# Project Name #
+# JobSpotter #
 
 <!-- 
-> This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
+> This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterity's sake.
 
 There is an approach called "working backwards" that is widely used at Amazon. They work backwards from the customer, rather than starting with an idea for a product and trying to bolt customers onto it. While working backwards can be applied to any specific product decision, using this approach is especially important when developing new products or features.
 
@@ -16,29 +16,31 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+## Find New Jobs ##
+  > Search for jobs across the US to find the fit that's best for you.
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+## Analyze the Market for your Skills ##
+  > Find jobs by location and industry and view metrics associated with your search.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > JobSpotter was developed to help you find the ideal job in the ideal location. Through our intuitive UI, you can easily view the number of relevant jobs in your location of interest, and then scour the job listings to find the best fit for you. It even provides important metrics for that location such as average salary and average cost of living to help you solidify your decision.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > It is difficult to simultaneously access job availability and job metrics for a specific location or position.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > JobSpotter helps to visualize job data across the US and to understand key metrics (average salary, cost of living, # of jobs, etc.) associated with specific locations/industries.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > “JobSpotter will help you to make a more informed decision on your next career move.”
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Simply go to our site, jobspotter.co, to start your search! 
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > “I was able to quickly view available jobs in my target cities and find the best option for me based on cost of living and average salary rates.”
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Start your informed job search today!
+
+
