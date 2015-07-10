@@ -1,6 +1,6 @@
 # JobSpotter
 
-> Jobs finder and analzyer
+> Find, compare, and analyze new jobs
 
 ## Team
 
