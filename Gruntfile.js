@@ -1,5 +1,4 @@
-// 'use strict';
-
+// "use strict";
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -17,11 +16,11 @@ module.exports = function(grunt) {
       ],
       options: {
         force: 'true',
+        // strict: 'true',
         ignores: [
           'node_modules/**/*.js',
           '**/node_modules/**/*.js',
-          'bower_components/**/*.js',
-          '**/bower_components/**/*.js'
+          'client/lib/**/*.js'
         ]
       }
     },
@@ -29,7 +28,7 @@ module.exports = function(grunt) {
     "bower-install-simple": {
       options: {
         color: true,
-        directory: 'bower_components'
+        directory: 'client/lib'
       },
       "prod": {
         options: {
