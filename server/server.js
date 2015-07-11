@@ -5,7 +5,7 @@ var session = require('express-session');
 var app = express();
 
 app.use(morgan('dev'));
-app.use(express.static(__dirname + "../client"));
+app.use(express.static(__dirname + "/../client"));
 
 var port = process.env.PORT || 8080;
 
