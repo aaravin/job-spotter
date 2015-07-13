@@ -4,7 +4,7 @@
   "description": "find and analyze new jobs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha --bail --reporter nyan test/ServerSpec.js;",
     "start": "node server.js"
   },
   "repository": {
@@ -29,7 +29,11 @@
     "express": "^4.12.4",
     "express-session": "^1.11.3",
     "knex": "^0.8.6",
+    "indeed-api": "^1.0.0",
     "morgan": "^1.6.0",
+    "chai": "^1.9.0",
+    "request": "^2.34.0",
+    "mocha": "^1.17.1",
     "mysql": "^2.7.0",
     "node": "0.0.0",
     "passport": "^0.2.2",
