@@ -4,6 +4,35 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    db_dump: {
+      local: {
+        options: {
+          database: "job_spotter",
+          user: "root",
+          pass: "",
+          host: "localhost",
+          backup_to: "db/backups/local.sql"
+        }
+      }
+    },
+
+    shell: {
+      multiple: {
+        command: [
+            'mysql.server start',
+            'mysql -u root -e "DROP DATABASE IF EXISTS job_spotter"',
+            'mysql -u root -e "CREATE DATABASE job_spotter"',
+            'mysql -u root job_spotter < db/backups/local.sql'
+        ].join('&&')
+      },
+      dbSetup: {
+        command: [
+          'node db/dbSetup.js',
+          '.exit'
+        ].join('&&')
+      }
+    },
+
     nodemon: {
       dev: {
         script: 'server/server.js'
@@ -85,4 +114,8 @@ module.exports = function(grunt) {
     'bower-install-simple',
     'concurrent'
   ]);
+
+  grunt.registerTask('backup', ['db_dump']);        // Save current MySQL data as pre-fill.
+  grunt.registerTask('reset', ['shell:multiple']);  // Reset DB with pre-fill data.
+  grunt.registerTask('dbInit', ['shell:dbSetup']);  // Initialize the database
 };
