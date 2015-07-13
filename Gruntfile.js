@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     db_dump: {
       local: {
         options: {
-          database: "job_spotter",
+          database: "jobspotter",
           user: "root",
           pass: "",
           host: "localhost",
@@ -20,9 +20,9 @@ module.exports = function(grunt) {
       multiple: {
         command: [
             'mysql.server start',
-            'mysql -u root -e "DROP DATABASE IF EXISTS job_spotter"',
-            'mysql -u root -e "CREATE DATABASE job_spotter"',
-            'mysql -u root job_spotter < db/backups/local.sql'
+            'mysql -u root -e "DROP DATABASE IF EXISTS jobspotter"',
+            'mysql -u root -e "CREATE DATABASE jobspotter"',
+            'mysql -u root jobspotter < db/backups/local.sql'
         ].join('&&')
       },
       dbSetup: {
