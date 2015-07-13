@@ -4,3 +4,5 @@
 //   }
 // );
 
+var app = new AppModel();
+
