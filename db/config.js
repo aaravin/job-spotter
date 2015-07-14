@@ -61,10 +61,10 @@ db.knex.schema.hasTable('locations').then(function(exists) {
     db.knex.schema.createTable('locations', function (table) {
       table.increments('id').primary();
       table.string('city', 100);
-      table.string('state', 100);
-      table.string('country', 50);
-      table.float('latitude', 10);
-      table.float('longitude', 10);
+      // table.string('state', 100);
+      // table.string('country', 50);
+      // table.float('latitude', 10);
+      // table.float('longitude', 10);
       table.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
