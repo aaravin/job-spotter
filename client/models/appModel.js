@@ -1,3 +1,5 @@
 var AppModel = Backbone.Model.extend({
-  this.set("jobs", new Jobs());
+  initialize: function() {
+    this.set("jobs", new Jobs(jobData));
+  }
 });

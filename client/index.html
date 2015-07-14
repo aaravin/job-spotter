@@ -8,7 +8,8 @@
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/backbone/backbone-min.js"></script>
-    <script src="lib/react/react.min.js"></script>
+    <script src="lib/react/react.js"></script>
+    <script src="lib/react/JSXTransformer.js"></script>
     <script src="lib/flux/dist/flux.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- <script src="lib/validator.min.js"></script> -->
@@ -19,7 +20,9 @@
   </head>
   <body>
     <h1>hello world</h1>
-    <a href='http://www.glassdoor.com/index.htm'>powered by <img src='http://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+
+    <!-- Sample Data -->
+    <script src="data.js"></script>
 
     <!-- Models -->
     <script src="models/appModel.js"></script>
@@ -30,7 +33,8 @@
 
     <!-- Views -->
     <script src="views/appView.js"></script>
-    <script src="views/jobsView.js"></script>
+    <script src="views/jobView.js" type="text/jsx"></script>
+    <script src="views/jobsView.js" type="text/jsx"></script>
 
     <!-- Router -->
 

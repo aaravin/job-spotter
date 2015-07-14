@@ -25,8 +25,8 @@ api.JobSearch()
     .Search(
         function (results) {
         // do something with the success results 
-        console.log(results);
-        console.log(results.results.length);
+        // console.log(results);
+        // console.log(results.results.length);
     },
         function (error) {
         // do something with the error results 

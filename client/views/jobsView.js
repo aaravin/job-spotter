@@ -1,66 +1,52 @@
+var BackboneMixin = {
+  componentDidMount: function () {
+    // Whenever there may be a change in the Backbone data, trigger a
+    // reconcile.
+    this.getBackboneCollections().forEach(function (collection) {
+      // explicitly bind `null` to `forceUpdate`, as it demands a callback and
+      // React validates that it's a function. `collection` events passes
+      // additional arguments that are not functions
+      collection.on('add remove change', this.forceUpdate.bind(this, null));
+    }, this);
+  },
+
+  componentWillUnmount: function () {
+    // Ensure that we clean up any dangling references when the component is
+    // destroyed.
+    this.getBackboneCollections().forEach(function (collection) {
+      collection.off(null, null, this);
+    }, this);
+  }
+};
 
 var JobsList = React.createClass({
-  render: function() {
-    var createItem = function(job, index) {
-      return 
-      <li key={index + job.id}>
-        <span>{job.title}</span>
-        <span>{job.location}</span>
-        <span>{job.company}</span>
-        <span>{job.link}</span>
-      </li>;
-    };
-    return <ul>{this.props.jobs.map(job)}</ul>;
-  }
-});
 
-var JobsApp = React.createClass({
-  getInitialState: function() {
-    return {jobs: [], title: ''/*, location: '', company: '', link: ''*/};
+  mixins: [BackboneMixin],
+
+  getDefaultProps: function() {
+    return null;
   },
-  onChange: function(e) {
-    this.setState({title: e.target.value});
+
+  getBackboneCollections: function () {
+    // console.log([this.props.todos]);
+    return [this.props.jobs];
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var nextItems = this.state.items.concat([this.state.title]);
-    var nextText = '';
-    this.setState({jobs: nextItems, title: nextText});
-  },
+
   render: function() {
+    console.log(this.props.jobs.at(0));
+    console.log(this.getBackboneCollections());
     return (
       <div>
-        <h3>Available Jobs</h3>
-        <JobsList jobs={this.state.jobs} />
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.title} />
-          <button>{'Add #' + (this.state.jobs.length + 1)}</button>
-        </form>
+        <h1>Jobs</h1>
+        <ul> 
+          this.getBackboneCollections().map(function(job) {
+            <JobListing joblisting={job.attributes} />
+          }, this)
+        </ul>
       </div>
     );
   }
+
 });
 
-// var formData: React.createClass({
-//   getInitialState: function() {
-//     return {
-//       title: 'Developer',
-//       location: 'San Francisco, CA',
-//       company: 'Hack Reactor',
-//       link: 'www.myawesomejob.com'
-//     };
-//   },
-
-//   render: function() {
-//     <form onSubmit={this.handleSubmit}>
-//       <input onChange={this.onChange} value={this.state.value} />
-//       // <input onChange={this.onChange} value={this.state.title} />
-//       // <input onChange={this.onChange} value={this.state.location} />
-//       // <input onChange={this.onChange} value={this.state.company} />
-//       // <input onChange={this.onChange} value={this.state.link} />
-//       <button>{'Add #' + (this.state.jobs.length + 1)}</button>
-//     </form>
-//   }
-// });
-
-React.render(<JobsApp />, document.body);
+React.render(<JobsList jobs={app.get('jobs')} />, document.body);
