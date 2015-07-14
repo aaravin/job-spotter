@@ -22,7 +22,8 @@ module.exports = function(grunt) {
             'mysql.server start',
             'mysql -u root -e "DROP DATABASE IF EXISTS jobspotter"',
             'mysql -u root -e "CREATE DATABASE jobspotter"',
-            'mysql -u root jobspotter < db/backups/local.sql'
+            'node db/config.js',
+            '.exit'
         ].join('&&')
       },
       dbSetup: {
@@ -115,7 +116,6 @@ module.exports = function(grunt) {
     'concurrent'
   ]);
 
-  grunt.registerTask('backup', ['db_dump']);        // Save current MySQL data as pre-fill.
   grunt.registerTask('reset', ['shell:multiple']);  // Reset DB with pre-fill data.
-  grunt.registerTask('dbInit', ['shell:dbSetup']);  // Initialize the database
+  grunt.registerTask('init', ['shell:dbSetup']);  // Initialize the database
 };
