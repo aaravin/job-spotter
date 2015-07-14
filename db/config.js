@@ -77,7 +77,7 @@ db.knex.schema.hasTable('links').then(function(exists) {
     db.knex.schema.createTable('links', function (table) {
       table.increments('id').primary();
       table.string('link', 255);
-      table.string('description', 255); //only show first 255 chars of job description
+      // table.string('description', 255); //only show first 255 chars of job description
       table.integer('title_id').unsigned().references('id').inTable('titles');
       table.integer('company_id').unsigned().references('id').inTable('companies');
       table.integer('location_id').unsigned().references('id').inTable('locations');
