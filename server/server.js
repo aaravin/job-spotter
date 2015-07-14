@@ -13,6 +13,16 @@ var port = process.env.PORT || 8080;
 app.listen(port);
 console.log("Listening on PORT " + port);
 
+var tempData = [
+  {"title":"UI Designer", "company": "General Motors", "location": "Detroit, MI"},
+  {"title":"Frontend Developer", "company": "Apple", "location": "San Francisco, CA"},
+  {"title":"Engineer", "company": "Venmo", "location": "New York, NY"},
+  {"title":"Garbage Man", "company": "Twitter", "location": "Austin, TX"}];
+
+app.get('/api/jobs', function(req, res) {
+  res.json(tempData);
+});
+
 api.JobSearch()
 	.Limit(30)
 	.WhereLocation({
@@ -31,6 +41,5 @@ api.JobSearch()
         function (error) {
         // do something with the error results 
         console.log(error);
-    })
-;
+    });
 
