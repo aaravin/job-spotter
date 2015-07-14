@@ -1,4 +1,5 @@
 var Link = require('../../db/models/link');
+
 var Promise = require('bluebird');
 var Title = require('../../db/models/title');
 var Company = require('../../db/models/company');
@@ -16,10 +17,9 @@ module.exports = {
       .then(function (links) {
         var results = [];
 
-        // build the array of links and store into results
-        //   each link is an object
         var models = links.models;
 
+        // build each link and store as an object onto the results array
         for (var i = 0; i < models.length; i++) {
           var resultObj = {};
           var link = models[i];
