@@ -24,21 +24,6 @@ var jobs = [{"id":67267,"title":"UI Designer / Frontend Developer","description"
 //   return false;
 // };
 
-var promiseWhile = function(condition, action) {
-    var resolver = bluebird.defer();
-
-    var loop = function() {
-        if (!condition()) return resolver.resolve();
-        return bluebird.cast(action())
-            .then(loop)
-            .catch(resolver.reject);
-    };
-
-    process.nextTick(loop);
-
-    return resolver.promise;
-};
-
 var link_id = 0;
 var title_id = 0;
 var company_id = 0;
@@ -46,11 +31,6 @@ var location_id = 0;
 var promises = [];
 var i = 0;
 // for (var i = 0; i < jobs.length; i++) {
-console.log(jobs.length);
-promiseWhile(function() {
-	return i < jobs.length;
-}, function() {
-	return new bluebird(function(resolve, reject) {
 		var linkDB = new Link({link: jobs[i]["angellist_url"]});
 		promises.push(linkDB.fetch().then(function(linkFound) {
 			if (linkFound) {
@@ -124,10 +104,5 @@ promiseWhile(function() {
 			// 	addedLink.set({title_id: title_id, company_id: company_id, location_id: location_id});
 			// });
 			i++;
-			resolve();
 		});
-	});
-}).then(function() {
-	console.log("DONE");
-});
 // }

@@ -35,11 +35,11 @@ describe('', function() {
     });
 
     it('Creates User and Password', function(done) {
-      console.log("creating user Phillip");
-      new User({
-          'username': 'Phillip',
-          'password': 'Phillip'
-      }).save();
+      // console.log("creating user Phillip");
+      // new User({
+      //     'username': 'Phillip',
+      //     'password': 'Phillip'
+      // }).save();
       expect(true).to.equal(true);
       done();
     });
