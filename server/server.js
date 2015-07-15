@@ -1,7 +1,8 @@
 var express = require('express');
 var morgan = require('morgan');
 var session = require('express-session');
-var api = require('indeed-api').getInstance("1508047511307515");
+// var api = require('indeed-api').getInstance("1508047511307515");
+var Link = require('../db/models/link');
 
 var app = express();
 
@@ -10,19 +11,42 @@ app.use(express.static(__dirname + "/../client"));
 
 var port = process.env.PORT || 8080;
 
+// var mainRouter = require('./routes');
+// app.use('/', mainRouter);
+
+app.get('/api/jobs', function(req, res) {
+  new Link()
+  .fetchAll({
+    withRelated: ['company', 'location', 'title']
+  })
+  .then(function (links) {
+    var results = [];
+
+    var models = links.models;
+
+    // build each link and store as an object onto the results array
+    for (var i = 0; i < models.length - 1; i++) {
+      var resultObj = {};
+      var link = models[i];
+      resultObj.id = link.attributes.id;
+      resultObj.link = link.attributes.link;
+      resultObj.title = link.relations.title.attributes.title;
+      resultObj.company = link.relations.company.attributes.name;
+      resultObj.location = link.relations.location.attributes.city;
+
+      results.push(resultObj);
+    }
+    console.log('results', results);
+
+    // send back the results
+    res.status(200).send(results);
+  });
+});
+
 app.listen(port);
 console.log("Listening on PORT " + port);
 
-var tempData = [
-  {"title":"UI Designer", "company": "General Motors", "location": "Detroit, MI"},
-  {"title":"Frontend Developer", "company": "Apple", "location": "San Francisco, CA"},
-  {"title":"Engineer", "company": "Venmo", "location": "New York, NY"},
-  {"title":"Garbage Man", "company": "Twitter", "location": "Austin, TX"}];
-
-app.get('/api/jobs', function(req, res) {
-  res.json(tempData);
-});
-
+/*
 api.JobSearch()
 	.Limit(30)
 	.WhereLocation({
@@ -42,4 +66,5 @@ api.JobSearch()
         // do something with the error results 
         console.log(error);
     });
+*/
 

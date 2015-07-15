@@ -1,5 +1,9 @@
 var db = require('../config');
 
+var Link = require('./link');
+var Title = require('./title');
+var Company = require('./company');
+
 var Location = db.Model.extend({
   tableName: 'locations',
   hasTimestamps: true,
