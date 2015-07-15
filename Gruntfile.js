@@ -10,7 +10,7 @@ module.exports = function(grunt) {
           database: "jobspotter",
           user: "root",
           pass: "",
-          host: "localhost",
+          host: "127.0.0.1",
           backup_to: "db/backups/local.sql"
         }
       }

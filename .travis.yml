@@ -4,4 +4,11 @@ node_js:
   - "0.11"
   - "0.10"
   - "iojs"
-  - "iojs-v1.0.4" 
+  - "iojs-v1.0.4"
+before_script:
+  - mysql -u root -e 'CREATE DATABASE jobspotter;'
+test:
+  adapter: mysql2
+  database: jobspotter
+  username: root
+  encoding: utf8  
