@@ -2,15 +2,15 @@ var Nav = React.createClass({
   
   render: function() {
     return (
-      <div class="nav nav-bar">
+      <div className="nav nav-bar">
         <h1>JobSpotter</h1>
-        <div>Signup</div>
-        <div>Login</div>
-        <div>About</div>
+        <a href="#">Signup</a>
+        <a href="#">Login</a>
+        <a href="#">About</a>
       </div>
     );
   }
 
 });
 
-React.render(<nav />, document.getElementById('nav'));
+React.render(<Nav />, document.getElementById('nav'));

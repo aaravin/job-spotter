@@ -28,6 +28,8 @@ var AppView = React.createClass({
   render: function() {
     return (
       <div>
+        <Nav />
+        <MapView />
         <JobsList jobs={this.state.jobs} />
       </div>
     );
