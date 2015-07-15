@@ -37,4 +37,13 @@ var AppView = React.createClass({
 
 });
 
+// $(function() {
+
 React.render(<AppView />, document.getElementById('main'));
+
+// setTimeout(function() {
+//   React.render(<AppView />, document.getElementById('main'));
+//   console.log("timeout working");
+// }, 8000);
+
+// });

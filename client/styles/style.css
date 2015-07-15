@@ -5,8 +5,8 @@ html, body {
 }
 
 #map-canvas { 
-  height: 50%; 
-  width: 50%;
-  margin: 0; 
+  height: 500px; 
+  width: 1000px;
+  margin-left: 50px; 
   padding: 0;
 }

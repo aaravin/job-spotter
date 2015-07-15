@@ -9,9 +9,10 @@ var MapView = React.createClass({
   },
 
   componentDidMount: function() {
+    //Hardcoded Entire US initial coordinates 
     var mapOptions = {
-      center: this.mapCenterLatLng(),
-      zoom: this.state.initialZoom
+      center: new google.maps.LatLng(39.83, -98.58),
+      zoom: 4
     },
     map = new google.maps.Map(this.getDOMNode(), mapOptions);
     // var marker = new google.maps.Marker({position: this.mapCenterLatLng(), title: 'Hi', map: map});
