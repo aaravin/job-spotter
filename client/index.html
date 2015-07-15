@@ -14,12 +14,14 @@
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- <script src="lib/validator.min.js"></script> -->
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <script type="text/javascript" 
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeaxZsJZtkFBZBaCq0PpDCcGdXgfRuwaY"></script>
     <!-- <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.icon-large.min.css"> -->
     <link rel="stylesheet" href="styles/style.css">
 
   </head>
   <body>
-    <h1>JobSpotter</h1>
+    <div id="nav"></div>
     <div id="main"></div>
 
     <!-- Sample Data -->
@@ -33,8 +35,10 @@
     <script src="collections/jobs.js"></script>
 
     <!-- Views -->
+    <script src="views/mapView.js" type="text/jsx"></script>
     <script src="views/jobView.js" type="text/jsx"></script>
     <script src="views/jobsView.js" type="text/jsx"></script>
+    <script src="views/navigationView.js" type="text/jsx"></script>
     <script src="views/appView.js" type="text/jsx"></script>
 
     <!-- Router -->
