@@ -2,7 +2,6 @@ var express = require('express');
 var morgan = require('morgan');
 var session = require('express-session');
 // var api = require('indeed-api').getInstance("1508047511307515");
-var Link = require('../db/models/link');
 var Job = require('../sqldb/models/job');
 
 var port = process.env.PORT || 8080;
@@ -40,8 +39,21 @@ var getAllJobs = function() {
     }
     console.log("Got all jobs!");
   });
-}
+};
 
+app.get('/api/jobs', function(req, res) {
+  console.log("Sending jobs to /api/jobs");
+  res.status(200).send(results);
+  console.log("Jobs sent");
+});
+
+
+getAllJobs();
+app.listen(port);
+console.log("Listening on PORT " + port);
+
+
+/* REFERENCES OLD VERSION of database, models, and schema
 app.get('/sql/jobs', function(req, res) {
   new Link()
   .fetchAll({
@@ -72,19 +84,10 @@ app.get('/sql/jobs', function(req, res) {
     res.status(200).send(results);
   });
 });
-
-app.get('/api/jobs', function(req, res) {
-  console.log("Sending jobs to /api/jobs");
-  res.status(200).send(results);
-  console.log("Jobs sent");
-});
+*/
 
 
-getAllJobs();
-app.listen(port);
-console.log("Listening on PORT " + port);
-
-/*
+/* Ashwin:
 api.JobSearch()
 	.Limit(30)
 	.WhereLocation({
