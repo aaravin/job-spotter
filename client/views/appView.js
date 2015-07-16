@@ -45,9 +45,6 @@ var AppView = React.createClass({
 
 
 module.exports = function() {
-  console.log('rending');
   React.render(<AppView />, document.getElementById('main'));
 };
-
-// module.exports = AppView;
 
