@@ -1,4 +1,4 @@
-
+var React = require('react');
 var JobListing = React.createClass({
 
   getInitialState: function() {
@@ -15,4 +15,4 @@ var JobListing = React.createClass({
   }
 });
 
-// module.exports = JobListing;
+module.exports = JobListing;

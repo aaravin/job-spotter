@@ -1,4 +1,5 @@
-// var JobListing = require('./JobsListing');
+var React = require('react');
+var JobListing = require('./jobView');
 
 var JobsList = React.createClass({
 
@@ -18,5 +19,4 @@ var JobsList = React.createClass({
 
 });
 
-// module.exports = JobsList;
-
+module.exports = JobsList;

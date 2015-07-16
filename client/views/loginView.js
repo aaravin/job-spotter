@@ -1,4 +1,4 @@
-
+var React = require('react');
 var Login = React.createClass({
 
   getInitialState: function() {
@@ -51,4 +51,6 @@ var Login = React.createClass({
   }
 
 });
+
+module.exports = Login;
 

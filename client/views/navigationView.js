@@ -1,4 +1,4 @@
-
+var React = require('react');
 
 var Nav = React.createClass({
   
@@ -15,6 +15,4 @@ var Nav = React.createClass({
 
 });
 
-React.render(<Nav />, document.getElementById('nav'));
-
-// module.exports = Nav;
+module.exports = Nav;

@@ -8,13 +8,13 @@ var reactify = require('reactify');
 var streamify = require('gulp-streamify');
 
 var path = {
-  HTML: 'src/index.html',
+  HTML: 'client/index.html',
   MINIFIED_OUT: 'build.min.js',
   OUT: 'build.js',
   DEST: 'dist',
   DEST_BUILD: 'dist/build',
   DEST_SRC: 'dist/src',
-  ENTRY_POINT: './src/js/App.js'
+  ENTRY_POINT: './client/app/app.js'
 };
 
 gulp.task('copy', function(){
@@ -64,4 +64,4 @@ gulp.task('replaceHTML', function(){
 
 gulp.task('production', ['replaceHTML', 'build']);
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['copy', 'watch']);

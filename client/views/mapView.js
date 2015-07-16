@@ -1,4 +1,4 @@
-
+var React = require('react');
 
 var MapView = React.createClass({
 
@@ -34,4 +34,4 @@ var MapView = React.createClass({
 
 });
 
-// module.exports = MapView;
+module.exports = MapView;
