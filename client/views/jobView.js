@@ -15,3 +15,4 @@ var JobListing = React.createClass({
   }
 });
 
+// module.exports = JobListing;

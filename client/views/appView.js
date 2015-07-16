@@ -1,3 +1,7 @@
+// var React = require('react');
+// var Nav = require('./Nav');
+// var JobsList = require('./JobsList');
+
 var AppView = React.createClass({
 
   getInitialState: function() {
@@ -37,13 +41,9 @@ var AppView = React.createClass({
 
 });
 
-// $(function() {
+
 
 React.render(<AppView />, document.getElementById('main'));
 
-// setTimeout(function() {
-//   React.render(<AppView />, document.getElementById('main'));
-//   console.log("timeout working");
-// }, 8000);
+// module.exports = AppView;
 
-// });

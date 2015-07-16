@@ -1,3 +1,5 @@
+
+
 var Nav = React.createClass({
   
   render: function() {
@@ -14,3 +16,5 @@ var Nav = React.createClass({
 });
 
 React.render(<Nav />, document.getElementById('nav'));
+
+// module.exports = Nav;
