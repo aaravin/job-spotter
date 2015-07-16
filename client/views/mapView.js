@@ -15,8 +15,29 @@ var MapView = React.createClass({
     var mapOptions = {
       center: new google.maps.LatLng(39.83, -98.58),
       zoom: 4
-    },
-    map = new google.maps.Map(this.getDOMNode(), mapOptions);
+    };
+    var map = new google.maps.Map(this.getDOMNode(), mapOptions);
+
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(39, -98),
+      map: map
+    });
+
+    var marker2 = new google.maps.Marker({
+      position: new google.maps.LatLng(36, -98),
+      map: map
+    });
+
+    var marker3 = new google.maps.Marker({
+      position: new google.maps.LatLng(36, -112),
+      map: map
+    });
+
+    var marker4 = new google.maps.Marker({
+      position: new google.maps.LatLng(38, -122),
+      map: map
+    });
+
     // var marker = new google.maps.Marker({position: this.mapCenterLatLng(), title: 'Hi', map: map});
     this.setState({map: map});
   },
