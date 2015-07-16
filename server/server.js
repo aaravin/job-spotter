@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var session = require('express-session');
 // var api = require('indeed-api').getInstance("1508047511307515");
 var Link = require('../db/models/link');
+var Job = require('../sqldb/models/job');
 
 var port = process.env.PORT || 8080;
 
@@ -12,10 +13,36 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname + "/../client"));
 
 
-// var mainRouter = require('./routes');
-// app.use('/', mainRouter);
+var results = [];
 
-app.get('/api/jobs', function(req, res) {
+var getAllJobs = function() {
+  console.log("Getting all jobs...");
+  new Job()
+  .query({where: {currency: 'USD'}})
+  .fetchAll({
+    withRelated: ['startup', 'loc', 'role']
+  })
+  .then(function (jobs) {
+    console.log("getting attributes");
+    var models = jobs.models;
+
+    for (var i = 0; i < models.length; i++) {
+      var resultObj = {};
+      var link = models[i];
+      if (link.relations.startup.models[0] && link.relations.loc.models[0]) {
+        resultObj.id = link.attributes.id;
+        resultObj.title = link.attributes.name;
+        resultObj.company = link.relations.startup.models[0].attributes.name;
+        resultObj.location = link.relations.loc.models[0].attributes.name.replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+        results.push(resultObj);
+      }
+    }
+    console.log("Got all jobs!");
+  });
+}
+
+app.get('/sql/jobs', function(req, res) {
   new Link()
   .fetchAll({
     withRelated: ['company', 'location', 'title']
@@ -31,6 +58,7 @@ app.get('/api/jobs', function(req, res) {
     for (var i = 0; i < models.length - 1; i++) {
       var resultObj = {};
       var link = models[i];
+      console.log(link);
       resultObj.id = link.attributes.id;
       resultObj.link = link.attributes.link;
       resultObj.title = link.relations.title.attributes.title;
@@ -39,13 +67,20 @@ app.get('/api/jobs', function(req, res) {
 
       results.push(resultObj);
     }
-    // console.log('results', results);
 
     // send back the results
     res.status(200).send(results);
   });
 });
 
+app.get('/api/jobs', function(req, res) {
+  console.log("Sending jobs to /api/jobs");
+  res.status(200).send(results);
+  console.log("Jobs sent");
+});
+
+
+getAllJobs();
 app.listen(port);
 console.log("Listening on PORT " + port);
 
