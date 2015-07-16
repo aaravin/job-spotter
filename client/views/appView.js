@@ -1,6 +1,8 @@
-// var React = require('react');
-// var Nav = require('./Nav');
-// var JobsList = require('./JobsList');
+var React = require('react');
+var Nav = require('./navigationView');
+var JobsList = require('./jobsView');
+var MapView = require('./mapView');
+var Jobs = require('./../collections/jobs');
 
 var AppView = React.createClass({
 
@@ -42,8 +44,10 @@ var AppView = React.createClass({
 });
 
 
-
-React.render(<AppView />, document.getElementById('main'));
+module.exports = function() {
+  console.log('rending');
+  React.render(<AppView />, document.getElementById('main'));
+};
 
 // module.exports = AppView;
 

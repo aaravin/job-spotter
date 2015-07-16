@@ -1,6 +1,6 @@
-// var App = require('./AppView');
-
-
-// module.exports = app;
+var App = require('./../views/AppView');
+ 
+App(); 
+// module.exports = App;
 
 
