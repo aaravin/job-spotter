@@ -1,3 +1,5 @@
+
+
 var MapView = React.createClass({
 
   getInitialState: function () {
@@ -31,3 +33,5 @@ var MapView = React.createClass({
   }
 
 });
+
+// module.exports = MapView;

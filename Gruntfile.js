@@ -72,6 +72,18 @@ module.exports = function(grunt) {
       }
     },
 
+    browserify:     {
+      options:      {
+        debug: true,
+        watch: true,
+        transform:  [ require('grunt-react').browserify ]
+      },
+      app:         {
+        src:        'client/app/app.js',
+        dest:       'client/dist/src.js'
+      }
+    },
+
     watch: {
       scripts: {
         files: [
@@ -95,6 +107,8 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-react');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
@@ -105,14 +119,9 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-  grunt.registerTask('mon', [
-    'jshint',
-    'concurrent'
-  ]);
 
   grunt.registerTask('default', [
     'jshint',
-    'bower-install-simple',
     'concurrent'
   ]);
 
