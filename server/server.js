@@ -12,6 +12,7 @@ var Startup = require('../sqldb/models/startup');
 
 var mainController = require('./controllers/mainController');
 var locationController = require('./controllers/locationController');
+var titleController = require('./controllers/titleController');
 
 var port = process.env.PORT || 8080;
 
@@ -20,7 +21,7 @@ var app = express();
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/../dist"));
 
-app.get('/api/jobs/all', function (req, res, next) {
+app.get('/api/locations/all', function (req, res, next) {
   // route name may change in the future
   //   - the purpose is to get all jobs by location
   mainController.getAllJobs(req, res, next);
@@ -33,8 +34,8 @@ app.get('/api/jobs/city', function (req, res, next) {
 });
 
 app.get('/api/jobs/title', function (req, res, next) {
-  console.log("You selected the route for", req.params.titlename, "- the controller for fetching this data is missing.");
-  res.send("You selected the route for " + String(req.params.cityname) + " - the controller for fetching this data is missing.");
+  // console.log("You selected the route for", req.params.titlename, "- the controller for fetching this data is missing.");
+  // res.send("You selected the route for " + String(req.params.cityname) + " - the controller for fetching this data is missing.");
   titleController.getJobsWithTitle(req, res, next);
 });
 
