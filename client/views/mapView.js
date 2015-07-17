@@ -40,7 +40,6 @@ var MapView = React.createClass({
   },
 
   componentDidMount: function() {
-    //Hardcoded Entire US initial coordinates 
     this.getCityData();
 
     var mapOptions = {
@@ -49,27 +48,6 @@ var MapView = React.createClass({
     };
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
 
-    // var marker = new google.maps.Marker({
-    //   position: new google.maps.LatLng(39, -98),
-    //   map: map
-    // });
-
-    // var marker2 = new google.maps.Marker({
-    //   position: new google.maps.LatLng(36, -98),
-    //   map: map
-    // });
-
-    // var marker3 = new google.maps.Marker({
-    //   position: new google.maps.LatLng(36, -112),
-    //   map: map
-    // });
-
-    // var marker4 = new google.maps.Marker({
-    //   position: new google.maps.LatLng(38, -122),
-    //   map: map
-    // });
-
-    // var marker = new google.maps.Marker({position: this.mapCenterLatLng(), title: 'Hi', map: map});
     this.setState({map: map});
   },
 
