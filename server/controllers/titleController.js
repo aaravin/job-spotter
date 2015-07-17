@@ -15,7 +15,7 @@ module.exports = {
       withRelated: ['startup','loc','role']
     })
     .then(function (jobs) {
-      var loc, company, role, city;
+      var locServer, company, role, locClient;
       var jobsData = _.map(jobs.models, function(job) {
         var jobData = {};
 
@@ -23,21 +23,22 @@ module.exports = {
         jobData.title = job.attributes.name;
         jobData.salary = (job.attributes.salary_min + job.attributes.salary_max)/2;
 
-        loc = job.related('loc').at(0);
-        if (loc) {
-          if (loc === "washington,_dc") {
-            city = "Washington, DC";
+        locServer = job.related('loc').at(0);
+        if (locServer) {
+          //if Washington, DC, don't use normal regex because it removes substring after ','
+          if (locServer === "washington,_dc") {
+            locClient = "Washington, DC";
           } else {
-            city = loc.replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+            locClient = locServer.replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
           }
         }
         company = job.related('startup').at(0);
         role = job.related('role').at(0);
 
-        jobData.loc = loc === undefined ? loc : loc.attributes.name;
+        jobData.locServer = locServer === undefined ? locServer : locServer.attributes.name;
         jobData.company = company === undefined ? company : company.attributes.name;
         jobData.role = role === undefined ? role : role.attributes.name;
-        jobData.city = loc === undefined ? loc : city;
+        jobData.locClient = locServer === undefined ? locServer : locClient;
 
         return jobData;
       });

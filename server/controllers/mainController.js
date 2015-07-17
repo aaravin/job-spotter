@@ -12,18 +12,19 @@ module.exports = {
 
       for (var i = 0; i < models.length; i++) {
         var loc = models[i];
-        var city;
+        var locClient;
 
         if (loc.attributes.name && loc.attributes.latitude && loc.attributes.longitude) {
+          //if Washington, DC, don't use normal regex because it removes substring after ','
           if (loc.attributes.name === "washington,_dc") {
-            city = "Washington, DC";
+            locClient = "Washington, DC";
           } else {
-            city = loc.attributes.name.replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
+            locClient = loc.attributes.name.replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
           }
 
           allLocs[i] = {
-            loc: loc.attributes.name,
-            city: city,
+            locServer: loc.attributes.name,
+            locClient: locClient,
             jobCount: loc.attributes.jobcount,
             latitude: loc.attributes.latitude,
             longitude: loc.attributes.longitude,
