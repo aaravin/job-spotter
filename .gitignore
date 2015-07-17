@@ -40,3 +40,6 @@ bower_components/
 
 # conceal API keys
 clientKey.js
+
+# conceal sqldump file
+dump.sql

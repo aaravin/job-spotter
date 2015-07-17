@@ -10,7 +10,6 @@ var Nav = React.createClass({
         <a href="#">Signup</a>
         <a href="#">Login</a>
         <a href="#">About</a>
-        <Login />
       </div>
     );
   }

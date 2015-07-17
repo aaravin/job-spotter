@@ -99,4 +99,4 @@ gulp.task('replaceHTML', function(){
 
 gulp.task('production', ['replaceHTML', 'build']);
 
-gulp.task('default', ['copy-index', 'copy-css',/* 'demon',*/ 'watch']);
+gulp.task('default', ['copy-index', 'copy-css', 'demon', 'watch']);
