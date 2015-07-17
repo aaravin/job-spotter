@@ -9,10 +9,19 @@ html, body {
   padding: 0;
 }
 
-#navigation {
-  height: 40px;
+.nav-pills {
+  padding-right: 20px;
+  padding-top: 5px;
 }
 
-.navbar-text {
-  /*margin: 10px;*/
+#navigation {
+  height: 60px;
 }
+
+.navbar-brand {
+  padding: 0px 10px;
+  margin-left: 20px;
+};
+
+
+
