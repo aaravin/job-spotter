@@ -3,7 +3,7 @@ var morgan = require('morgan');
 var session = require('express-session');
 var request = require('request');
 // var api = require('indeed-api').getInstance("1508047511307515");
-var Link = require('../db/models/link');
+var Link = require('../old_db/models/link');
 var db = require('../sqldb/config');
 var Job = require('../sqldb/models/job');
 var Loc = require('../sqldb/models/loc');
@@ -16,8 +16,6 @@ var app = express();
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/../client"));
-
-var results = [];
 
 var getAllJobs = function() {
   console.log("Getting all jobs...");
@@ -119,10 +117,33 @@ app.get('/sql/jobs', function(req, res) {
   });
 });
 
-app.get('/api/jobs', function(req, res) {
-  console.log("Sending jobs to /api/jobs");
-  res.status(200).send(results);
-  console.log("Jobs sent");
+// app.get('/api/jobs', function(req, res) {
+//   console.log("Sending jobs to /api/jobs");
+//   res.status(200).send(results);
+//   console.log("Jobs sent");
+// });
+
+app.get('/api/jobs/all', function(req, res) {
+  console.log("Sending locations to /api/jobs/all");
+  var allLocs = {};
+  new Loc()
+  .fetchAll()
+  .then(function(locs) {
+    var models = locs.models;
+
+    for (var i = 0; i < models.length; i++) {
+      var loc = models[i];
+      if (loc.attributes.latitude && loc.attributes.longitude) {
+        allLocs[loc.attributes.name] = {
+          jobCount: loc.attributes.jobcount,
+          latitude: loc.attributes.latitude,
+          longitude: loc.attributes.longitude,
+          avgSalary: loc.attributes.avg_salary
+        }
+      }
+    }
+    res.status(200).send(allLocs);
+  })
 });
 
 // getAllJobs();  //DON'T UNCOMMENT THIS
