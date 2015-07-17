@@ -27,16 +27,47 @@ var MapView = React.createClass({
     });
   },
 
+  testTrigger: function() {
+    alert("TEST TRIGGER");
+  },
+
   setMarkers: function() {
     var context = this;
-    _.each(this.state.cityData, function(city) {
-      console.log(city.jobCount.toString());
+
+    _.each(this.state.cityData, function(city, cityName) {
+      console.log(city);
+
+
+      var contentString = "<div>" +
+          "<h1>" + cityName + "</h1>" +
+          "<a href=" + '"#"'  + ">" + city.jobCount + " jobs available here!" + "</a>" +
+          "<p>" + "Average Salary: " + city.avgSalary + "</p>"
+        "</div>";
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(city.latitude, city.longitude),
         map: context.state.map,
         title: city.jobCount.toString() + " JOBS HERE!!!"
       });
-    })
+
+      google.maps.event.addListener(marker, "click", function() {
+        infowindow.open(context.state.map, marker);
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/api/jobs/city/" + cityName,
+          data: {
+            format: "json"
+          },
+          success: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    });
   },
 
   componentDidMount: function() {
