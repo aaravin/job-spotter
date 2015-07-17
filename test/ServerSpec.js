@@ -37,9 +37,6 @@ describe('Testing Suite', function() {
       done();
     });
   });
-});
-
-/* Temporarily block out tests - NEED REFACTORING to new database
 
   describe("Server Routes Tests", function() {
     var dbConnection;
@@ -48,7 +45,7 @@ describe('Testing Suite', function() {
       dbConnection = mysql.createConnection({
         user: "root",
         password: "",
-        database: "jobspotter"
+        database: "jobs"
       });
       dbConnection.connect();
       done();
@@ -59,7 +56,7 @@ describe('Testing Suite', function() {
     });
 
     it('Should respond to GET requests for /api/jobs with a 200 status code', function(done) {
-      request('http://127.0.0.1:8080/api/jobs', function(error, response, body) {
+      request('http://127.0.0.1:8080/api/jobs/all', function(error, response, body) {
         expect(response.statusCode).to.equal(200);
         done();
       });
@@ -67,7 +64,7 @@ describe('Testing Suite', function() {
   });
 
   describe("Database Tests", function() {
-    var TABLES_COUNT = 8;
+    var TABLES_COUNT = 9;
     
     var dbConnection;
 
@@ -75,7 +72,7 @@ describe('Testing Suite', function() {
       dbConnection = mysql.createConnection({
         user: "root",
         password: "",
-        database: "jobspotter"
+        database: "jobs"
       });
       dbConnection.connect();
       done();
@@ -107,8 +104,8 @@ describe('Testing Suite', function() {
       });
     });
 
-    it("Should have table named links", function(done) {
-      var queryString = "SELECT * FROM links";
+    it("Should have table named Jobs", function(done) {
+      var queryString = "SELECT * FROM Jobs";
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
@@ -117,8 +114,8 @@ describe('Testing Suite', function() {
       });
     });
 
-    it("Should have columns in table named links", function(done) {
-      var queryString = "SHOW COLUMNS FROM links";
+    it("Should have columns in table named Jobs", function(done) {
+      var queryString = "SHOW COLUMNS FROM Jobs";
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
@@ -128,8 +125,8 @@ describe('Testing Suite', function() {
       });
     });
 
-    it("Should have a primary key in the first column in table named links", function(done) {
-      var queryString = "SHOW COLUMNS FROM links";
+    it("Should have a primary key in the first column in table named Jobs", function(done) {
+      var queryString = "SHOW COLUMNS FROM Jobs";
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
@@ -139,10 +136,51 @@ describe('Testing Suite', function() {
       });
     });
 
+    it("Should have table named Locs", function(done) {
+      var queryString = "SELECT * FROM Locs";
+      var queryArgs = [];
+
+      dbConnection.query(queryString, queryArgs, function(err, results) {
+        expect(results).to.not.equal(undefined);
+        done();
+      });
+    });
+
+    it("Should have columns in table named Locs", function(done) {
+      var queryString = "SHOW COLUMNS FROM Locs";
+      var queryArgs = [];
+
+      dbConnection.query(queryString, queryArgs, function(err, results) {
+        expect(results.length).to.be.greaterThan(0);
+        // console.log('results', results);
+        done();
+      });
+    });
+
+    it("Should have a jobcount column in table named Locs", function(done) {
+      var queryString = "SHOW COLUMNS FROM Locs";
+      var queryArgs = [];
+
+      dbConnection.query(queryString, queryArgs, function(err, results) {
+        // console.log('results', results);
+        var columnFound = true;
+        for (var i = 0, limit = results.length; i < limit; i++) {
+          for (var key in results[i]) {
+            if (results[i][key] === "jobcount") {
+              columnFound = true;
+            }
+          }
+        }
+        expect(columnFound).to.equal(true);
+        done();
+      });
+    });
+
+
     // *** Travis CI does not have data to execute this test
     // *** COMMENT OUT below before commiting ***
-    // it("Should have data rows in table named links", function(done) {
-    //   var queryString = "SELECT * FROM links";
+    // it("Should have data rows in table named Jobs", function(done) {
+    //   var queryString = "SELECT * FROM Jobs";
     //   var queryArgs = [];
 
     //   dbConnection.query(queryString, queryArgs, function(err, results) {
@@ -156,4 +194,3 @@ describe('Testing Suite', function() {
 
 });
 
-*/
