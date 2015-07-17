@@ -15,7 +15,7 @@ var port = process.env.PORT || 8080;
 var app = express();
 
 app.use(morgan('dev'));
-app.use(express.static(__dirname + "/../client"));
+app.use(express.static(__dirname + "/../dist"));
 
 var getAllJobs = function() {
   console.log("Getting all jobs...");

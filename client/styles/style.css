@@ -5,8 +5,14 @@ html, body {
 }
 
 #map-canvas { 
-  height: 500px; 
-  width: 1000px;
-  margin-left: 50px; 
+  height: 400px; 
   padding: 0;
+}
+
+#navigation {
+  height: 40px;
+}
+
+.navbar-text {
+  /*margin: 10px;*/
 }

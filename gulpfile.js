@@ -13,7 +13,7 @@ var nodemon = require('gulp-nodemon');
 var path = {
   ALL: ['client/app/*.js', 'client/collections/*.js', 'client/mdoels/*.js', 'client/views/*.js'],
   HTML: 'client/index.html',
-  CSS: 'styles/style.css',
+  CSS: 'client/styles/style.css',
   MINIFIED_OUT: 'build.min.js',
   OUT: 'build.js',
   DEST: 'dist',
@@ -35,7 +35,7 @@ gulp.task('copy-index', function(){
 
 gulp.task('copy-css', function(){
   gulp.src(path.CSS)
-    .pipe(gulp.dest(path.DEST))
+    // .pipe(gulp.dest(path.DEST_SRC))
     .pipe(concat('main.css'))
     .pipe(gulp.dest(path.DEST_SRC));
 });
@@ -99,4 +99,4 @@ gulp.task('replaceHTML', function(){
 
 gulp.task('production', ['replaceHTML', 'build']);
 
-gulp.task('default', ['copy-index', 'copy-css', 'demon', 'watch']);
+gulp.task('default', ['copy-index', 'copy-css',/* 'demon',*/ 'watch']);
