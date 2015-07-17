@@ -3,8 +3,17 @@ var JobListing = require('./jobView');
 
 var JobsList = React.createClass({
 
+  handleClick: function() {
+    this.props.jobs.fetch({
+      success: function(data) {
+        context.setState({jobData: data});
+        context.setMarkers();
+      }
+    });
+  },
+
   render: function() {
-    var list = this.props.jobs.map(function(job, index) {
+    var list = this.state.jobData.map(function(job, index) {
       return <JobListing joblisting={job.attributes} key={index} />
     });
     return (

@@ -12,14 +12,20 @@ var MapView = React.createClass({
     };
   },
 
-  getCityData: function() {
+  componentDidMount: function() {
     var context = this;
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/api/jobs/all",
-      data: {
-        format: "json"
-      },
+    // $.ajax({
+    //   type: "GET",
+    //   url: "http://localhost:8080/api/jobs/all",
+    //   data: {
+    //     format: "json"
+    //   },
+    //   success: function(data) {
+    //     context.setState({cityData: data});
+    //     context.setMarkers();
+    //   }
+    // });
+    this.props.locs.fetch({
       success: function(data) {
         context.setState({cityData: data});
         context.setMarkers();
@@ -34,14 +40,14 @@ var MapView = React.createClass({
   setMarkers: function() {
     var context = this;
 
-    _.each(this.state.cityData, function(city, cityName) {
+    this.state.cityData.forEach(function(city, cityName) {
       console.log(city);
 
 
       var contentString = "<div>" +
-          "<h1>" + cityName + "</h1>" +
-          "<a href=" + '"#"'  + ">" + city.jobCount + " jobs available here!" + "</a>" +
-          "<p>" + "Average Salary: " + city.avgSalary + "</p>"
+          "<h1>" + city.get("loc") + "</h1>" +
+          "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
+          "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
         "</div>";
 
       var infowindow = new google.maps.InfoWindow({
