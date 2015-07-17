@@ -6,15 +6,9 @@ var Startup = require('./startup');
 
 var Loc = db.Model.extend({
   tableName: 'Locs',
-  hasTimestamps: true,
-  startups: function() {
-    return this.belongsToMany(Startup);
-  },
-  roles: function() {
-    return this.belongsToMany(Role);
-  },
+  hasTimestamps: false,
   jobs: function() {
-    return this.belongsToMany(Job);
+    return this.belongsToMany(Job, 'loc_job', 'Loc_rowId', 'Job_rowId');
   }
 });
 
