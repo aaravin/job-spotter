@@ -29,9 +29,9 @@ var MapView = React.createClass({
 
   setMarkers: function() {
     var context = this;
+    var prevWindow = false;
 
-    this.props.locs.forEach(function(city) {
-
+    this.props.locs.forEach(function(city, index) {
 
       var contentString = "<div>" +
           "<h1>" + city.get("locClient") + "</h1>" +
@@ -43,21 +43,43 @@ var MapView = React.createClass({
         content: contentString
       });
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
-        map: context.state.map,
-        title: city.get('jobCount') + " JOBS HERE!!!"
-      });
+      setTimeout(function(){
 
-      google.maps.event.addListener(marker, "click", function() {
-        infowindow.open(context.state.map, marker);
-        context.props.jobsUpdate(city.get('locServer'));
-      });
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
+          map: context.state.map,
+          // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+          // size: new google.maps.Size(40, 40),
+          animation: google.maps.Animation.DROP,
+          title: city.get('jobCount') + " JOBS HERE!!!"
+        });
+
+        //add click event to show banner on each marker
+        google.maps.event.addListener(marker, "click", function() {
+          //close any other window/banner if one is open
+          if(prevWindow) {
+            prevWindow.close();
+          }
+          infowindow.open(context.state.map, marker);
+          prevWindow = infowindow;
+          context.props.jobsUpdate(city.get('locServer'));
+        });
+
+      }, 1*index);
+      
     });
+
+    //add click event to close all banners when map area is clicked
+    google.maps.event.addListener(this.state.map, "click", function() {
+      if(prevWindow) {
+        prevWindow.close();
+        prevWindow = false;
+      }
+    });
+
   },
 
   buildMap: function() {
-    // this.getCityData();
 
     var mapOptions = {
       center: new google.maps.LatLng(39.83, -98.58),
