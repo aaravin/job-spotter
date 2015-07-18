@@ -12,35 +12,63 @@ var MapView = React.createClass({
     };
   },
 
-  getCityData: function() {
+  componentDidMount: function() {
+    this.buildMap();
     var context = this;
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/api/jobs/all",
-      data: {
-        format: "json"
-      },
-      success: function(data) {
-        context.setState({cityData: data});
+
+    this.props.locs.fetch({
+      success: function() {
+        // context.setState({cityData: data});
         context.setMarkers();
       }
     });
   },
 
-  setMarkers: function() {
-    var context = this;
-    _.each(this.state.cityData, function(city) {
-      console.log(city.jobCount.toString());
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(city.latitude, city.longitude),
-        map: context.state.map,
-        title: city.jobCount.toString() + " JOBS HERE!!!"
-      });
-    })
+  testTrigger: function() {
+    alert("TEST TRIGGER");
   },
 
-  componentDidMount: function() {
-    this.getCityData();
+  setMarkers: function() {
+    var context = this;
+
+    this.props.locs.forEach(function(city) {
+
+
+      var contentString = "<div>" +
+          "<h1>" + city.get("locClient") + "</h1>" +
+          "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
+          "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
+        "</div>";
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
+        map: context.state.map,
+        title: city.get('jobCount') + " JOBS HERE!!!"
+      });
+
+      google.maps.event.addListener(marker, "click", function() {
+        infowindow.open(context.state.map, marker);
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/api/jobs/city?cityName=" + city.get("locServer"),
+          data: {
+            format: "json"
+          },
+          success: function(data) {
+            console.log(data);
+            context.props.update(data);
+          }
+        });
+      });
+    });
+  },
+
+  buildMap: function() {
+    // this.getCityData();
 
     var mapOptions = {
       center: new google.maps.LatLng(39.83, -98.58),

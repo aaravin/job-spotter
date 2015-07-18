@@ -8,4 +8,4 @@ var Locs = Backbone.Collection.extend({
   
 });
 
-module.exports = Jobs;
+module.exports = Locs;
