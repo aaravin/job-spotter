@@ -23,11 +23,11 @@ describe('Testing Suite', function() {
 
   describe('Dummy Test:', function(){
 
-    beforeEach(function(done){      // create a user that we can then log-in with
-      done();
-    });
+    // beforeEach(function(done){      // create a user that we can then log-in with
+    //   done();
+    // });
 
-    it('Dummy Test: Creates User and Password', function(done) {
+    it('Dummy Test', function(done) {
       // console.log("creating user Phillip");
       // new User({
       //     'username': 'Phillip',
@@ -57,6 +57,10 @@ describe('Testing Suite', function() {
 
     it('Should respond to GET requests for /api/jobs with a 200 status code', function(done) {
       request('http://127.0.0.1:8080/api/locations/all', function(error, response, body) {
+        if (error) {
+          throw error;
+        }
+
         expect(response.statusCode).to.equal(200);
         done();
       });
@@ -64,7 +68,6 @@ describe('Testing Suite', function() {
   });
 
   describe("Database Tests", function() {
-    var TABLES_COUNT = 9;
     
     var dbConnection;
 
@@ -87,6 +90,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results).to.not.equal(undefined);
         // console.log('results.length', results.length);
         done();
@@ -94,10 +101,15 @@ describe('Testing Suite', function() {
     });
 
     it("Should have the correct number of tables in the database", function(done) {
+      var TABLES_COUNT = 9;
       var queryString = "SHOW TABLES";
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results.length).to.equal(TABLES_COUNT);
         // console.log('results.length', results.length);
         done();
@@ -109,6 +121,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results).to.not.equal(undefined);
         done();
       });
@@ -119,6 +135,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results.length).to.be.greaterThan(0);
         // console.log('results', results);
         done();
@@ -130,6 +150,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results[0].Key).to.be.equal('PRI');
         // console.log('results[0].Key', results[0].Key);
         done();
@@ -141,6 +165,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         expect(results).to.not.equal(undefined);
         done();
       });
@@ -151,6 +179,9 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
         expect(results.length).to.be.greaterThan(0);
         // console.log('results', results);
         done();
@@ -162,6 +193,10 @@ describe('Testing Suite', function() {
       var queryArgs = [];
 
       dbConnection.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          throw error;
+        }
+
         // console.log('results', results);
         var columnFound = true;
         for (var i = 0, limit = results.length; i < limit; i++) {
