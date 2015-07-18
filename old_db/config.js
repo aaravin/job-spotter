@@ -1,6 +1,6 @@
 var host = process.env.HOST || '127.0.0.1';
 var port = process.env.DBPORT || 3306;
-var dbname = process.env.DBNAME || 'jobspotter';
+var dbname = process.env.DBNAME || 'jobs';
 var dbuser = process.env.DBUSER || 'root';
 var dbpassword = process.env.DBPASSWORD || '';
 

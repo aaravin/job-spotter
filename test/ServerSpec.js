@@ -56,7 +56,7 @@ describe('Testing Suite', function() {
     });
 
     it('Should respond to GET requests for /api/jobs with a 200 status code', function(done) {
-      request('http://127.0.0.1:8080/api/jobs/all', function(error, response, body) {
+      request('http://127.0.0.1:8080/api/locations/all', function(error, response, body) {
         expect(response.statusCode).to.equal(200);
         done();
       });
