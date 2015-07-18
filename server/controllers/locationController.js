@@ -11,10 +11,10 @@ module.exports = {
     var locClient;
 
     db.knex.select('Jobs.id as id', 'Jobs.name as title', 'Startups.name as company', 'Jobs.salary_min as salmin', 'Jobs.salary_max as salmax', 'Locs.name as city').from('Locs')
-    .innerJoin('loc_job', 'Locs.id', 'loc_job.Loc_rowId')
-    .innerJoin('Jobs', 'Jobs.id', 'loc_job.Job_rowId')
-    .innerJoin('startup_job', 'Jobs.id', 'startup_job.Job_rowId')
-    .innerJoin('Startups', 'Startups.id', 'startup_job.Startup_rowId')
+    .leftJoin('loc_job', 'Locs.id', 'loc_job.Loc_rowId')
+    .leftJoin('Jobs', 'Jobs.id', 'loc_job.Job_rowId')
+    .leftJoin('startup_job', 'Jobs.id', 'startup_job.Job_rowId')
+    .leftJoin('Startups', 'Startups.id', 'startup_job.Startup_rowId')
     .where('Locs.name', req.query.cityName)
     .then(function (jobs) {
       //if Washington, DC, don't use normal regex because it removes substring after ','
