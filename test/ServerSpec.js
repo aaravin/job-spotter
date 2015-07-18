@@ -68,7 +68,6 @@ describe('Testing Suite', function() {
   });
 
   describe("Database Tests", function() {
-    var TABLES_COUNT = 9;
     
     var dbConnection;
 
@@ -102,6 +101,7 @@ describe('Testing Suite', function() {
     });
 
     it("Should have the correct number of tables in the database", function(done) {
+      var TABLES_COUNT = 9;
       var queryString = "SHOW TABLES";
       var queryArgs = [];
 
