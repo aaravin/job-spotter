@@ -12,10 +12,10 @@ module.exports = {
     new Job()
     .where({name: req.query.title})
     .fetchAll({
-      withRelated: ['startup','loc','role']
+      withRelated: ['startup','loc']
     })
     .then(function (jobs) {
-      var locServer, company, role, locClient;
+      var locServer, company, locClient;
       var jobsData = _.map(jobs.models, function(job) {
         var jobData = {};
 
@@ -33,11 +33,9 @@ module.exports = {
           }
         }
         company = job.related('startup').at(0);
-        role = job.related('role').at(0);
 
         jobData.locServer = locServer === undefined ? locServer : locServer.attributes.name;
         jobData.company = company === undefined ? company : company.attributes.name;
-        jobData.role = role === undefined ? role : role.attributes.name;
         jobData.locClient = locServer === undefined ? locServer : locClient;
 
         return jobData;
