@@ -33,6 +33,8 @@ db.knex.schema.hasTable('Jobs').then(function (exists) {
       table.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
     });
   }
 });
@@ -49,6 +51,8 @@ db.knex.schema.hasTable('Locs').then(function (exists) {
       table.float('avg_salary');
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
     });
   }
 });
@@ -61,6 +65,8 @@ db.knex.schema.hasTable('Roles').then(function (exists) {
       table.timestamps();
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
     });
   }
 });
@@ -73,6 +79,8 @@ db.knex.schema.hasTable('Skills').then(function (exists) {
       table.timestamps();
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
     });
   }
 });
@@ -85,6 +93,8 @@ db.knex.schema.hasTable('Startups').then(function (exists) {
       table.timestamps();
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
     });
   }
 });
@@ -97,6 +107,18 @@ db.knex.schema.hasTable('loc_job').then(function (exists) {
       table.uuid('Loc_rowId').references('id').inTable('Locs');
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
+      console.log('Trying again...');
+      db.knex.schema.createTable('loc_job', function (table) {
+        table.timestamps();
+        table.uuid('Job_rowId').references('id').inTable('Jobs');
+        table.uuid('Loc_rowId').references('id').inTable('Locs');
+      }).then(function (table) {
+        console.log('Create Table', table);
+      }).catch(function (error) {
+        console.log('2nd attempt: Could not make table: Error:', error);
+      });
     });
   }
 });
@@ -109,6 +131,18 @@ db.knex.schema.hasTable('role_job').then(function (exists) {
       table.uuid('Role_rowId').references('id').inTable('Roles');
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
+      console.log('Trying again...');
+      db.knex.schema.createTable('role_job', function (table) {
+        table.timestamps();
+        table.uuid('Job_rowId').references('id').inTable('Jobs');
+        table.uuid('Role_rowId').references('id').inTable('Roles');
+      }).then(function (table) {
+        console.log('Create Table', table);
+      }).catch(function (error) {
+        console.log('2nd attempt: Could not make table: Error:', error);
+      });
     });
   }
 });
@@ -121,6 +155,18 @@ db.knex.schema.hasTable('skill_job').then(function (exists) {
       table.uuid('Skill_rowId').references('id').inTable('Skills');
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
+      console.log('Trying again...');
+      db.knex.schema.createTable('skill_job', function (table) {
+        table.timestamps();
+        table.uuid('Job_rowId').references('id').inTable('Jobs');
+        table.uuid('Skill_rowId').references('id').inTable('Skills');
+      }).then(function (table) {
+        console.log('Create Table', table);
+      }).catch(function (error) {
+        console.log('2nd attempt: Could not make table: Error:', error);
+      });
     });
   }
 });
@@ -133,6 +179,18 @@ db.knex.schema.hasTable('startup_job').then(function (exists) {
       table.uuid('Startup_rowId').references('id').inTable('Startups');
     }).then(function (table) {
       console.log('Create Table', table);
+    }).catch(function (error) {
+      console.log('Could not make table: Error:', error);
+      console.log('Trying again...');
+      db.knex.schema.createTable('startup_job', function (table) {
+        table.timestamps();
+        table.uuid('Job_rowId').references('id').inTable('Jobs');
+        table.uuid('Startup_rowId').references('id').inTable('Startups');
+      }).then(function (table) {
+        console.log('Create Table', table);
+      }).catch(function (error) {
+        console.log('2nd attempt: Could not make table: Error:', error);
+      });
     });
   }
 });
