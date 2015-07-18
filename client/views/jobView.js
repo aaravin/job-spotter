@@ -6,6 +6,7 @@ var JobListing = React.createClass({
   },
 
   render: function() {
+    console.log(this.props.jobListing);
     return (
     <li className="job-item">
       <span className="job-title">{this.props.joblisting.title}</span>

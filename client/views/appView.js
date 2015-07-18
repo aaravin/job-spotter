@@ -2,6 +2,7 @@ var React = require('react');
 var Nav = require('./navigationView');
 var JobsList = require('./jobsView');
 var MapView = require('./mapView');
+var Locs = require('./../collections/locations');
 var Jobs = require('./../collections/jobs');
 
 var AppView = React.createClass({
@@ -14,29 +15,21 @@ var AppView = React.createClass({
     }
   },
 
-  update: function(locs) {
-    //resetting state will trigger a render() event with the new jobs data
+  jobsUpdate: function(jobs) {
+    console.log("JOBSUPDATE");
     this.setState({
-      locs: locs
-    });
+      jobs: new Jobs(jobs)
+    })
   },
 
-  // componentDidMount: function() {
-  //   var context = this;
-  //   //make AJAX request to server for all jobs -- URL defined in Backbone collection
-  //   // this.state.locs.fetch({ 
-  //   //   //on success, send the data to update function to trigger a setState change
-  //   //   success: function(data) {
-  //   //               context.update(data);
-  //   //            }
-  //   });
-  // },
+  componentDidMount: function() {
+  },
 
   render: function() {
     return (
       <div>
         <Nav />
-        <MapView locs={this.state.locs} />
+        <MapView update={this.jobsUpdate} jobs={this.state.jobs} locs={this.state.locs} />
         <JobsList jobs={this.state.jobs} />
       </div>
     );

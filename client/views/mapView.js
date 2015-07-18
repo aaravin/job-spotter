@@ -13,21 +13,12 @@ var MapView = React.createClass({
   },
 
   componentDidMount: function() {
+    this.buildMap();
     var context = this;
-    // $.ajax({
-    //   type: "GET",
-    //   url: "http://localhost:8080/api/jobs/all",
-    //   data: {
-    //     format: "json"
-    //   },
-    //   success: function(data) {
-    //     context.setState({cityData: data});
-    //     context.setMarkers();
-    //   }
-    // });
+
     this.props.locs.fetch({
-      success: function(data) {
-        context.setState({cityData: data});
+      success: function() {
+        // context.setState({cityData: data});
         context.setMarkers();
       }
     });
@@ -40,12 +31,11 @@ var MapView = React.createClass({
   setMarkers: function() {
     var context = this;
 
-    this.state.cityData.forEach(function(city, cityName) {
-      console.log(city);
+    this.props.locs.forEach(function(city) {
 
 
       var contentString = "<div>" +
-          "<h1>" + city.get("loc") + "</h1>" +
+          "<h1>" + city.get("locClient") + "</h1>" +
           "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
           "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
         "</div>";
@@ -55,29 +45,30 @@ var MapView = React.createClass({
       });
 
       var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(city.latitude, city.longitude),
+        position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
         map: context.state.map,
-        title: city.jobCount.toString() + " JOBS HERE!!!"
+        title: city.get('jobCount') + " JOBS HERE!!!"
       });
 
       google.maps.event.addListener(marker, "click", function() {
         infowindow.open(context.state.map, marker);
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/api/jobs/city/" + cityName,
+          url: "http://localhost:8080/api/jobs/city?cityName=" + city.get("locServer"),
           data: {
             format: "json"
           },
           success: function(data) {
             console.log(data);
+            context.props.update(data);
           }
         });
       });
     });
   },
 
-  componentDidMount: function() {
-    this.getCityData();
+  buildMap: function() {
+    // this.getCityData();
 
     var mapOptions = {
       center: new google.maps.LatLng(39.83, -98.58),
