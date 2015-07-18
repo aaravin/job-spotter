@@ -1,8 +1,8 @@
 var ids = {};
 
 ids.linkedin = {
-  clientID: '75d922y49ikdio',
-  clientSecret: 'imB0FZsZlSwXw6DQ',
+  clientID: 'my client ID',
+  clientSecret: 'my client Secret',
   callbackURL: "http://localhost:8080/auth/linkedin/callback"
 };
 
