@@ -15,11 +15,18 @@ var AppView = React.createClass({
     }
   },
 
-  jobsUpdate: function(jobs) {
+  jobsUpdate: function(location) {
     console.log("JOBSUPDATE");
-    this.setState({
-      jobs: new Jobs(jobs)
-    })
+    context = this;
+    this.state.jobs.fetch({
+      traditional: true,
+      data: {cityName: location},
+      success: function(jobs) {
+        context.setState({
+          jobs: jobs
+        })
+      }
+    })  
   },
 
   componentDidMount: function() {
@@ -29,7 +36,7 @@ var AppView = React.createClass({
     return (
       <div>
         <Nav />
-        <MapView update={this.jobsUpdate} jobs={this.state.jobs} locs={this.state.locs} />
+        <MapView jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
         <JobsList jobs={this.state.jobs} />
       </div>
     );

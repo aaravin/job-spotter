@@ -39,7 +39,7 @@ bower_components/
 .flooignore
 
 # conceal API keys
-clientKey.js
+server/oauthKeys.js
 
 # conceal sqldump file
-dump.sql
+sqldb/dump.sql
