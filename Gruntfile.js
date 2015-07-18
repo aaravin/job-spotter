@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     db_dump: {
       local: {
         options: {
-          database: "jobspotter",
+          database: "jobs",
           user: "root",
           pass: "",
           host: "127.0.0.1",
@@ -20,8 +20,7 @@ module.exports = function(grunt) {
       multiple: {
         command: [
             'mysql.server start',
-            'mysql -u root -e "DROP DATABASE IF EXISTS jobspotter"',
-            'mysql -u root -e "CREATE DATABASE jobspotter"',
+            'mysql -u root -e "CREATE DATABASE IF NOT EXISTS jobs"',
             'node db/config.js',
             '.exit'
         ].join('&&')

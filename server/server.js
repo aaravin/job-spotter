@@ -18,24 +18,41 @@ var port = process.env.PORT || 8080;
 
 var app = express();
 
+require('./lib/middleware.js')(app, express); // load up all middlewares
+
+
+/********************************************************************
+ * To turn on LinkedIn Authentication:
+ *  - Uncomment the code block below
+ *  - Switch the routes to use ensureAuthenticated;
+ *    alternate function calls to app.get are provided for each route
+ *  - To login navigate to: localhost:8080/auth/LinkedIn
+ ********************************************************************/
+// var authRouter = require('./auth');
+// app.use('/', authRouter);
+// var ensureAuthenticated = function (req, res, next) {
+//   if (req.isAuthenticated()) { return next(); }
+//   console.log('rejected');
+//   res.status(401).end();
+// };
+/********************************************************************/
+
+
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/../dist"));
 
+// app.get('/api/locations/all', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/locations/all', function (req, res, next) {
-  // route name may change in the future
-  //   - the purpose is to get all jobs by location
   mainController.getAllJobs(req, res, next);
 });
 
+// app.get('/api/jobs/city', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/jobs/city', function (req, res, next) {
-  // console.log("You selected the route for", req.params.cityname, "- the controller for fetching this data is missing.");
-  // res.send("You selected the route for " + String(req.params.cityname) + " - the controller for fetching this data is missing.");
   locationController.getJobsWithLocation(req, res, next);
 });
 
+// app.get('/api/jobs/title', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/jobs/title', function (req, res, next) {
-  // console.log("You selected the route for", req.params.titlename, "- the controller for fetching this data is missing.");
-  // res.send("You selected the route for " + String(req.params.cityname) + " - the controller for fetching this data is missing.");
   titleController.getJobsWithTitle(req, res, next);
 });
 
