@@ -10,13 +10,11 @@ module.exports = {
     var allJobs = [];
     var locClient;
 
-    db.knex.select('Jobs.id as id', 'Jobs.name as title', 'Startups.name as company', 'Jobs.salary_min as salmin', 'Jobs.salary_max as salmax', 'Locs.name as city', 'Roles.name as role').from('Locs')
+    db.knex.select('Jobs.id as id', 'Jobs.name as title', 'Startups.name as company', 'Jobs.salary_min as salmin', 'Jobs.salary_max as salmax', 'Locs.name as city').from('Locs')
     .innerJoin('loc_job', 'Locs.id', 'loc_job.Loc_rowId')
     .innerJoin('Jobs', 'Jobs.id', 'loc_job.Job_rowId')
     .innerJoin('startup_job', 'Jobs.id', 'startup_job.Job_rowId')
     .innerJoin('Startups', 'Startups.id', 'startup_job.Startup_rowId')
-    .innerJoin('role_job', 'Jobs.id', 'role_job.Job_rowId')
-    .innerJoin('Roles', 'Roles.id', 'role_job.Role_rowId')
     .where('Locs.name', req.query.cityName)
     .then(function (jobs) {
       //if Washington, DC, don't use normal regex because it removes substring after ','
@@ -32,8 +30,7 @@ module.exports = {
           salary: (jobs[i].salmin + jobs[i].salmax)/2,
           locServer: jobs[i].city,
           locClient: locClient,
-          company: jobs[i].company,
-          role: jobs[i].role
+          company: jobs[i].company
         };
 
         allJobs.push(job);
