@@ -52,17 +52,18 @@ var MapView = React.createClass({
 
       google.maps.event.addListener(marker, "click", function() {
         infowindow.open(context.state.map, marker);
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8080/api/jobs/city?cityName=" + city.get("locServer"),
-          data: {
-            format: "json"
-          },
-          success: function(data) {
-            console.log(data);
-            context.props.update(data);
-          }
-        });
+        context.props.jobsUpdate(city.get('locServer'));
+        // $.ajax({
+        //   type: "GET",
+        //   url: "http://localhost:8080/api/jobs/city?cityName=" + city.get("locServer"),
+        //   data: {
+        //     format: "json"
+        //   },
+        //   success: function(data) {
+        //     console.log(data);
+        //     context.props.update(data);
+        //   }
+        // });
       });
     });
   },
