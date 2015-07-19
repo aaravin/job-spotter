@@ -10,7 +10,7 @@ var JobListing = React.createClass({
     <li className="job-item">
       <span className="job-title">{this.props.joblisting.get('title')}</span>
       <span className="job-company">{this.props.joblisting.get('company')}</span>
-      <span className="job-location">{this.props.joblisting.get('location')}</span>
+      <span className="job-location">{this.props.joblisting.get('locClient')}</span>
     </li>)
   }
 });

@@ -48,11 +48,13 @@ app.get('/api/locations/all', function (req, res, next) {
 
 // app.get('/api/jobs/city', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/jobs/city', function (req, res, next) {
+  console.log('in city route on server');
   locationController.getJobsWithLocation(req, res, next);
 });
 
 // app.get('/api/jobs/title', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/jobs/title', function (req, res, next) {
+  console.log('in title route on server');
   titleController.getJobsWithTitle(req, res, next);
 });
 
