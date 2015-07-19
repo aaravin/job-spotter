@@ -3,7 +3,7 @@ var Loc = require('../../sqldb/models/loc');
 
 module.exports = {
   getAllJobs: function (req, res, next) {
-    console.log("Sending locations to /api/jobs/all");
+    console.log("Sending locations to /api/locations/all");
     var allLocs = [];
     new Loc()
     .fetchAll()

@@ -2,7 +2,7 @@ var React = require('react');
 var $ = require('jquery');
 var _ = require('underscore');
 
-var MapView = React.createClass({
+var Map = React.createClass({
 
   getInitialState: function () {
     return {
@@ -21,10 +21,6 @@ var MapView = React.createClass({
         context.setMarkers();
       }
     });
-  },
-
-  testTrigger: function() {
-    alert("TEST TRIGGER");
   },
 
   setMarkers: function() {
@@ -50,7 +46,7 @@ var MapView = React.createClass({
           map: context.state.map,
           // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
           // size: new google.maps.Size(40, 40),
-          animation: google.maps.Animation.DROP,
+          // animation: google.maps.Animation.DROP,
           title: city.get('jobCount') + " JOBS HERE!!!"
         });
 
@@ -103,4 +99,4 @@ var MapView = React.createClass({
 
 });
 
-module.exports = MapView;
+module.exports = Map;
