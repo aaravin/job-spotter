@@ -81,7 +81,7 @@ db.knex.schema.hasTable('links').then(function(exists) {
       table.integer('salary_min');
       table.integer('salary_max');
       table.integer('salary_avg');
-      table.string('equity');
+      table.string('equity', 20);
       table.integer('title_id').unsigned().references('id').inTable('titles');
       table.integer('company_id').unsigned().references('id').inTable('companies');
       table.integer('location_id').unsigned().references('id').inTable('locations');
