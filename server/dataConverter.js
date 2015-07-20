@@ -6,7 +6,6 @@ jobData = JSON.stringify(jobData);
 
 jobData = JSON.parse(jobData);
 
-console.log(jobData);
 
 var testTag = jobData[0].jobsPerCompany[0].jobInfo;
 var testSalary = jobData[0].jobsPerCompany[0].jobSalary;
@@ -24,8 +23,6 @@ var weirdSymbolCleanser = function(data) {
   return result;
 };
 
-console.log(weirdSymbolCleanser(testTag));
-console.log(weirdSymbolCleanser(testSalary));
 
 
 var salaryConverter = function(salary) {
@@ -79,7 +76,11 @@ var theAngelExtracter = function(foldedData) {
     unfoldedData.jobSalaryAvg = (salaryArray[0] + salaryArray[1]) / 2;
 
     for (var j = 3; j < jobDetails.length; j++) {
-      unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j] + ", ";
+	  if (j !== jobDetails.length - 1) {
+        unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j] + ", ";
+  	  } else {
+  	  	unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j]
+  	  }
     }
 
     cleanData.push(unfoldedData);
