@@ -61,10 +61,10 @@ db.knex.schema.hasTable('locations').then(function(exists) {
     db.knex.schema.createTable('locations', function (table) {
       table.increments('id').primary();
       table.string('city', 100);
-      // table.string('state', 100);
-      // table.string('country', 50);
-      // table.float('latitude', 10);
-      // table.float('longitude', 10);
+      // table.string('state', 100);   //could not access this data
+      // table.string('country', 50);  //could not access this data
+      table.float('latitude', 10);
+      table.float('longitude', 10);
       table.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -77,7 +77,11 @@ db.knex.schema.hasTable('links').then(function(exists) {
     db.knex.schema.createTable('links', function (table) {
       table.increments('id').primary();
       table.string('link', 255);
-      // table.string('description', 255); //only show first 255 chars of job description
+      table.string('skills', 255); //only show first 255 chars of job skills
+      table.integer('salary_min');
+      table.integer('salary_max');
+      table.integer('salary_avg');
+      table.string('equity');
       table.integer('title_id').unsigned().references('id').inTable('titles');
       table.integer('company_id').unsigned().references('id').inTable('companies');
       table.integer('location_id').unsigned().references('id').inTable('locations');
