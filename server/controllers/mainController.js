@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var Loc = require('../../sqldb/models/loc');
+var Loc = require('../../legacy_sqldb/models/loc');
 
 module.exports = {
   getAllJobs: function (req, res, next) {

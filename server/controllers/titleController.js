@@ -1,9 +1,9 @@
 var Promise = require('bluebird');
 var _ = require('underscore');
-var Loc = require('../../sqldb/models/loc');
-var Job = require('../../sqldb/models/job');
-var Company = require('../../sqldb/models/startup');
-var Role = require('../../sqldb/models/role');
+var Loc = require('../../legacy_sqldb/models/loc');
+var Job = require('../../legacy_sqldb/models/job');
+var Company = require('../../legacy_sqldb/models/startup');
+var Role = require('../../legacy_sqldb/models/role');
 
 module.exports = {
   getJobsWithTitle: function (req, res, next) {

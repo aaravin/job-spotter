@@ -4,11 +4,11 @@ var session = require('express-session');
 var request = require('request');
 // var api = require('indeed-api').getInstance("1508047511307515");
 // var Link = require('../old_db/models/link');
-var db = require('../sqldb/config');
-var Job = require('../sqldb/models/job');
-var Loc = require('../sqldb/models/loc');
-var Role = require('../sqldb/models/role');
-var Startup = require('../sqldb/models/startup');
+var db = require('../legacy_sqldb/config');
+var Job = require('../legacy_sqldb/models/job');
+var Loc = require('../legacy_sqldb/models/loc');
+var Role = require('../legacy_sqldb/models/role');
+var Startup = require('../legacy_sqldb/models/startup');
 
 var mainController = require('./controllers/mainController');
 var locationController = require('./controllers/locationController');
