@@ -5,6 +5,7 @@ var Map = require('./mapView');
 var Input = require('./inputView');
 var Locs = require('./../collections/locations');
 var Jobs = require('./../collections/jobs');
+var Metrics = require('./metricsView');
 
 var AppView = React.createClass({
 
@@ -23,6 +24,7 @@ var AppView = React.createClass({
       // url: 'http://localhost:8080/api/jobs/city/',
       data: {cityName: location},
       success: function(jobs) {
+        console.log("JOBS: ", jobs);
         context.setState({
           jobs: jobs
         })
@@ -55,6 +57,7 @@ var AppView = React.createClass({
         <Input jobsUpdateTitle={this.jobsUpdateTitle} />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
         <JobsList jobs={this.state.jobs} />
+        <Metrics jobs={this.state.jobs} />
       </div>
     );
   }
