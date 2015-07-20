@@ -47,16 +47,24 @@ app.get('/api/locations/all', function (req, res, next) {
 });
 
 // app.get('/api/jobs/city', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
-app.get('/api/jobs/city', function (req, res, next) {
-  console.log('in city route on server');
-  locationController.getJobsWithLocation(req, res, next);
+app.get('/api/jobs', function (req, res, next) {
+  console.log('in jobs route on server');
+  if (req.query.location && req.query.title) {
+    filterController.getJobsWithBoth(req, res, next);
+  } else if (req.query.location) {
+    filterController.getJobsWithLocation(req, res, next);
+  } else if (req.query.title) {
+    filterController.getJobsWithTitle(req, res, next);
+  } else {
+    console.log("No location or title sent in request");
+  }
 });
 
 // app.get('/api/jobs/title', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
-app.get('/api/jobs/title', function (req, res, next) {
-  console.log('in title route on server');
-  titleController.getJobsWithTitle(req, res, next);
-});
+// app.get('/api/jobs/title', function (req, res, next) {
+//   console.log('in title route on server');
+//   titleController.getJobsWithTitle(req, res, next);
+// });
 
 app.listen(port);
 console.log("Listening on PORT " + port);
