@@ -24,7 +24,6 @@ var AppView = React.createClass({
       // url: 'http://localhost:8080/api/jobs/city/',
       data: {cityName: location},
       success: function(jobs) {
-        console.log("JOBS: ", jobs);
         context.setState({
           jobs: jobs
         })
@@ -56,8 +55,8 @@ var AppView = React.createClass({
         <Nav />
         <Input jobsUpdateTitle={this.jobsUpdateTitle} />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
-        <JobsList jobs={this.state.jobs} />
         <Metrics jobs={this.state.jobs} />
+        <JobsList jobs={this.state.jobs} />
       </div>
     );
   }

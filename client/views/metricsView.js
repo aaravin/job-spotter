@@ -4,7 +4,6 @@ var BarChart = require('react-d3/barchart').BarChart;
 var Metrics = React.createClass({
 
   getInitialState: function() {
-    // console.log("JOBS: ", this.props.jobs);
     return {
       barData: [
         {label: 'City', value: 0},
@@ -34,9 +33,8 @@ var Metrics = React.createClass({
   },
 
   render: function() {
-    console.log("JOBS: ", this.props.jobs);
     return (
-      <BarChart data={this.state.barData} width={500} height={200} fill={'#3182bd'} title='Average Salary'/>
+      <BarChart data={this.state.barData} width={300} height={200} fill={'#ADD8E6'} title='Average Salary' className="col-sm-5 col-sm-offset-1"/>
     );
   }
 
