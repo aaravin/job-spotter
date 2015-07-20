@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var request = require('request');
 var server = require('../server/server').app;
 
-var db = require('../sqldb/config');
+// var db = require('../db/config'); <--- Activate when tests are ready
 
 
 describe('Testing Suite', function() {
