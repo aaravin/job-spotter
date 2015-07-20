@@ -93,7 +93,7 @@ var Map = React.createClass({
 
   render: function() {
     return (
-      <div id="map-canvas" className="col-sm-6 col-sm-offset-2 row container"></div>
+      <div id="map-canvas" className="col-sm-6 col-sm-offset-1"></div>
     )
   }
 
