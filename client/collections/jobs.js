@@ -1,10 +1,14 @@
 var Backbone = require('backbone');
-var JobModel = require('./../models/jobModel')
+var JobModel = require('./../models/jobModel');
+var path = require('path');
+
+// console.log(path.join('//api/locations/all'));
 
 var Jobs = Backbone.Collection.extend({
   model: JobModel,
 
-  url: 'http://localhost:8080/api/jobs/city',
+  // url: path.join(String(process.env.HOST), '../api/jobs')
+  url: path.join('//api/jobs')
   
 });
 
