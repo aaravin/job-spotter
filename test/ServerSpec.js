@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var expect = require('chai').expect;
 var request = require('request');
+var path = require('path');
 var server = require('../server/server').app;
 
 // var db = require('../db/config'); <--- Activate when tests are ready
@@ -57,7 +58,7 @@ describe('Testing Suite', function() {
     });
 
     it('Should respond to GET requests for /api/jobs with a 200 status code', function(done) {
-      request('http://127.0.0.1:8080/api/locations/all', function(error, response, body) {
+      request(path.join('//api/locations/all'), function(error, response, body) {
         if (error) {
           throw error;
         }

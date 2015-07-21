@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Promise = require('bluebird');
+var path = require('path');
 // add database user controller here for storing users
 
 // OAuth - LinkedIn
@@ -19,7 +20,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(new LinkedInStrategy({
   clientID: config.linkedin.clientID,
   clientSecret: config.linkedin.clientSecret,
-  callbackURL: "http://localhost:8080/auth/linkedin/callback",
+  callbackURL: path.join('//auth/linkedin/callback"),
   scope: ['r_emailaddress', 'r_basicprofile', 'rw_company_admin', 'w_share'],
   state: true
 }, function (accessToken, refreshToken, profile, done) {
