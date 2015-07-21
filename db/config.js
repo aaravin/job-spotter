@@ -36,7 +36,7 @@ db.knex.schema.hasTable('titles').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('titles', function (table) {
       table.increments('id').primary();
-      table.string('title', 100);
+      table.string('title', 255);
       table.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -61,10 +61,12 @@ db.knex.schema.hasTable('locations').then(function(exists) {
     db.knex.schema.createTable('locations', function (table) {
       table.increments('id').primary();
       table.string('city', 100);
+      table.integer('jobCount');
       // table.string('state', 100);   //could not access this data
       // table.string('country', 50);  //could not access this data
       table.float('latitude', 10);
       table.float('longitude', 10);
+      table.integer('avgSalary');
       table.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
