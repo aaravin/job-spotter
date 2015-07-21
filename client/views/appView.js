@@ -17,12 +17,18 @@ var AppView = React.createClass({
     }
   },
 
-  jobsUpdate: function(location) {
+  jobsUpdate: function(location, title) {
     context = this;
+    var request = {};
+    if(location) {
+      request.location = location;
+    }
+    if(title) {
+      request.title = title;
+    }
     this.state.jobs.fetch({
       traditional: true,
-      // url: 'http://localhost:8080/api/jobs/city/',
-      data: {cityName: location},
+      data: request,
       success: function(jobs) {
         context.setState({
           jobs: jobs
@@ -31,19 +37,19 @@ var AppView = React.createClass({
     })  
   },
 
-  jobsUpdateTitle: function(title) {
-    context = this;
-    this.state.jobs.fetch({
-      traditional: true,
-      // url: 'http://localhost:8080/api/jobs/title',
-      data: {title: title},
-      success: function(jobs) {
-        context.setState({
-          jobs: jobs
-        })
-      }
-    })  
-  },
+  // jobsUpdateTitle: function(title) {
+  //   context = this;
+  //   this.state.jobs.fetch({
+  //     traditional: true,
+  //     // url: 'http://localhost:8080/api/jobs/title',
+  //     data: {title: title},
+  //     success: function(jobs) {
+  //       context.setState({
+  //         jobs: jobs
+  //       })
+  //     }
+  //   })  
+  // },
 
   componentDidMount: function() {
 
@@ -53,7 +59,7 @@ var AppView = React.createClass({
     return (
       <div>
         <Nav />
-        <Input jobsUpdateTitle={this.jobsUpdateTitle} />
+        <Input jobsUpdate={this.jobsUpdate} />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
         <Metrics jobs={this.state.jobs} />
         <JobsList jobs={this.state.jobs} />

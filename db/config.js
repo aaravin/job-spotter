@@ -27,7 +27,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       table.string('password', 255);
       table.timestamps();
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created Users Table');
     });
   }
 });
@@ -39,7 +39,7 @@ db.knex.schema.hasTable('titles').then(function(exists) {
       table.string('title', 255);
       table.timestamps();
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created Titles Table');
     });
   }
 });
@@ -51,7 +51,7 @@ db.knex.schema.hasTable('companies').then(function(exists) {
       table.string('name', 100);
       table.timestamps();
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created Companies Table');
     });
   }
 });
@@ -69,7 +69,7 @@ db.knex.schema.hasTable('locations').then(function(exists) {
       table.integer('avgSalary');
       table.timestamps();
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created Locations Table');
     });
   }
 });
@@ -89,7 +89,7 @@ db.knex.schema.hasTable('links').then(function(exists) {
       table.integer('location_id').unsigned().references('id').inTable('locations');
       table.timestamps();
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created Links Table');
     });
   }
 });
@@ -100,7 +100,7 @@ db.knex.schema.hasTable('titles_companies').then(function(exists) {
       table.integer('title_id').unsigned().references('id').inTable('titles');
       table.integer('company_id').unsigned().references('id').inTable('companies');
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created titles_companies Table');
     });
   }
 });
@@ -111,7 +111,7 @@ db.knex.schema.hasTable('titles_locations').then(function(exists) {
       table.integer('title_id').unsigned().references('id').inTable('titles');
       table.integer('location_id').unsigned().references('id').inTable('locations');
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created titles_locations Table');
     });
   }
 });
@@ -122,7 +122,7 @@ db.knex.schema.hasTable('companies_locations').then(function(exists) {
       table.integer('company_id').unsigned().references('id').inTable('companies');
       table.integer('location_id').unsigned().references('id').inTable('locations');
     }).then(function (table) {
-      console.log('Created Table', table);
+      console.log('Created companies_locations Table');
     });
   }
 });

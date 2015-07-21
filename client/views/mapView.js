@@ -28,9 +28,8 @@ var Map = React.createClass({
     var prevWindow = false;
 
     this.props.locs.forEach(function(city, index) {
-
       var contentString = "<div>" +
-          "<h1>" + city.get("locClient") + "</h1>" +
+          "<h1>" + city.get("location") + "</h1>" +
           "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
           "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
         "</div>";
@@ -58,7 +57,7 @@ var Map = React.createClass({
           }
           infowindow.open(context.state.map, marker);
           prevWindow = infowindow;
-          context.props.jobsUpdate(city.get('locServer'));
+          context.props.jobsUpdate(city.get('location'));
         });
 
       }, 1*index);

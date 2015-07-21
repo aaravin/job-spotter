@@ -1,4 +1,5 @@
 var Location = require('../../db/models/location');
+var request = require('request');
 
 module.exports = {
   getAllLocs: function() {

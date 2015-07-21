@@ -148,7 +148,7 @@ promiseWhile(function() {
 		var linkDB = new Link({link: jobs[i]["jobURL"]});
 		promises.push(linkDB.fetch().then(function(linkFound) {
 			if (linkFound) {
-				console.log("Duplicate Link");
+				// console.log("Duplicate Link");
 			} else {
 				// linkDB.set("description", jobs[i]["description"]);
 				linkDB.set("skills", jobs[i]["requiredSkills"]);
