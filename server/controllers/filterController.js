@@ -28,10 +28,10 @@ module.exports = {
   getJobsWithLocation: function (req, res, next) {
     console.log("Sending jobs to /api/jobs/ LOCATION SEARCH:",  req.query.location);
 
-    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills', \
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max', \
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city', \
-                   'Titles.title as title', 'Companies.name as company', \
+    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
+                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
+                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company'
                    ).from('Locations')
     .leftJoin('Links', 'Links.title_id', 'Locations.id')
     .leftJoin('Titles', 'Titles.id', 'Links.title_id')
@@ -46,10 +46,10 @@ module.exports = {
   getJobsWithTitle: function() {
     console.log("Sending jobs to /api/jobs/ TITLE SEARCH:",  req.query.title);
     
-    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills', \
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max', \
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city', \
-                   'Titles.title as title', 'Companies.name as company', \
+    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
+                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
+                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company'
                    ).from('Titles')
     .leftJoin('Links', 'Links.title_id', 'Titles.id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
@@ -64,10 +64,10 @@ module.exports = {
   getJobsWithBoth: function() {
     console.log("Sending jobs to /api/jobs/ TITLE & LOCATION SEARCH:",  req.query.title, req.query.location);
     
-    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills', \
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max', \
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city', \
-                   'Titles.title as title', 'Companies.name as company', \
+    db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
+                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
+                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company'
                    ).from('Titles')
     .leftJoin('Links', 'Links.title_id', 'Titles.id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
