@@ -13,9 +13,9 @@ module.exports = {
 
       jobInfo.link = job.link;
       jobInfo.skills = job.skills;
-      jobInfo.sal_min = job.sal_min;
-      jobInfo.sal_max = job.sal_max;
-      jobInfo.sal_avg = (job.sal_min + job.sal_max)/2;
+      jobInfo.salary_min = job.salary_min;
+      jobInfo.salary_max = job.salary_max;
+      jobInfo.salary_avg = (job.salary_min + job.salary_max)/2;
       jobInfo.equity = job.equity;
       jobInfo.location = job.city;
       jobInfo.title = job.title;
@@ -29,10 +29,10 @@ module.exports = {
     console.log("Sending jobs to /api/jobs/ LOCATION SEARCH:",  req.query.location);
 
     db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
-                   'Titles.title as title', 'Companies.name as company'
-                   ).from('Locations')
+                   'Links.salary_min as salary_min', 'Links.salary_max as salary_max',
+                   'Links.salary_avg as salary_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company')
+    .from('Locations')
     .leftJoin('Links', 'Links.title_id', 'Locations.id')
     .leftJoin('Titles', 'Titles.id', 'Links.title_id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
@@ -43,14 +43,14 @@ module.exports = {
     }); 
   },
 
-  getJobsWithTitle: function() {
+  getJobsWithTitle: function(req, res, next) {
     console.log("Sending jobs to /api/jobs/ TITLE SEARCH:",  req.query.title);
     
     db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
-                   'Titles.title as title', 'Companies.name as company'
-                   ).from('Titles')
+                   'Links.salary_min as salary_min', 'Links.salary_max as salary_max',
+                   'Links.salary_avg as salary_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company')
+    .from('Titles')
     .leftJoin('Links', 'Links.title_id', 'Titles.id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
@@ -61,19 +61,19 @@ module.exports = {
     });
   }, 
 
-  getJobsWithBoth: function() {
+  getJobsWithBoth: function(req, res, next) {
     console.log("Sending jobs to /api/jobs/ TITLE & LOCATION SEARCH:",  req.query.title, req.query.location);
     
     db.knex.select('Links.id as id', 'Links.link as link', 'Links.skills as skills',
-                   'Links.sal_min as sal_min', 'Links.sal_max as sal_max',
-                   'Links.sal_avg as sal_avg', 'Links.equity as equity', 'Locations.city as city',
-                   'Titles.title as title', 'Companies.name as company'
-                   ).from('Titles')
+                   'Links.salary_min as salary_min', 'Links.salary_max as salary_max',
+                   'Links.salary_avg as salary_avg', 'Links.equity as equity', 'Locations.city as city',
+                   'Titles.title as title', 'Companies.name as company')
+    .from('Titles')
     .leftJoin('Links', 'Links.title_id', 'Titles.id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
     .where('Titles.title', req.query.title)
-    andWhere('Locations.city', req.query.location)
+    .andWhere('Locations.city', req.query.location)
     .then(function(jobs) {
       var jobsData = module.exports.buildJobs(jobs);
       res.status(200).send(jobsData);
