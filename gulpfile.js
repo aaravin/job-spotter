@@ -11,7 +11,7 @@ var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
 
 var path = {
-  ALL: ['client/app/*.js', 'client/collections/*.js', 'client/mdoels/*.js', 'client/views/*.js'],
+  ALL: ['client/app/*.js', 'client/collections/*.js', 'client/models/*.js', 'client/views/*.js'],
   HTML: 'client/index.html',
   CSS: 'client/styles/style.css',
   MINIFIED_OUT: 'build.min.js',

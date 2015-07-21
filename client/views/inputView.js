@@ -11,8 +11,7 @@ var Input = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    console.log('submitting', this.state.title, this.state.location);
-    this.props.jobsUpdateTitle(this.state.title);
+    this.props.jobsUpdate(this.state.location, this.state.title);
     this.setState({
       location: '',
       title: ''
