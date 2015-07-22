@@ -21,7 +21,13 @@ html, body {
 .navbar-brand {
   padding: 0px 10px;
   margin-left: 20px;
-};
+}
 
 
+.job-item:nth-child(even){
+  background-color: #E8E8EE;
+}
 
+.job-item:hover {
+  background-color: lightgrey;
+}
