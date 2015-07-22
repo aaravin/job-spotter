@@ -15,7 +15,6 @@ var Map = React.createClass({
   componentDidMount: function() {
     this.buildMap();
     var context = this;
-
     this.props.locs.fetch({
       success: function() {
         context.setMarkers();
