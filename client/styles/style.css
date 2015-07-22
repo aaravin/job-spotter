@@ -31,6 +31,51 @@ html, body {
   background-color: lightgrey;
 }
 
+.job-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  padding: 10px;
+}
+
+.job-company {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.job-location {
+  display: inline;
+  float: right;
+  color: gray;
+}
+
+.loc-icon {
+  display: inline;
+}
+
+.job-title {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+}
+
+.job-sal-equity {
+  display: inline;
+  float: right;
+  color: gray;
+}
+
+.job-skills {
+}
+
+.jobs-list {
+  border-style: solid;
+  margin-top: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .chart rect {
   fill: steelblue;
 }
