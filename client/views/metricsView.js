@@ -37,9 +37,7 @@ var Metrics = React.createClass({
 
     // Pure D3 only below this line
     var cityData = this.state.barData;
-    console.log('cityData', cityData);
     var data = [cityData[0].value, 70000];
-    console.log('data', data);
 
     var width = 300,
         barHeight = 20;

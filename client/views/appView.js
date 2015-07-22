@@ -10,8 +10,9 @@ var Metrics = require('./metricsView');
 var AppView = React.createClass({
 
   getInitialState: function() {
-    //create new Backbone collection to hold our data
+    //create new Backbone collections to hold our data
     return { 
+      location: '',
       jobs: new Jobs(),
       locs: new Locs()
     }
@@ -27,13 +28,17 @@ var AppView = React.createClass({
       request.title = title;
     }
 
+    this.setState({
+      location: location
+    })
+
     this.state.jobs.fetch({
       traditional: true,
       data: request,
       success: function(jobs) {
         context.setState({
-          jobs: jobs
-        })
+          jobs: jobs,
+        });
       }
     })  
   },
@@ -47,7 +52,7 @@ var AppView = React.createClass({
     return (
       <div>
         <Nav jobsUpdate={this.jobsUpdate} />
-        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
+        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} />
         <Metrics jobs={this.state.jobs} />
         <JobsList jobs={this.state.jobs} />
       </div>
