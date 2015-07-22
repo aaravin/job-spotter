@@ -8,11 +8,11 @@ var JobsList = React.createClass({
       return <JobListing joblisting={job} key={index} />
     });
     return (
-      <div className="row col-sm-10 col-sm-offset-1">
+      <div className="jobs-list row col-sm-10 col-sm-offset-1">
         <h3 className="">Available Jobs</h3>
-        <ul> 
+        <div> 
           {list}
-        </ul>
+        </div>
       </div>
     );
   }
