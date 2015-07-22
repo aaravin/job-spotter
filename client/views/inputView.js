@@ -17,8 +17,7 @@ var Input = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    console.log('submitting', this.state.title, this.state.location);
-    this.props.jobsUpdateTitle(this.state.title);
+    this.props.jobsUpdate(this.state.location, this.state.title);
     this.setState({
       location: '',
       title: ''
@@ -39,24 +38,22 @@ var Input = React.createClass({
 
   componentDidMount: function() {
     var context = this;
-    // this.state.locData.fetch({
-    //   success: function(data) {
-    //     // console.log(data.models.map(function(item) { return item.get("location"); }));
-    //     var myData = ["San Francisco", "San Jose", "San Pablo", "San Mateo", "Stanford", "Danville", "Walnut Creek", "Berkeley"];
-    //     $(React.findDOMNode(context.refs.location)).autocomplete({ 
-    //       source: data.models.map(function(item) { return item.get("location"); }),
-    //       appendTo: this,
-    //       create: function (e) {
-    //         $(this).prev('.ui-helper-hidden-accessible').remove();
-    //       }
-    //     });       
-    //   }
-    // });
+    this.state.locData.fetch({
+      success: function(data) {
+        // console.log(data.models.map(function(item) { return item.get("location"); }));
+        $(React.findDOMNode(context.refs.location)).autocomplete({ 
+          source: data.models.map(function(item) { return item.get("location"); }),
+          appendTo: this,
+          create: function (e) {
+            $(this).prev('.ui-helper-hidden-accessible').remove();
+          }
+        });       
+      }
+    });
     this.state.titleData.fetch({
+      data: {title: this.state.title + "*"},
       success: function(data) {
         console.log(data);
-        console.log(data.models.map(function(item) { return item.get("title"); }));
-        var myData = ["San Francisco", "San Jose", "San Pablo", "San Mateo", "Stanford", "Danville", "Walnut Creek", "Berkeley"];
         $(React.findDOMNode(context.refs.title)).autocomplete({ 
           source: data.models.map(function(item) { return item.get("title"); }),
           appendTo: this,

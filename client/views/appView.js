@@ -38,19 +38,6 @@ var AppView = React.createClass({
     })  
   },
 
-  // jobsUpdateTitle: function(title) {
-  //   context = this;
-  //   this.state.jobs.fetch({
-  //     traditional: true,
-  //     // url: 'http://localhost:8080/api/jobs/title',
-  //     data: {title: title},
-  //     success: function(jobs) {
-  //       context.setState({
-  //         jobs: jobs
-  //       })
-  //     }
-  //   })  
-  // },
 
   componentDidMount: function() {
 
