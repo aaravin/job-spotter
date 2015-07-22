@@ -23,12 +23,21 @@ html, body {
   margin-left: 20px;
 }
 
-
 .job-item:nth-child(even){
   background-color: #E8E8EE;
 }
 
 .job-item:hover {
   background-color: lightgrey;
+}
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
 }
 
