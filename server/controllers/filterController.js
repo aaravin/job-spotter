@@ -33,7 +33,7 @@ module.exports = {
                    'Links.salary_avg as salary_avg', 'Links.equity as equity', 'Locations.city as city',
                    'Titles.title as title', 'Companies.name as company')
     .from('Locations')
-    .leftJoin('Links', 'Links.title_id', 'Locations.id')
+    .leftJoin('Links', 'Links.location_id', 'Locations.id')
     .leftJoin('Titles', 'Links.title_id', 'Titles.id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
     .where('Locations.city', req.query.location)

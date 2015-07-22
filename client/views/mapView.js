@@ -26,6 +26,7 @@ var Map = React.createClass({
   setMarkers: function() {
     var context = this;
     var prevWindow = false;
+    var markers = [];
 
     this.props.locs.forEach(function(city, index) {
       var contentString = "<div>" +
@@ -38,31 +39,31 @@ var Map = React.createClass({
         content: contentString
       });
 
-      setTimeout(function(){
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
+        map: context.state.map,
+        // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+        // size: new google.maps.Size(40, 40),
+        // animation: google.maps.Animation.DROP,
+        title: city.get('jobCount') + " JOBS HERE!!!"
+      });
 
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
-          map: context.state.map,
-          // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
-          // size: new google.maps.Size(40, 40),
-          // animation: google.maps.Animation.DROP,
-          title: city.get('jobCount') + " JOBS HERE!!!"
-        });
+      //add click event to show banner on each marker
+      google.maps.event.addListener(marker, "click", function() {
+        //close any other window/banner if one is open
+        if(prevWindow) {
+          prevWindow.close();
+        }
+        infowindow.open(context.state.map, marker);
+        prevWindow = infowindow;
+        context.props.jobsUpdate(city.get('location'));
+      });
 
-        //add click event to show banner on each marker
-        google.maps.event.addListener(marker, "click", function() {
-          //close any other window/banner if one is open
-          if(prevWindow) {
-            prevWindow.close();
-          }
-          infowindow.open(context.state.map, marker);
-          prevWindow = infowindow;
-          context.props.jobsUpdate(city.get('location'));
-        });
-
-      }, 1*index);
+      markers.push(marker);
       
     });
+
+    var markerCluster = new MarkerClusterer(this.state.map, markers);
 
     //add click event to close all banners when map area is clicked
     google.maps.event.addListener(this.state.map, "click", function() {
