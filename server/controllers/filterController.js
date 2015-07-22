@@ -34,7 +34,7 @@ module.exports = {
                    'Titles.title as title', 'Companies.name as company')
     .from('Locations')
     .leftJoin('Links', 'Links.title_id', 'Locations.id')
-    .leftJoin('Titles', 'Titles.id', 'Links.title_id')
+    .leftJoin('Titles', 'Links.title_id', 'Titles.id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
     .where('Locations.city', req.query.location)
     .then(function(jobs) {

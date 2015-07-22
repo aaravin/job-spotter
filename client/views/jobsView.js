@@ -5,6 +5,7 @@ var JobsList = React.createClass({
 
   render: function() {
     var list = this.props.jobs.map(function(job, index) {
+      console.log(job);
       return <JobListing joblisting={job} key={index} />
     });
     return (
