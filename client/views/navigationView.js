@@ -18,7 +18,7 @@ var Nav = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     this.props.jobsUpdate(this.state.location, this.state.title);
-    tis.setState({
+    this.setState({
       location: '',
       title: ''
     });
