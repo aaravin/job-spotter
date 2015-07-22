@@ -46,8 +46,7 @@ var AppView = React.createClass({
   render: function() {
     return (
       <div>
-        <Nav />
-        <Input jobsUpdate={this.jobsUpdate} />
+        <Nav jobsUpdate={this.jobsUpdate} />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} />
         <Metrics jobs={this.state.jobs} />
         <JobsList jobs={this.state.jobs} />
