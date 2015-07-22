@@ -7,33 +7,26 @@ var Metrics = React.createClass({
   getInitialState: function() {
     return {
       barData: [
-        {label: 'City', value: 10000},
+        // {label: 'City', value: 10000},
         {label: 'US', value: 70000}
       ]
     };
   },
 
   componentWillReceiveProps: function() {
-    console.log('Metrics has received props');
 
     // var barData = [];
     var sumSal = 0;
 
     var location = this.props.jobs.models[0].attributes.location;
-    console.log('location', location);
-
-    console.log('models', this.props.jobs.models);
 
     this.props.jobs.forEach(function(job) {
-      console.log('salary_avg', job.get('salary_avg'));
       if (job.get('salary_avg') > 20000 && job.get('salary_avg') < 300000) {
         sumSal += job.get('salary_avg');
       }
     });
 
     var avgSal = sumSal / this.props.jobs.length;
-    // console.log('sumSal', sumSal);
-    // console.log('avgSal', avgSal);
 
     this.setState({
       barData: [
