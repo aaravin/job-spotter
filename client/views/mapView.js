@@ -29,10 +29,11 @@ var Map = React.createClass({
 
     this.props.locs.forEach(function(city, index) {
       if (city.get("jobCount")) {
-        var contentString = "<div>" +
+        var contentString = 
+          "<div>" + 
             "<h1>" + city.get("location") + "</h1>" +
-            "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
-            "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
+            "<p>" + city.get("jobCount").toLocaleString() + (city.get("jobCount")>1 ? " jobs " : " job ")  + "available here!" + "</p>" +
+            "<p>" + "Average Salary: $" + city.get("avgSalary").toLocaleString() + "</p>"
           "</div>";
 
         var infowindow = new google.maps.InfoWindow({
@@ -94,7 +95,7 @@ var Map = React.createClass({
 
   render: function() {
     return (
-      <div id="map-canvas" className="col-sm-6 col-sm-offset-1"></div>
+      <div id="map-canvas" className="col-sm-8 col-sm-offset-2"></div>
     )
   }
 
