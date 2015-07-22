@@ -18,7 +18,7 @@ var AppView = React.createClass({
   },
 
   jobsUpdate: function(location, title) {
-    context = this;
+    var context = this;
     var request = {};
     if(location) {
       request.location = location;
@@ -26,6 +26,7 @@ var AppView = React.createClass({
     if(title) {
       request.title = title;
     }
+
     this.state.jobs.fetch({
       traditional: true,
       data: request,
@@ -37,19 +38,6 @@ var AppView = React.createClass({
     })  
   },
 
-  // jobsUpdateTitle: function(title) {
-  //   context = this;
-  //   this.state.jobs.fetch({
-  //     traditional: true,
-  //     // url: 'http://localhost:8080/api/jobs/title',
-  //     data: {title: title},
-  //     success: function(jobs) {
-  //       context.setState({
-  //         jobs: jobs
-  //       })
-  //     }
-  //   })  
-  // },
 
   componentDidMount: function() {
 

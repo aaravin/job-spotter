@@ -15,7 +15,6 @@ var Map = React.createClass({
   componentDidMount: function() {
     this.buildMap();
     var context = this;
-
     this.props.locs.fetch({
       success: function() {
         context.setMarkers();
@@ -29,38 +28,40 @@ var Map = React.createClass({
     var markers = [];
 
     this.props.locs.forEach(function(city, index) {
-      var contentString = "<div>" +
-          "<h1>" + city.get("location") + "</h1>" +
-          "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
-          "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
-        "</div>";
+      if (city.get("jobCount")) {
+        var contentString = "<div>" +
+            "<h1>" + city.get("location") + "</h1>" +
+            "<a href=" + '"#"'  + ">" + city.get("jobCount") + " jobs available here!" + "</a>" +
+            "<p>" + "Average Salary: " + city.get("avgSalary") + "</p>"
+          "</div>";
 
-      var infowindow = new google.maps.InfoWindow({
-        content: contentString
-      });
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
-        map: context.state.map,
-        // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
-        // size: new google.maps.Size(40, 40),
-        // animation: google.maps.Animation.DROP,
-        title: city.get('jobCount') + " JOBS HERE!!!"
-      });
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(city.get("latitude"), city.get("longitude")),
+          map: context.state.map,
+          // icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png',
+          // size: new google.maps.Size(40, 40),
+          // animation: google.maps.Animation.DROP,
+          title: city.get('jobCount') + " JOBS HERE!!!"
+        });
 
-      //add click event to show banner on each marker
-      google.maps.event.addListener(marker, "click", function() {
-        //close any other window/banner if one is open
-        if(prevWindow) {
-          prevWindow.close();
-        }
-        infowindow.open(context.state.map, marker);
-        prevWindow = infowindow;
-        context.props.jobsUpdate(city.get('location'));
-      });
+        //add click event to show banner on each marker
+        google.maps.event.addListener(marker, "click", function() {
+          //close any other window/banner if one is open
+          if(prevWindow) {
+            prevWindow.close();
+          }
+          infowindow.open(context.state.map, marker);
+          prevWindow = infowindow;
+          context.props.jobsUpdate(city.get('location'));
+        });
 
-      markers.push(marker);
-      
+        markers.push(marker);
+        
+      }
     });
 
     var markerCluster = new MarkerClusterer(this.state.map, markers);
