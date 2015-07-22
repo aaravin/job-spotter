@@ -31,3 +31,14 @@ html, body {
 .job-item:hover {
   background-color: lightgrey;
 }
+
+
+SELECT Links.id as id, Links.link as link, Links.skills as skills,
+  Links.salary_min as salary_min, Links.salary_max as salary_max,
+  Links.salary_avg as salary_avg, Links.equity as equity, Locations.city as city,
+  Titles.title as title, Companies.name as company
+FROM Links
+LEFT JOIN Links ON Links.title_id=Locations.id
+JOIN Titles ON Titles.id=Links.title_id
+JOIN Companies ON Companies.id=Links.company_id
+WHERE Locations.city='denver';
