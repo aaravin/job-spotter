@@ -93,12 +93,27 @@ var theAngelExtracter = function(foldedData) {
     unfoldedData.jobSalaryMax = salaryArray[1];
     unfoldedData.jobSalaryAvg = (salaryArray[0] + salaryArray[1]) / 2;
 
+    if (isNaN(unfoldedData.jobSalaryMin)) {
+      unfoldedData.jobSalaryMin = 0;
+    }
+    if (isNaN(unfoldedData.jobSalaryMax)) {
+      unfoldedData.jobSalaryMax = 0;
+    }
+    if (isNaN(unfoldedData.jobSalaryAvg)) {
+      unfoldedData.jobSalaryAvg = 0;
+    }
+
+
     for (var j = 3; j < jobDetails.length; j++) {
       if (j !== jobDetails.length - 1) {
         unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j] + ", ";
-  	  } else {
-  	  	unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j]
-  	  }
+      } else {
+        unfoldedData.requiredSkills = unfoldedData.requiredSkills + jobDetails[j]
+      }
+    }
+
+    if (unfoldedData.requiredSkills.length > 255) {
+      unfoldedData.requiredSkills = unfoldedData.requiredSkills.substring(0, 255);
     }
 
     cleanData.push(unfoldedData);
@@ -138,97 +153,84 @@ var location_id = 0;
 var promises = [];
 var i = 0;
 
+console.log(jobs[1663]);
 console.log("STARTING INSERTION INTO DB...");
 
 promiseWhile(function() {
-	return i < jobs.length;
+  return i < jobs.length;
 }, function() {
-	return new bluebird(function(resolve, reject) {
-		// console.log(jobs[i]["description"]);
-		var linkDB = new Link({link: jobs[i]["jobURL"]});
-		promises.push(linkDB.fetch().then(function(linkFound) {
-			if (linkFound) {
-				// console.log("Duplicate Link");
-			} else {
-				// linkDB.set("description", jobs[i]["description"]);
-				linkDB.set("skills", jobs[i]["requiredSkills"]);
-				linkDB.set("salary_min", jobs[i]["jobSalaryMin"]);
-				linkDB.set("salary_max", jobs[i]["jobSalaryMax"]);
-				linkDB.set("salary_avg", jobs[i]["jobSalaryAvg"]);
-				linkDB.set("equity", jobs[i]["jobEquity"]);
-				promises.push(linkDB.save().then(function(newLink) {
-					link_id = newLink.get("id");
-				}));
-			}
-		}));
+  return new bluebird(function(resolve, reject) {
+    var linkDB = new Link({link: jobs[i]["jobURL"]});
+    linkDB.fetch().then(function(linkFound) {
+      if (linkFound) {
+        console.log("Duplicate Link");
+        i++;
+        resolve();
+      } else {
+        linkDB.set("skills", jobs[i]["requiredSkills"]);
+        linkDB.set("salary_min", jobs[i]["jobSalaryMin"]);
+        linkDB.set("salary_max", jobs[i]["jobSalaryMax"]);
+        linkDB.set("salary_avg", jobs[i]["jobSalaryAvg"]);
+        linkDB.set("equity", jobs[i]["jobEquity"]);
+        linkDB.save().then(function(newLink) {
+          link_id = newLink.get("id");
+          var titleDB = new Title({title: jobs[i]["jobTitle"]});
+          promises.push(titleDB.fetch().then(function(titleFound) {
+            if (titleFound) {
+              newLink.set("title_id", titleFound.get("id"));
+              promises.push(newLink.save());
+            } else {
+              promises.push(titleDB.save().then(function(newTitle) {
+                newLink.set("title_id", newTitle.get("id"));
+                promises.push(newLink.save());
+              }));
+            }
+          }));
 
-		bluebird.settle(promises).then(function() {
-			// console.log("TITLE: " + jobs[i]["title"]);
-			var titleDB = new Title({title: jobs[i]["jobTitle"]});
-			promises.push(titleDB.fetch().then(function(titleFound) {
-				if (titleFound) {
-					title_id = titleFound.get("id");
-				} else {
-					promises.push(titleDB.save().then(function(newTitle) {
-						title_id = newTitle.get("id");
-					}));
-				}
-			}));
-		});
+          bluebird.settle(promises).then(function() {
+            var companyDB = new Company({name: jobs[i]["companyName"]});
+            promises.push(companyDB.fetch().then(function(companyFound) {
+              if (companyFound) {
+                newLink.set("company_id", companyFound.get("id"));
+                promises.push(newLink.save());
+              } else {
+                promises.push(companyDB.save().then(function(newCompany) {
+                  newLink.set("company_id", newCompany.get("id"));
+                  promises.push(newLink.save());
+                }));
+              }
+            }));
+          });
 
-		bluebird.settle(promises).then(function() {
-			// console.log("COMPANY: " + jobs[i]["startup"]["name"]);
-			var companyDB = new Company({name: jobs[i]["companyName"]});
-			promises.push(companyDB.fetch().then(function(companyFound) {
-				if (companyFound) {
-					company_id = companyFound.get("id");
-				} else {
-					promises.push(companyDB.save().then(function(newCompany) {
-						company_id = newCompany.get("id");
-					}));
-				}
-			}));
-		});
+          bluebird.settle(promises).then(function() {
+            var locationDB = new Location({city: jobs[i]["jobLocation"]});
+            promises.push(locationDB.fetch().then(function(locationFound) {
+              if (locationFound) {
+                newLink.set("location_id", locationFound.get("id"));
+                promises.push(newLink.save());
+              } else {
+                promises.push(locationDB.save().then(function(newLocation) {
+                  newLink.set("location_id", newLocation.get("id"));
+                  promises.push(newLink.save());
+                }));
+              }
+            }));
+          });
 
-		bluebird.settle(promises).then(function() {
-			// var cityVal = "Not available";
-			// for (var j = 0; j < jobs[i]["tags"].length; j++) {
-			// 	if (jobs[i]["tags"][j]["tag_type"] === "LocationTag") {
-			// 		cityVal = jobs[i]["tags"][j]["display_name"];
-			// 	}
-			// }
-			// console.log("LOCATION: " + cityVal);
-			var locationDB = new Location({city: jobs[i]["jobLocation"]});
-			promises.push(locationDB.fetch().then(function(locationFound) {
-				if (locationFound) {
-					location_id = locationFound.get("id");
-				} else {
-					promises.push(locationDB.save().then(function(newLocation) {
-						location_id = newLocation.get("id");
-					}));
-				}
-			}));
-		});
+          bluebird.settle(promises).then(function() {
+            db.knex('titles_companies').insert({title_id: title_id, company_id: company_id});
+            db.knex('titles_locations').insert({title_id: title_id, location_id: location_id});
+            db.knex('companies_locations').insert({company_id: company_id, location_id: location_id});
+          });
 
-		bluebird.settle(promises).then(function() {
-			db.knex('titles_companies').insert({title_id: title_id, company_id: company_id});
-			db.knex('titles_locations').insert({title_id: title_id, location_id: location_id});
-			db.knex('companies_locations').insert({company_id: company_id, location_id: location_id});
-			promises.push(new Link({id: link_id}).fetch().then(function(addedLink) {
-				// console.log(JSON.stringify(addedLink));
-				addedLink.set("title_id", title_id);
-				addedLink.set("company_id", company_id);
-				addedLink.set("location_id", location_id);
-				// {title_id: title_id, company_id: company_id, location_id: location_id});
-				promises.push(addedLink.save());
-			}));
-		});
-
-		bluebird.settle(promises).then(function() {
-			i++;
-			resolve();
-		});
-	});
+          bluebird.settle(promises).then(function() {
+            i++;
+            resolve();
+          });
+        });
+      }
+    });
+  });
 }).then(function() {
-	console.log("DONE INSERTING INTO DB");
+  console.log("DONE INSERTING INTO DB");
 });
