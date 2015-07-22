@@ -43,11 +43,6 @@ var AppView = React.createClass({
     })  
   },
 
-
-  componentDidMount: function() {
-
-  },
-
   render: function() {
     return (
       <div>
