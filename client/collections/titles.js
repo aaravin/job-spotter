@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var LocModel = require('./../models/titleModel');
+var TitleModel = require('./../models/titleModel');
 var path = require('path');
 
 

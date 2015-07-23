@@ -47,6 +47,10 @@ app.get('/api/locations/all', function (req, res, next) {
   mainController.getAllJobs(req, res, next);
 });
 
+app.get('/api/titles/all', function (req, res, next) {
+  mainController.getAllTitles(req, res, next);
+});
+
 // app.get('/api/jobs/city', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/jobs', function (req, res, next) {
   console.log('in jobs route on server');
