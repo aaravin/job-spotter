@@ -14,12 +14,10 @@ var Map = React.createClass({
 
   componentDidMount: function() {
     this.buildMap();
-    var context = this;
-    this.props.locs.fetch({
-      success: function() {
-        context.setMarkers();
-      }
-    });
+  },
+
+  componentWillReceiveProps: function() {
+    this.setMarkers();
   },
 
   setMarkers: function() {
@@ -88,7 +86,6 @@ var Map = React.createClass({
       zoom: 4
     };
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
-
     this.setState({map: map});
   },
 
