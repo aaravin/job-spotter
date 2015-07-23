@@ -4,17 +4,36 @@ var JobListing = require('./jobView');
 var JobsList = React.createClass({
 
   render: function() {
+    var count = 0;
+    var titleString = '';
     var list = this.props.jobs.map(function(job, index) {
+      count++;
       return <JobListing joblisting={job} key={index} />
     });
-    return (
-      <div className="jobs-list row col-sm-10 col-sm-offset-1">
-        <h3 className="">Available Jobs</h3>
-        <div> 
-          {list}
+
+    if (this.props.location !== '' && this.props.title === '') {
+      titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found in ' + this.props.location.toUpperCase();
+    } else if (this.props.location === '' && this.props.title !== '') {
+      titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found relating to ' + this.props.title.toUpperCase();
+    } else if (this.props.location !== '' && this.props.title !== '') {
+      titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found in ' + this.props.location.toUpperCase() + ' relating to ' + this.props.title.toUpperCase();
+    }
+
+    if (this.props.location === '' && this.props.title === '') {
+      return (
+        <div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="row col-sm-10 col-sm-offset-1">
+          <div className="title-string">{titleString}</div>
+          <div className="jobs-list"> 
+            {list}
+          </div>
+        </div>
+      );
+    }
   }
 
 });

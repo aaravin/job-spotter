@@ -13,6 +13,7 @@ var AppView = React.createClass({
     //create new Backbone collections to hold our data
     return { 
       location: '',
+      title: '',
       jobs: new Jobs(),
       locs: new Locs()
     }
@@ -23,14 +24,27 @@ var AppView = React.createClass({
     var request = {};
     if(location) {
       request.location = location;
-    }
-    if(title) {
-      request.title = title;
+      this.setState({
+        location: location
+      })
+    } else {
+      request.location = '';
+      this.setState({
+        location: ''
+      })
     }
 
-    this.setState({
-      location: location
-    })
+    if(title) {
+      request.title = title;
+      this.setState({
+        title: title
+      })
+    } else {
+      request.title = '';
+      this.setState({
+        title: ''
+      })
+    }
 
     this.state.jobs.fetch({
       traditional: true,
@@ -48,8 +62,7 @@ var AppView = React.createClass({
       <div>
         <Nav jobsUpdate={this.jobsUpdate} />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} />
-        <Metrics jobs={this.state.jobs} />
-        <JobsList jobs={this.state.jobs} />
+        <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
     );
   }

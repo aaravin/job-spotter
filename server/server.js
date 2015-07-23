@@ -71,13 +71,13 @@ app.get('/api/jobs', function (req, res, next) {
 // console.log("GETTING LAT AND LONGS");
 // latLongUtil.getAllLocs();
 
-// Update all jobCounts
-console.log("UPDATING JOB COUNTS");
-jobCountUtil.updateJobCounts();
+// // Update all jobCounts
+// console.log("UPDATING JOB COUNTS");
+// jobCountUtil.updateJobCounts();
 
-// Update all locSalaries
-console.log("UPDATING LOC SALARIES");
-locSalaryUtil.updateLocSalaries();
+// // Update all locSalaries
+// console.log("UPDATING LOC SALARIES");
+// locSalaryUtil.updateLocSalaries();
 
 app.listen(port);
 console.log("Listening on PORT " + port);
