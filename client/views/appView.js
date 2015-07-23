@@ -12,6 +12,7 @@ var AppView = React.createClass({
   getInitialState: function() {
     //create new Backbone collections to hold our data
     return { 
+      zoomFlag: false,
       location: '',
       title: '',
       jobs: new Jobs(),
@@ -19,49 +20,32 @@ var AppView = React.createClass({
     }
   },
 
-  jobsUpdate: function(location, title) {
+  jobsUpdate: function(location, title, zoomFlag) {
     var context = this;
     var request = {};
-    if(location) {
-      request.location = location;
-      this.setState({
-        location: location
-      })
-    } else {
-      request.location = '';
-      this.setState({
-        location: ''
-      })
-    }
-
-    if(title) {
-      request.title = title;
-      this.setState({
-        title: title
-      })
-    } else {
-      request.title = '';
-      this.setState({
-        title: ''
-      })
-    }
+    request.location = location || '';
+    request.title = title || '';
 
     this.state.jobs.fetch({
       traditional: true,
       data: request,
       success: function(jobs) {
         context.setState({
-          jobs: jobs,
+          jobs: jobs, 
+          zoomFlag: zoomFlag, 
+          location: request.location,
+          title: request.title
         });
       }
-    })  
+    });
+
   },
 
   render: function() {
     return (
       <div>
         <Nav jobsUpdate={this.jobsUpdate} />
-        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} />
+        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
     );
