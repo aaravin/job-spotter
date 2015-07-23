@@ -70,16 +70,13 @@ var Nav = React.createClass({
       <div className="navbar navbar-default navbar-static-top" id="navigation">
         <div className="container-fluid">
           <h1 className="navbar-brand">JobSpotter</h1>
-          <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle">
+          <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
             <div className="form-group">
-              <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control"/>
+              <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control" id="autocomplete"/>
               <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title" ref="title" className="form-control"/>
-              <button onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
+              <button id="search-button" onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
             </div>
           </form>
-          <ul className="nav nav-pills navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
-          </ul>
         </div>
       </div>
     );

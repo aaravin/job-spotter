@@ -16,6 +16,19 @@ html, body {
 
 #navigation {
   height: 60px;
+  z-index: 1;
+}
+
+#search-form {
+  float: right;
+}
+
+.form-control {
+  margin-right: 5px;
+}
+
+#search-button {
+  background-color: whitesmoke;
 }
 
 .navbar-brand {
