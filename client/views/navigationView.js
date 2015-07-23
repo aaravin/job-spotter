@@ -69,7 +69,7 @@ var Nav = React.createClass({
     return (
       <div className="navbar navbar-default navbar-static-top" id="navigation">
         <div className="container-fluid">
-          <h1 className="navbar-brand">JobSpotter</h1>
+          <h1 id="title" className="navbar-brand">JobSpotter</h1>
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
             <div className="form-group">
               <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control" id="autocomplete"/>
