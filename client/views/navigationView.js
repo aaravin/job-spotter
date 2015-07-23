@@ -17,7 +17,8 @@ var Nav = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    this.props.jobsUpdate(this.state.location, this.state.title);
+    var flag = this.state.location ? true : false;
+    this.props.jobsUpdate(this.state.location, this.state.title, flag);
     this.setState({
       location: '',
       title: ''
@@ -56,7 +57,7 @@ var Nav = React.createClass({
           //   console.log("CHANGE: ", e.target.value);
           // },
           close: function(e) {
-            console.log("CLOSE: ", e.target.value);
+            // console.log("CLOSE: ", e.target.value);
             context.setState({location: e.target.value });
           }
         });   
@@ -70,7 +71,7 @@ var Nav = React.createClass({
         <div className="container-fluid">
           <h1 className="navbar-brand">JobSpotter</h1>
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle">
-            <div class="form-group">
+            <div className="form-group">
               <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control"/>
               <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title" ref="title" className="form-control"/>
               <button onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>

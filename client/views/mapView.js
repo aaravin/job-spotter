@@ -57,7 +57,7 @@ var Map = React.createClass({
           }
           infowindow.open(context.state.map, marker);
           prevWindow = infowindow;
-          context.props.jobsUpdate(city.get('location'));
+          context.props.jobsUpdate(city.get('location'), null, false);
         });
 
         markers.push(marker);
@@ -75,10 +75,6 @@ var Map = React.createClass({
       }
     });
 
-  },
-
-  componentWillReceiveProps: function() {
-    this.zoomToCity();
   },
 
   zoomToCity: function() {
@@ -110,6 +106,9 @@ var Map = React.createClass({
   },
 
   render: function() {
+    if(this.props.zoomFlag) {
+      this.zoomToCity();
+    }
     return (
       <div id="map-canvas" className="col-sm-8 col-sm-offset-2"></div>
     )
