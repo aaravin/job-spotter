@@ -26,10 +26,8 @@ var Map = React.createClass({
     var context = this;
     var prevWindow = false;
     var markers = [];
-    console.log(this.state.map ? 'map exists in setMarkers' : 'does not exist');
 
     this.props.locs.forEach(function(city, index) {
-      console.log('going through each city in setMarkers');
       if (city.get("jobCount")) {
         var contentString = 
           "<div>" + 
@@ -79,25 +77,16 @@ var Map = React.createClass({
 
   },
 
-  // componentWillReceiveProps: function() {
-  //   console.log(this.props.location);
-  //   this.buildMapLocal();
-  // },
+  componentWillReceiveProps: function() {
+    this.zoomToCity();
+  },
 
-  // buildMapLocal: function() {
-
-  //   var mapOptions = {
-  //     center: this.mapCenterLatLng(),
-  //     zoom: 5
-  //   };
-  //   var map = new google.maps.Map(this.getDOMNode(), mapOptions);
-
-  //   this.setState({map: map});
-  //   this.setMarkers();
-  // },
+  zoomToCity: function() {
+    this.state.map.panTo(this.mapCenterLatLng());
+    this.state.map.setZoom(12);
+  },
 
   buildMap: function() {
-
     var mapOptions = {
       center: this.mapCenterLatLng(),
       zoom: 4
@@ -108,21 +97,16 @@ var Map = React.createClass({
   },
 
   mapCenterLatLng: function () {
+    var zoomLocation;
     if(this.props.location) {
-      console.log('I have a location selected', this.props.location);
       var context = this;
       this.props.locs.forEach(function(loc) {
         if(loc.get("location").toUpperCase() === context.props.location.toUpperCase()) {
-          console.log("I found the location:", loc.get("location"), loc.get("latitude"), loc.get("longitude"));
-          context.setState({
-             mapCenterLat: loc.get("latitude"),
-             mapCenterLng: loc.get("longitude")
-          });
+          zoomLocation = new google.maps.LatLng(loc.get("latitude"), loc.get("longitude"));
         }
       });
     } 
-    console.log(this.state.mapCenterLat, this.state.mapCenterLng);
-    return new google.maps.LatLng(this.state.mapCenterLat, this.state.mapCenterLng);
+    return zoomLocation || new google.maps.LatLng(this.state.mapCenterLat, this.state.mapCenterLng);
   },
 
   render: function() {

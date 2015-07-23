@@ -45,6 +45,19 @@ var Nav = React.createClass({
           appendTo: this,
           create: function (e) {
             $(this).prev('.ui-helper-hidden-accessible').remove();
+            // console.log(e);
+            // context.setState({location: e.target.value});
+          },
+          // select: function(e) {
+          //   console.log(e.target.value);
+          //   context.setState({location: e.target.value});
+          // },
+          // change: function(e) {
+          //   console.log("CHANGE: ", e.target.value);
+          // },
+          close: function(e) {
+            console.log("CLOSE: ", e.target.value);
+            context.setState({location: e.target.value });
           }
         });   
       }
