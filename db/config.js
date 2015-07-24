@@ -7,22 +7,22 @@ var dbpassword = process.env.DBPASSWORD || '';
 
 var knex = require('knex')({
   client: 'mysql',
-  // connection: {
-  //   host: host,
-  //   user: dbuser,
-  //   password: dbpassword,
-  //   database: dbname,
-  //   charset: 'utf8',
-  //   port: port
-  // }
   connection: {
-    host: us-cdbr-iron-east-02.cleardb.net,
-    user: b1f2f075e286d6,
-    password: ac08b527,
-    database: heroku_69374543caaaf88,
+    host: host,
+    user: dbuser,
+    password: dbpassword,
+    database: dbname,
     charset: 'utf8',
     port: port
   }
+//   connection: {
+//     host: us-cdbr-iron-east-02.cleardb.net,
+//     user: b1f2f075e286d6,
+//     password: ac08b527,
+//     database: heroku_69374543caaaf88,
+//     charset: 'utf8',
+//     port: port
+//   }
 });
 
 var db = require('bookshelf')(knex);

@@ -3,10 +3,11 @@ var Nav = require('./navigationView');
 var JobsList = require('./jobsView');
 var Map = require('./mapView');
 var Input = require('./inputView');
+var Selections = require('./selectionsView');
+var Metrics = require('./metricsView');
 var Locs = require('./../collections/locations');
 var Jobs = require('./../collections/jobs');
 var Titles = require('./../collections/titles');
-var Metrics = require('./metricsView');
 
 var AppView = React.createClass({
 
@@ -39,6 +40,16 @@ var AppView = React.createClass({
   },
 
   jobsUpdate: function(location, title, zoomFlag) {
+    if(!location && !title) {
+      this.setState({
+        jobs: new Jobs(),
+        location: '',
+        title: '', 
+        zoomFlag: zoomFlag
+      });
+      return;
+    }
+
     var context = this;
     var request = {};
     request.location = location || '';
@@ -63,6 +74,7 @@ var AppView = React.createClass({
       <div>
         <Nav jobsUpdate={this.jobsUpdate} locs={this.state.locs} titles={this.state.titles} ref="nav" />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+        <Selections jobsUpdate={this.jobsUpdate} location={this.state.location} title={this.state.title} />
         <Metrics jobs={this.state.jobs} />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
