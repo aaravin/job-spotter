@@ -16,10 +16,6 @@ var Map = React.createClass({
     this.buildMap();
   },
 
-  componentWillReceiveProps: function() {
-    this.setMarkers();
-  },
-
   setMarkers: function() {
     var context = this;
     var prevWindow = false;
