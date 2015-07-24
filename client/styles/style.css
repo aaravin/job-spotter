@@ -5,7 +5,8 @@ html, body {
 }
 
 #map-canvas { 
-  height: 400px; 
+  height: 450px;
+  width: 65%;
   padding: 0;
 }
 
@@ -84,7 +85,25 @@ html, body {
   color: gray;
 }
 
-.job-skills {
+#sal-table {
+  margin-bottom: 10px;
+}
+
+.col-label {
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+td {
+  padding: 0px 10px;
+}
+
+#metrics {
+  display: inline;
+  padding-top: 50px;
+  float: right;
+  margin-right: 10px;
 }
 
 .jobs-list {
@@ -111,11 +130,21 @@ html, body {
   padding: 5px;
 }
 
-.chart rect {
+.salaryChart rect {
   fill: steelblue;
 }
 
-.chart text {
+.salaryChart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+.numberChart rect {
+  fill: steelblue;
+}
+
+.numberChart text {
   fill: white;
   font: 10px sans-serif;
   text-anchor: end;
