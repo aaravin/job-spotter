@@ -23,7 +23,7 @@ var knex = require('knex')({
 //     charset: 'utf8',
 //     port: port
 //   }
-// });
+});
 
 var db = require('bookshelf')(knex);
 
