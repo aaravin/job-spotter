@@ -2,10 +2,10 @@
   "name": "job-spotter",
   "version": "0.0.0",
   "description": "find and analyze new jobs",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --bail --reporter nyan test/ServerSpec.js;",
-    "start": "node server.js"
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
