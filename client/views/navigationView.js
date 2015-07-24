@@ -37,32 +37,33 @@ var Nav = React.createClass({
     });
   },
 
-  componentDidMount: function() {
+  componentWillReceiveProps: function() {
+    console.log('Received Props');
+  },
+
+  autoFill: function() {
     var context = this;
-    this.state.locData.fetch({
-      success: function(data) {
-        $(React.findDOMNode(context.refs.location)).autocomplete({ 
-          source: data.models.map(function(item) { return item.get("location"); }),
-          appendTo: this,
-          create: function (e) {
-            $(this).prev('.ui-helper-hidden-accessible').remove();
-            // console.log(e);
-            // context.setState({location: e.target.value});
-          },
-          // select: function(e) {
-          //   console.log(e.target.value);
-          //   context.setState({location: e.target.value});
-          // },
-          // change: function(e) {
-          //   console.log("CHANGE: ", e.target.value);
-          // },
-          close: function(e) {
-            // console.log("CLOSE: ", e.target.value);
-            context.setState({location: e.target.value });
-          }
-        });   
+    $(React.findDOMNode(context.refs.location)).autocomplete({ 
+      source: context.props.locs.pluck("location"),
+      appendTo: this,
+      create: function (e) {
+        $(this).prev('.ui-helper-hidden-accessible').remove();
+      },
+      close: function(e) {
+        context.setState({location: e.target.value });
       }
     });
+
+    $(React.findDOMNode(context.refs.title)).autocomplete({ 
+      source: context.props.titles.pluck("title"),
+      appendTo: this,
+      create: function (e) {
+        $(this).prev('.ui-helper-hidden-accessible').remove();
+      },
+      close: function(e) {
+        context.setState({location: e.target.value });
+      }
+    });   
   },
   
   render: function() {

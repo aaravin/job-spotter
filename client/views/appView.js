@@ -28,18 +28,14 @@ var AppView = React.createClass({
       success: function(locs) {
         context.state.titles.fetch({
           success: function(titles) {
-            context.setState({
-              locs: locs,
-              titles: titles
-            });
+            context.state.locs = locs;
+            context.state.titles = titles;
+            context.refs.map.setMarkers();
+            context.refs.nav.autoFill();
           }
         });
       }
     });
-  },
-
-  convertToArray: function(collection, str) {
-    return collection.pluck(str);
   },
 
   jobsUpdate: function(location, title, zoomFlag) {
@@ -60,15 +56,13 @@ var AppView = React.createClass({
         });
       }
     });
-
   },
 
   render: function() {
     return (
       <div>
-        <Nav jobsUpdate={this.jobsUpdate} locs={this.convertToArray(this.state.locs, 'location')} titles={this.convertToArray(this.state.titles, 'title')}/>
-        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} />
-        <Metrics jobs={this.state.jobs} />
+        <Nav jobsUpdate={this.jobsUpdate} locs={this.state.locs} titles={this.state.titles} ref="nav" />
+        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
     );
