@@ -37,10 +37,6 @@ var Nav = React.createClass({
     });
   },
 
-  componentWillReceiveProps: function() {
-    console.log('Received Props');
-  },
-
   autoFill: function() {
     var context = this;
     $(React.findDOMNode(context.refs.location)).autocomplete({ 
