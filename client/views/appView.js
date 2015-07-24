@@ -63,6 +63,7 @@ var AppView = React.createClass({
       <div>
         <Nav jobsUpdate={this.jobsUpdate} locs={this.state.locs} titles={this.state.titles} ref="nav" />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+        <Metrics jobs={this.state.jobs} />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
     );
