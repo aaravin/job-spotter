@@ -178,10 +178,12 @@ promiseWhile(function() {
           promises.push(titleDB.fetch().then(function(titleFound) {
             if (titleFound) {
               newLink.set("title_id", titleFound.get("id"));
+              title_id = titleFound.get("id");
               promises.push(newLink.save());
             } else {
               promises.push(titleDB.save().then(function(newTitle) {
                 newLink.set("title_id", newTitle.get("id"));
+                title_id = newTitle.get("id");
                 promises.push(newLink.save());
               }));
             }
@@ -192,10 +194,12 @@ promiseWhile(function() {
             promises.push(companyDB.fetch().then(function(companyFound) {
               if (companyFound) {
                 newLink.set("company_id", companyFound.get("id"));
+                company_id = companyFound.get("id");
                 promises.push(newLink.save());
               } else {
                 promises.push(companyDB.save().then(function(newCompany) {
                   newLink.set("company_id", newCompany.get("id"));
+                  company_id = newCompany.get("id");
                   promises.push(newLink.save());
                 }));
               }
@@ -207,10 +211,12 @@ promiseWhile(function() {
             promises.push(locationDB.fetch().then(function(locationFound) {
               if (locationFound) {
                 newLink.set("location_id", locationFound.get("id"));
+                location_id = locationFound.get("id");
                 promises.push(newLink.save());
               } else {
                 promises.push(locationDB.save().then(function(newLocation) {
                   newLink.set("location_id", newLocation.get("id"));
+                  location_id = newLocation.get("id");
                   promises.push(newLink.save());
                 }));
               }
@@ -218,9 +224,15 @@ promiseWhile(function() {
           });
 
           bluebird.settle(promises).then(function() {
-            db.knex('titles_companies').insert({title_id: title_id, company_id: company_id});
-            db.knex('titles_locations').insert({title_id: title_id, location_id: location_id});
-            db.knex('companies_locations').insert({company_id: company_id, location_id: location_id});
+            promises.push(db.knex('titles_companies').insert({title_id: title_id, company_id: company_id}).then(function() {
+
+            }));
+            promises.push(db.knex('titles_locations').insert({title_id: title_id, location_id: location_id}).then(function() {
+
+            }));
+            promises.push(db.knex('companies_locations').insert({company_id: company_id, location_id: location_id}).then(function() {
+
+            }));
           });
 
           bluebird.settle(promises).then(function() {

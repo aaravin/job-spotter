@@ -86,9 +86,9 @@ db.knex.schema.hasTable('links').then(function(exists) {
       table.integer('salary_max');
       table.integer('salary_avg');
       table.string('equity', 20);
-      table.integer('title_id').unsigned().references('id').inTable('titles');
-      table.integer('company_id').unsigned().references('id').inTable('companies');
-      table.integer('location_id').unsigned().references('id').inTable('locations');
+      table.integer('title_id').unsigned();
+      table.integer('company_id').unsigned();
+      table.integer('location_id').unsigned();
       table.timestamps();
     }).then(function (table) {
       console.log('Created Links Table');
@@ -99,8 +99,8 @@ db.knex.schema.hasTable('links').then(function(exists) {
 db.knex.schema.hasTable('titles_companies').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('titles_companies', function (table) {
-      table.integer('title_id').unsigned().references('id').inTable('titles');
-      table.integer('company_id').unsigned().references('id').inTable('companies');
+      table.integer('title_id').unsigned();
+      table.integer('company_id').unsigned();
     }).then(function (table) {
       console.log('Created titles_companies Table');
     });
@@ -110,8 +110,8 @@ db.knex.schema.hasTable('titles_companies').then(function(exists) {
 db.knex.schema.hasTable('titles_locations').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('titles_locations', function (table) {
-      table.integer('title_id').unsigned().references('id').inTable('titles');
-      table.integer('location_id').unsigned().references('id').inTable('locations');
+      table.integer('title_id').unsigned();
+      table.integer('location_id').unsigned();
     }).then(function (table) {
       console.log('Created titles_locations Table');
     });
@@ -121,8 +121,8 @@ db.knex.schema.hasTable('titles_locations').then(function(exists) {
 db.knex.schema.hasTable('companies_locations').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('companies_locations', function (table) {
-      table.integer('company_id').unsigned().references('id').inTable('companies');
-      table.integer('location_id').unsigned().references('id').inTable('locations');
+      table.integer('company_id').unsigned();
+      table.integer('location_id').unsigned();
     }).then(function (table) {
       console.log('Created companies_locations Table');
     });
