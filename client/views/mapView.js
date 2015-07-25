@@ -20,7 +20,8 @@ var Map = React.createClass({
     var context = this;
     var prevWindow = false;
     var markers = [];
-
+    console.log(this.props.locs);
+    
     this.props.locs.forEach(function(city, index) {
       if (city.get("jobCount")) {
         var contentString = 

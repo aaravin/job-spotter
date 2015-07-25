@@ -20,6 +20,7 @@ var knex = require('knex')({
 });
 
 var db = require('bookshelf')(knex);
+db.plugin('registry');
 
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {

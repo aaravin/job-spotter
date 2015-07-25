@@ -18,20 +18,31 @@ var AppView = React.createClass({
       location: '',
       title: '',
       jobs: new Jobs(),
-      locs: new Locs(),
+      allLocs: new Locs(),
+      filteredLocs: new Locs(),
       titles: new Titles()
     }
   },
 
   componentDidMount: function() {
     var context = this;
-    this.state.locs.fetch({
+    this.state.filteredLocs.fetch({
+      success: function(locs) {
+        // context.state.allLocs = locs;
+        context.state.filteredLocs = locs;
+        // context.state.titles = titles;
+        context.refs.map.setMarkers();
+        // context.refs.nav.autoFill();
+      }
+    });
+
+    this.state.allLocs.fetch({
       success: function(locs) {
         context.state.titles.fetch({
           success: function(titles) {
-            context.state.locs = locs;
+            context.state.allLocs = locs;
             context.state.titles = titles;
-            context.refs.map.setMarkers();
+            // context.refs.map.setMarkers();
             context.refs.nav.autoFill();
           }
         });
@@ -67,13 +78,26 @@ var AppView = React.createClass({
         });
       }
     });
+
+    if(title){
+      this.state.filteredLocs.fetch({
+        traditional: true,
+        data: {title: title},
+        success: function(newLocs) {
+          context.state.filteredLocs = newLocs;
+          context.refs.map.setMarkers();
+        }
+      });
+    }
   },
 
   render: function() {
+    console.log('all', this.state.allLocs);
+    console.log('filtered', this.state.filteredLocs);
     return (
       <div>
-        <Nav jobsUpdate={this.jobsUpdate} locs={this.state.locs} titles={this.state.titles} ref="nav" />
-        <Map jobsUpdate={this.jobsUpdate} locs={this.state.locs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+        <Nav jobsUpdate={this.jobsUpdate} locs={this.state.allLocs} titles={this.state.titles} ref="nav" />
+        <Map jobsUpdate={this.jobsUpdate} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
         <Selections jobsUpdate={this.jobsUpdate} location={this.state.location} title={this.state.title} />
         <Metrics jobs={this.state.jobs} locs={this.state.locs} />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
