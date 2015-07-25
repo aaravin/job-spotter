@@ -92,14 +92,12 @@ var AppView = React.createClass({
   },
 
   render: function() {
-    console.log('all', this.state.allLocs);
-    console.log('filtered', this.state.filteredLocs);
     return (
       <div>
         <Nav jobsUpdate={this.jobsUpdate} locs={this.state.allLocs} titles={this.state.titles} ref="nav" />
         <Map jobsUpdate={this.jobsUpdate} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
         <Selections jobsUpdate={this.jobsUpdate} location={this.state.location} title={this.state.title} />
-        <Metrics jobs={this.state.jobs} locs={this.state.locs} />
+        <Metrics jobs={this.state.jobs} locs={this.state.filteredLocs} />
         <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
       </div>
     );

@@ -8,7 +8,9 @@ var Map = React.createClass({
     return {
       initialZoom: 8,
       mapCenterLat: 39.8282,
-      mapCenterLng: -98.5795
+      mapCenterLng: -98.5795, 
+      markers: [],
+      markerCluster: null
     };
   },
 
@@ -19,8 +21,18 @@ var Map = React.createClass({
   setMarkers: function() {
     var context = this;
     var prevWindow = false;
-    var markers = [];
-    console.log(this.props.locs);
+    // var markers = [];
+
+    if(this.state.markers.length) {
+      _.each(this.state.markers, function(marker) {
+        marker.setMap(null);
+        marker = null;
+      });
+      this.state.markers = [];
+      if(this.state.markerCluster) {
+        this.state.markerCluster.clearMarkers();
+      }
+    }
     
     this.props.locs.forEach(function(city, index) {
       if (city.get("jobCount")) {
@@ -55,12 +67,12 @@ var Map = React.createClass({
           context.props.jobsUpdate(city.get('location'), null, false);
         });
 
-        markers.push(marker);
+        context.state.markers.push(marker);
         
       }
     });
 
-    var markerCluster = new MarkerClusterer(this.state.map, markers);
+    this.state.markerCluster = new MarkerClusterer(this.state.map, this.state.markers);
 
     //add click event to close all banners when map area is clicked
     google.maps.event.addListener(this.state.map, "click", function() {

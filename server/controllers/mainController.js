@@ -45,26 +45,24 @@ module.exports = {
       var models = locs.models;
       // console.log(models);
 
-      var cityData = _.map(models, function(model) {
-        console.log(model);
-        if(model.related('titles')) {
-          // console.log('found a model', model.related('titles');
-        }
-        // console.log(model.related('titles'));
-        // console.log(model.related('titles'));
-        // if(model.related('titles').at(0).attributes.title.toUpperCase() === req.query.title.toUpperCase()) {
-        //   return {
-        //     location: model.get('city'),
-        //     jobCount: model.get('jobCount'),
-        //     latitude: model.get('latitude'),
-        //     longitude: model.get('longitude'),
-        //     avgSalary: model.get('avgSalary')
-        //   }
-        // }
+      var cityData = _.filter(models, function(model) {
+        return model.related('titles').at(0).get('title').toUpperCase() === req.query.title.toUpperCase();
       });
+
+      cityData = _.map(cityData, function(model) {
+        console.log('found a title with', req.query.title, model.get('city'));
+        return {
+          location: model.get('city'),
+          jobCount: model.get('jobCount'),
+          latitude: model.get('latitude'),
+          longitude: model.get('longitude'),
+          avgSalary: model.get('avgSalary')
+        }
+      });
+      console.log(cityData.length);
+      res.status(200).send(cityData);
     });
 
-    //   res.status(200).send(cityData);
     // });
     // db.knex.raw("SELECT DISTINCT locations.city as location, locations.latitude, locations.longitude, COUNT(location_id) \
     // as jobCount, AVG(salary_avg) as avgSalary FROM links  \
