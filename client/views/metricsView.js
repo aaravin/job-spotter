@@ -7,11 +7,11 @@ var Metrics = React.createClass({
   getInitialState: function () {
     return {
       salaryData: [
-        {label: 'City', value: 0},
+        {label: 'Selected Jobs', value: 0},
         {label: 'U.S.', value: 0}
       ],
       numberData: [
-        {label: 'City', value: 0},
+        {label: 'Selected Jobs', value: 0},
         {label: 'U.S.', value: 0}
       ]
     };
@@ -19,7 +19,15 @@ var Metrics = React.createClass({
 
   componentWillReceiveProps: function () {
     var sumSal = 0;
+    var locObject = {};
+
     this.props.jobs.forEach(function (job) {
+      if (!locObject[job.get('location')]) {
+        locObject[job.get('location')] = 1;
+      } else {
+        locObject[job.get('location')]++;
+      }
+
       if (job.get('salary_avg') > 20000 && job.get('salary_avg') < 300000) {
         sumSal += job.get('salary_avg');
       }
@@ -41,40 +49,53 @@ var Metrics = React.createClass({
 
     this.setState({
       salaryData: [
-        {label: cityName, value: avgSal},
+        {label: 'Selected Jobs', value: avgSal},
         {label: 'U.S.', value: avgTotalSal}
       ],
       numberData: [
-        {label: cityName, value: jobCount},
+        {label: 'Selected Jobs', value: jobCount},
         {label: 'U.S.', value: avgTotalNumber}
       ]
     });
   },
 
   componentDidMount: function() {
-    // var totalSal = 0;
-    // var totalNumber = 0;
+    //set up initial conditions for salary and number charts
+    var width = 200;
+    var barHeight = 20;
 
-    // this.props.locs.forEach(function (loc) {
-    //     totalSal += loc.get('avgSalary');
-    //     totalNumber += loc.get('jobCount');
-    // });
-    // var avgTotalSal = parseInt(totalSal / this.props.locs.length);
-    // var avgTotalNumber = parseInt(totalNumber / this.props.locs.length);
+    var data = [0, 0];
 
-    // this.setState({
-    //   salaryData: [
-    //     {label: '', value: 0},
-    //     {label: 'U.S.', value: avgTotalSal}
-    //   ],
-    //   numberData: [
-    //     {label: '', value: 0},
-    //     {label: 'U.S.', value: avgTotalNumber}
-    //   ]
-    // });
+    var salaryChart = d3.select(".salaryChart")
+      .attr("width", width)
+      .attr("height", barHeight * 2);
 
-    this.renderSalaryGraph();
-    this.renderNumberGraph();
+    var numberChart = d3.select(".numberChart")
+      .attr("width", width)
+      .attr("height", barHeight * 2);
+
+    var salaryBar = d3.select(".salaryChart").selectAll("g")
+      .data(data)
+      .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+    var numberBar = d3.select(".numberChart").selectAll("g")
+      .data(data)
+      .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+
+    salaryBar.append("rect")
+      .attr("width", 0)
+      .attr("height", barHeight - 1);
+
+    numberBar.append("rect")
+      .attr("width", 0)
+      .attr("height", barHeight - 1);
+
+    salaryBar.append("text");
+
+    numberBar.append("text");
+
   },
 
   componentDidUpdate: function () {
@@ -82,80 +103,64 @@ var Metrics = React.createClass({
     this.renderNumberGraph();
   },
 
+
+
   renderSalaryGraph: function () {
     var context = this;  // save the component's context to use inside d3 methods
 
     var salaryData = [context.state.salaryData[0].value, context.state.salaryData[1].value];
-
-    var width = 200,
-        barHeight = 25;
+    var width = 200;
+    var barHeight = 20;
 
     var x = d3.scale.linear()
       .domain([0, d3.max(salaryData)])
-      .range([0, width]);
+      .range([10, width]);
 
-    d3.select(".salaryChart").selectAll("g")
-      .data([])
-      .exit().remove();
-
-    var chart = d3.select(".salaryChart")
-      .attr("width", width)
-      .attr("height", barHeight * salaryData.length);
-
-    var bar = chart.selectAll("g")
+    d3.select(".salaryChart").selectAll("rect")
       .data(salaryData)
-      .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-
-    bar.append("rect")
+      .transition()
+      .duration(1000)
       .attr("width", x)
       .attr("height", barHeight - 1);
 
-    bar.append("text")
+    d3.select(".salaryChart").selectAll("text")
+      .data(salaryData)
+      .text(function(d) {
+        return '$' + d.toLocaleString();
+      })
+      .transition()
+      .duration(1000)
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
-      .attr("dy", ".35em")
-      .text(function (data, index) {
-        return "$" + data.toLocaleString();
-      });
   },
 
   renderNumberGraph: function () {
     var context = this;  // save the component's context to use inside d3 methods
 
     var numberData = [context.state.numberData[0].value, context.state.numberData[1].value];
-
-    var width = 200,
-        barHeight = 25;
+    var width = 200;
+    var barHeight = 20;
 
     var x = d3.scale.linear()
       .domain([0, d3.max(numberData)])
-      .range([0, width]);
+      .range([10, width]);
 
-    d3.select(".numberChart").selectAll("g")
-      .data([])
-      .exit().remove();
-
-    var chart = d3.select(".numberChart")
-      .attr("width", width)
-      .attr("height", barHeight * numberData.length);
-
-    var bar = chart.selectAll("g")
+    d3.select(".numberChart").selectAll("rect")
       .data(numberData)
-      .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-
-    bar.append("rect")
+      .transition()
+      .duration(1000)
       .attr("width", x)
       .attr("height", barHeight - 1);
 
-    bar.append("text")
+    d3.select(".numberChart").selectAll("text")
+      .data(numberData)
+      .text(function(d) {
+        return d;
+      })
+      .transition()
+      .duration(1000)
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
-      .attr("dy", ".35em")
-      .text(function (data, index) {
-        return data.toLocaleString();
-      });
   },
 
   render: function () {
@@ -163,7 +168,7 @@ var Metrics = React.createClass({
     //   return (<div></div>)
     // } else {
       return (
-        <div id="metrics">
+        <div className="metrics">
           <table id="sal-table">
             <tr>
               <td className="col-label" colSpan="2">Average Salary</td>
@@ -197,12 +202,7 @@ var Metrics = React.createClass({
             </tr>
           </table>
         </div>
-        // <BarChart data={this.state.barData} width={300} height={200} fill={'#ADD8E6'} title='Average Salary' />
-        // <div className="col-sm-1">This is Metrics View</div>
-        // <div className="col-sm-2">This is Metrics View</div>
-
       );
-    // }
   }
 
 });

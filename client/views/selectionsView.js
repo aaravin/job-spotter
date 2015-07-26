@@ -12,11 +12,32 @@ var Selections = React.createClass({
   },
 
   render: function() {
-    return (
-    <div className="selections col-sm-2">
-      <div className="selector-location" onClick={this.handleClickLoc}>{this.props.location}</div>
-      <div className="selector-title" onClick={this.handleClickTitle}>{this.props.title}</div>
-    </div>)
+    if (this.props.location === '' && this.props.title === '') {
+      return (
+        <div className="selections">
+          <div className="filterLabel">Search Filters</div>
+        </div>)
+    } else if (this.props.location !== '' && this.props.title !== '') {
+      return (
+      <div className="selections">
+        <div className="filterLabel">Search Filters</div>
+        <div className="selector" onClick={this.handleClickLoc}>{this.props.location}</div>
+        <div className="selector" onClick={this.handleClickTitle}>{this.props.title}</div>
+      </div>)
+    } else if (this.props.location !== '') {
+      return (
+      <div className="selections">
+        <div className="filterLabel">Search Filters</div>
+        <div className="selector" onClick={this.handleClickLoc}>{this.props.location}</div> 
+      </div>
+      )
+    } else {
+      return (
+      <div className="selections">
+        <div className="filterLabel">Search Filters</div>
+        <div className="selector" onClick={this.handleClickTitle}>{this.props.title}</div>
+      </div>)
+    }
   }
 });
 

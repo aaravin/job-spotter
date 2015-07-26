@@ -103,7 +103,7 @@ var Map = React.createClass({
       this.zoomToCity();
     }
     return (
-      <div id="map-canvas"></div>
+      <div id="map-canvas" className="col-sm-8"></div>
     )
   }
 
