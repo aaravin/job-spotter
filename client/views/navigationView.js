@@ -65,7 +65,7 @@ var Nav = React.createClass({
   render: function() {
     return (
       <div className="navbar navbar-default navbar-static-top" id="navigation">
-        <div className="container-fluid">
+        <div>
           <h1 id="title" className="navbar-brand">JobSpotter</h1>
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
             <div className="form-group">
