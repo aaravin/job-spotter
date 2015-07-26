@@ -75,7 +75,7 @@ app.get('/api/jobs', function (req, res, next) {
 // console.log("GETTING LAT AND LONGS");
 // latLongUtil.getAllLocs();
 
-// // Update all jobCounts
+// Update all jobCounts
 // console.log("UPDATING JOB COUNTS");
 // jobCountUtil.updateJobCounts();
 
