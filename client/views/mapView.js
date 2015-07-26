@@ -22,6 +22,7 @@ var Map = React.createClass({
     var context = this;
     var prevWindow = false;
     // var markers = [];
+    console.log(this.state.markers.length);
 
     if(this.state.markers.length) {
       _.each(this.state.markers, function(marker) {
@@ -64,7 +65,7 @@ var Map = React.createClass({
           }
           infowindow.open(context.state.map, marker);
           prevWindow = infowindow;
-          context.props.jobsUpdate(city.get('location'), null, false);
+          context.props.updateClick(city.get('location'));
         });
 
         context.state.markers.push(marker);
@@ -86,6 +87,7 @@ var Map = React.createClass({
 
   zoomToCity: function() {
     this.state.map.panTo(this.mapCenterLatLng());
+    
     this.state.map.setZoom(12);
   },
 
@@ -113,6 +115,7 @@ var Map = React.createClass({
 
   render: function() {
     if(this.props.zoomFlag) {
+      console.log('I zoomed');
       this.zoomToCity();
     }
     return (
