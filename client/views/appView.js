@@ -50,13 +50,7 @@ var AppView = React.createClass({
     //no location or title passed in response - reset everything
     if(!location && !title) {
       if(this.state.title) {
-        console.log('before', this.state.filteredLocs, this.state.allLocs);
-        // this.setState({
-        //   filteredLocs: this.state.allLocs
-        // });
-        this.state.filteredLocs = this.state.allLocs;
-        console.log('filtered:', this.state.filteredLocs);
-        this.refs.map.setMarkers();
+        this.locationUpdate(location, title);
       }
       this.setState({
         zoomFlag: zoomFlag
@@ -117,9 +111,6 @@ var AppView = React.createClass({
       data: {title: title},
       success: function(newLocs) {
         context.state.filteredLocs = newLocs;
-        // context.setState({
-        //   filteredLocs: newLocs
-        // });
         context.refs.map.setMarkers();
       }
     });
