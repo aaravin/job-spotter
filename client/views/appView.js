@@ -97,8 +97,8 @@ var AppView = React.createClass({
       success: function(jobs) {
         context.setState({
           jobs: jobs, 
-          location: location,
-          title: title
+          location: request.location,
+          title: request.title
         });
       }
     });
