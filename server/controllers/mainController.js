@@ -14,7 +14,7 @@ module.exports = {
     .fetchAll()
     .then(function (locs) {
       if(!locs) {
-        return res.status(404).send();
+        return res.status(200).send(null);
       }
       var models = locs.models;
 
@@ -43,7 +43,7 @@ module.exports = {
     GROUP BY location_id")
     .then(function(data) {
       if(!data[0]) {
-        return res.status(404).send();
+        return res.status(200).send(null);
       }
       var collection = data[0];
       var cityData = _.map(collection, function(locInfo) {

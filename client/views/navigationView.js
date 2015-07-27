@@ -17,8 +17,8 @@ var Nav = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var flag = this.state.location ? true : false;
-    this.props.updateSearch(this.state.location, this.state.title, flag);
+    var zoomFlag = this.state.location ? true : false;
+    this.props.updateSearch(this.state.location, this.state.title, zoomFlag);
     this.setState({
       location: '',
       title: ''
@@ -64,7 +64,7 @@ var Nav = React.createClass({
   
   render: function() {
     return (
-      <div className="navbar navbar-default navbar-static-top" id="navigation">
+      <div className="navbar navbar-inverse navbar-static-top" id="navigation">
         <div>
           <h1 id="title" className="navbar-brand">JobSpotter</h1>
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
@@ -74,6 +74,7 @@ var Nav = React.createClass({
               <button id="search-button" onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
             </div>
           </form>
+          <div className="error-message pull-right"> {this.props.errorMessage}</div>
         </div>
       </div>
     );

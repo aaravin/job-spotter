@@ -66,7 +66,7 @@ app.get('/api/jobs', function (req, res, next) {
     jobsController.getJobsWithTitle(req, res, next);
   } else {
     console.log("No location or title sent in request - 404");
-    res.status(404).send();
+    res.status(200).send(null);
   }
 });
 

@@ -49,7 +49,7 @@ html, body {
 
 #navigation {
   height: 60px;
-  background-color: dimgray;
+  /*background-color: dimgray;*/
   color: white;
   z-index: 1;
   margin-bottom: 0px;
@@ -64,7 +64,7 @@ html, body {
 }
 
 #search-button {
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
 }
 
 .navbar-brand {
@@ -78,11 +78,17 @@ html, body {
 }
 
 #title {
-  color: white;
-  font-family: 'Lobster', cursive;
-  font-style: italic;
+  /*color: white;*/
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  /*font-style: italic;*/
   margin-left: 10px;
   font-size: 30px;
+}
+
+.error-message {
+  margin-top: 35px;
+  color: #9d9d9d;
+
 }
 
 .job-item:hover {
