@@ -1,13 +1,13 @@
 var db = require('./config.js');
-var Companies = require('./collections/companies');
+// var Companies = require('./collections/companies');
 var Company = require('./models/company');
-var Links = require('./collections/links');
+// var Links = require('./collections/links');
 var Link = require('./models/link');
-var Locations = require('./collections/locations');
+// var Locations = require('./collections/locations');
 var Location = require('./models/location');
-var Titles = require('./collections/titles');
+// var Titles = require('./collections/titles');
 var Title = require('./models/title');
-var Users = require('./collections/users');
+// var Users = require('./collections/users');
 var User = require('./models/user');
 var bluebird = require('bluebird');
 

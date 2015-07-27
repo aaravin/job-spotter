@@ -25,4 +25,4 @@ var User = db.Model.extend({
   }
 });
 
-module.exports = User;
+module.exports = db.model('User', User);

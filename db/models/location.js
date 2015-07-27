@@ -1,21 +1,20 @@
 var db = require('../config');
-
-var Link = require('./link');
-var Title = require('./title');
-var Company = require('./company');
+require('./link');
+require('./title');
+require('./company');
 
 var Location = db.Model.extend({
   tableName: 'locations',
   hasTimestamps: true,
   companies: function() {
-    return this.belongsToMany(Company);
+    return this.belongsToMany('Company');
   },
   titles: function() {
-    return this.belongsToMany(Title);
+    return this.belongsToMany('Title', 'titles_locations', 'location_id', 'title_id');
   },
   links: function() {
-    return this.hasMany(Link);
+    return this.hasMany('Link');
   }
 });
 
-module.exports = Location;
+module.exports = db.model('Location', Location);

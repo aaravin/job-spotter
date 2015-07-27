@@ -2,13 +2,11 @@ var React = require('react');
 var Selections = React.createClass({
 
   handleClickLoc: function() {
-    console.log('Location clicked!', this.props.title, this.props.location);
-    this.props.jobsUpdate(null, this.props.title, false);
+    this.props.updateSearch(null, this.props.title, false);
   },
 
   handleClickTitle: function() {
-    console.log('Title clicked!', this.props.title, this.props.location);
-    this.props.jobsUpdate(this.props.location, null, false);
+    this.props.updateSearch(this.props.location, null, false);
   },
 
   render: function() {

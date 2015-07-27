@@ -1,8 +1,8 @@
 var Promise = require('bluebird');
+var db = require('../../db/config.js');
 var Location = require('../../db/models/location');
 var Link = require('../../db/models/link');
 var Company = require('../../db/models/company');
-var db = require('../../db/config.js');
 var _ = require('underscore');
 
 module.exports = {
@@ -78,7 +78,7 @@ module.exports = {
       var jobsData = module.exports.buildJobs(jobs);
       res.status(200).send(jobsData);
     });
-  },
+  }
 
 };
 

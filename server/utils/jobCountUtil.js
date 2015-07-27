@@ -1,5 +1,5 @@
-var Location = require('../../db/models/location');
 var db = require('../../db/config.js');
+var Location = require('../../db/models/location');
 
 module.exports = {
   updateJobCounts: function() {
