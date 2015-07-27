@@ -21,8 +21,6 @@ var Map = React.createClass({
   setMarkers: function() {
     var context = this;
     var prevWindow = false;
-    // var markers = [];
-    console.log(this.state.markers.length);
 
     if(this.state.markers.length) {
       _.each(this.state.markers, function(marker) {
@@ -115,7 +113,6 @@ var Map = React.createClass({
 
   render: function() {
     if(this.props.zoomFlag) {
-      console.log('I zoomed');
       this.zoomToCity();
     }
     return (
