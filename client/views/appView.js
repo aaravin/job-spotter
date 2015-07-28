@@ -58,16 +58,17 @@ var AppView = React.createClass({
       this.clearJobs();
       this.refs.map.resetMap();
     } else {
-      this.jobsUpdate(location, title, zoomFlag, zoomoutFlag);
+      this.jobsUpdate(location, title, zoomFlag, zoomoutFlag, false);
     } 
 
   },
 
   updateClick: function(location) {
     //always update jobs WITH EXISTING TITLE SEARCH!
-    this.jobsUpdate(location, this.state.title);
+    this.jobsUpdate(location, this.state.title, false, false, true);
     if (!this.state.showResults) {
       this.refs.map.shrinkMapWithoutZoom();
+      this.state.showResults = true;
     }
   },
 
@@ -80,7 +81,7 @@ var AppView = React.createClass({
     });
   },
 
-  jobsUpdate: function(location, title, zoomFlag, zoomoutFlag) {
+  jobsUpdate: function(location, title, zoomFlag, zoomoutFlag, clickFlag) {
     var context = this;
     var request = {};
     request.location = location || '';
@@ -96,10 +97,9 @@ var AppView = React.createClass({
             title: request.title, 
             zoomFlag: zoomFlag, 
             zoomoutFlag: zoomoutFlag,
-            filteredLocs: context.state.filteredLocs,
             errorMessage: ''
           });
-          context.handleZoom(location, title);
+          context.handleZoom(location, title, clickFlag);
         } else {
           context.setState({
             zoomFlag: false,
@@ -111,8 +111,8 @@ var AppView = React.createClass({
     });
   },
 
-  handleZoom: function(location, title) {
-    if(title || this.state.title)  { 
+  handleZoom: function(location, title, clickFlag) {
+    if(!clickFlag && (title || this.state.title))  { 
       this.locationUpdate(location, title);
     }
     if (!this.state.showResults) {
