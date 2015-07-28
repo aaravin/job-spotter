@@ -20,7 +20,8 @@ var AppView = React.createClass({
       jobs: new Jobs(),
       allLocs: new Locs(),
       filteredLocs: new Locs(),
-      titles: new Titles()
+      titles: new Titles(),
+      errorMessage: ''
     }
   },
 
@@ -52,29 +53,23 @@ var AppView = React.createClass({
       if(this.state.title) {
         this.locationUpdate(location, title);
       }
-      this.setState({
-        zoomFlag: zoomFlag
-      });
       this.clearJobs();
     } else {
       //reset jobs always
-      this.jobsUpdate(location, title);
-      //reset map? - maybe
-      this.setState({
-        zoomFlag: zoomFlag
-      });
-      if(title || this.state.title) { 
-        //if user is searching a new title in THIS REQUEST
-        //OR if user search for a title LAST REQUEST and we need to clear it
-        this.locationUpdate(location, title);
-      } 
+      if(this.jobsUpdate(location, title, zoomFlag)) {
+        if(title || this.state.title) { 
+          //if user is searching a new title in THIS REQUEST
+          //OR if user search for a title LAST REQUEST and we need to clear it
+          this.locationUpdate(location, title);
+        } 
+      }
+
     }
   },
 
   updateClick: function(location) {
     //always update jobs WITH EXISTING TITLE SEARCH!
     this.jobsUpdate(location, this.state.title);
-    this.setLocationTitle(location, this.state.title);
   },
 
   clearJobs: function() {
@@ -85,7 +80,7 @@ var AppView = React.createClass({
     });
   },
 
-  jobsUpdate: function(location, title) {
+  jobsUpdate: function(location, title, zoomFlag) {
     var context = this;
     var request = {};
     request.location = location || '';
@@ -95,11 +90,23 @@ var AppView = React.createClass({
       traditional: true,
       data: request,
       success: function(jobs) {
-        context.setState({
-          jobs: jobs, 
-          location: request.location,
-          title: request.title
-        });
+        if(jobs.length) {
+          context.setState({
+            jobs: jobs, 
+            location: request.location,
+            title: request.title, 
+            zoomFlag: zoomFlag, 
+            errorMessage: ''
+          });
+          return true;
+        } else {
+          context.setState({
+            zoomFlag: false,
+            errorMessage: 'No jobs found, try another search.'
+          });
+          return false;
+        }
+        console.log(context.state.errorMessage);
       }
     });
   },
@@ -119,7 +126,7 @@ var AppView = React.createClass({
   render: function() {
     return (
       <div>
-        <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} ref="nav" />
+        <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
         <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
         <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
         <Metrics jobs={this.state.jobs} locs={this.state.filteredLocs} />
