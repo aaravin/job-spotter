@@ -86,8 +86,12 @@ var Map = React.createClass({
 
   zoomToCity: function() {
     this.state.map.panTo(this.mapCenterLatLng());
-    
     this.state.map.setZoom(12);
+  },
+
+  zoomOutCenter: function() {
+    this.state.map.panTo(this.mapCenterLatLng());
+    this.state.map.setZoom(4);
   },
 
   buildMap: function() {
@@ -175,6 +179,8 @@ var Map = React.createClass({
   render: function() {
     if(this.props.zoomFlag) {
       this.zoomToCity();
+    } else if(this.props.zoomoutFlag) {
+      this.zoomOutCenter();
     }
     return (
       <div id="map-canvas" className="col-sm-8"></div>
