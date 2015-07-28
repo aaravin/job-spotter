@@ -17,7 +17,7 @@ var Metrics = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function () {
+  updateMetrics: function() {
     var sumSal = 0;
     var locObject = {};
 
@@ -59,6 +59,10 @@ var Metrics = React.createClass({
     });
   },
 
+  componentWillReceiveProps: function () {
+    this.updateMetrics();
+  },
+
   componentDidMount: function() {
     //set up initial conditions for salary and number charts
     var width = 200;
@@ -96,14 +100,13 @@ var Metrics = React.createClass({
 
     numberBar.append("text");
 
+    this.updateMetrics();
   },
 
   componentDidUpdate: function () {
     this.renderSalaryGraph();
     this.renderNumberGraph();
   },
-
-
 
   renderSalaryGraph: function () {
     var context = this;  // save the component's context to use inside d3 methods
@@ -137,7 +140,7 @@ var Metrics = React.createClass({
 
   renderNumberGraph: function () {
     var context = this;  // save the component's context to use inside d3 methods
-
+    console.log(this.props.locs, this.props.jobs);
     var numberData = [context.state.numberData[0].value, context.state.numberData[1].value];
     var width = 200;
     var barHeight = 20;

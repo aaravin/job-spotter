@@ -57,10 +57,12 @@ var AppView = React.createClass({
       this.clearJobs();
     } else {
       //reset jobs always
-      this.setState({
-        showResults: true
-      });
-      this.refs.map.shrinkMap();
+      // this.setState({
+      //   showResults: true
+      // });
+      if (!this.state.showResults) {
+        this.refs.map.shrinkMapWithZoom();
+      }
       if(this.jobsUpdate(location, title, zoomFlag)) {
         if(title || this.state.title) { 
           //if user is searching a new title in THIS REQUEST
@@ -75,6 +77,9 @@ var AppView = React.createClass({
   updateClick: function(location) {
     //always update jobs WITH EXISTING TITLE SEARCH!
     this.jobsUpdate(location, this.state.title);
+    if (!this.state.showResults) {
+      this.refs.map.shrinkMapWithoutZoom();
+    }
   },
 
   clearJobs: function() {
@@ -102,7 +107,9 @@ var AppView = React.createClass({
             location: request.location,
             title: request.title, 
             zoomFlag: zoomFlag, 
-            errorMessage: ''
+            filteredLocs: context.state.filteredLocs,
+            errorMessage: '',
+            showResults: true
           });
           return true;
         } else {
