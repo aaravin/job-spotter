@@ -95,7 +95,25 @@ var Map = React.createClass({
       zoom: 4
     };
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
+    google.maps.event.addDomListener(map, 'idle', function() {});
     this.setState({map: map});
+  },
+
+  shrinkMap: function() {
+    var context = this;
+
+    $("#map-canvas").animate({
+      height: "500px",
+      width: "65%",
+      marginTop: "5px",
+      marginLeft: "5px"
+    }, {
+      duration: 2000,
+      step: function(currentHeight) {
+        google.maps.event.trigger(context.state.map, "resize");
+        context.zoomToCity();
+      }
+    });
   },
 
   mapCenterLatLng: function () {

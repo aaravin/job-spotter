@@ -21,7 +21,8 @@ var AppView = React.createClass({
       allLocs: new Locs(),
       filteredLocs: new Locs(),
       titles: new Titles(),
-      errorMessage: ''
+      errorMessage: '',
+      showResults: false
     }
   },
 
@@ -56,6 +57,10 @@ var AppView = React.createClass({
       this.clearJobs();
     } else {
       //reset jobs always
+      this.setState({
+        showResults: true
+      });
+      this.refs.map.shrinkMap();
       if(this.jobsUpdate(location, title, zoomFlag)) {
         if(title || this.state.title) { 
           //if user is searching a new title in THIS REQUEST
@@ -76,7 +81,8 @@ var AppView = React.createClass({
     this.setState({
       jobs: new Jobs(),
       location: '',
-      title: ''
+      title: '',
+      showResults: false
     });
   },
 
@@ -124,15 +130,24 @@ var AppView = React.createClass({
   },
 
   render: function() {
-    return (
-      <div>
-        <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
-        <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
-        <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
-        <Metrics jobs={this.state.jobs} locs={this.state.filteredLocs} />
-        <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
-      </div>
-    );
+    if (this.state.showResults) {
+      return (
+        <div>
+          <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
+          <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+          <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
+          <Metrics jobs={this.state.jobs} locs={this.state.filteredLocs} />
+          <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
+          <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+        </div>
+      );      
+    }
   }
 
 });
