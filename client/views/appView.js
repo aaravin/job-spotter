@@ -55,6 +55,7 @@ var AppView = React.createClass({
         this.locationUpdate(location, title);
       }
       this.clearJobs();
+      this.refs.map.resetMap();
     } else {
       this.jobsUpdate(location, title, zoomFlag);
       if(this.state.errorMessage === '') {
@@ -112,8 +113,8 @@ var AppView = React.createClass({
             title: request.title, 
             zoomFlag: zoomFlag, 
             filteredLocs: context.state.filteredLocs,
-            errorMessage: ''
-            // showResults: true
+            errorMessage: '',
+            showResults: true
           });
         } else {
           // context.state.errorMessage = 'No jobs found, try another search.';
