@@ -99,7 +99,7 @@ var Map = React.createClass({
     this.setState({map: map});
   },
 
-  shrinkMap: function() {
+  shrinkMapWithZoom: function() {
     var context = this;
 
     $("#map-canvas").animate({
@@ -111,7 +111,26 @@ var Map = React.createClass({
       duration: 2000,
       step: function(currentHeight) {
         google.maps.event.trigger(context.state.map, "resize");
-        context.zoomToCity();
+        context.state.map.panTo(context.mapCenterLatLng());
+        context.state.map.setZoom(12);
+      }
+    });
+  },
+
+  shrinkMapWithoutZoom: function() {
+    var context = this;
+    var center = this.state.map.getCenter();
+
+    $("#map-canvas").animate({
+      height: "500px",
+      width: "65%",
+      marginTop: "5px",
+      marginLeft: "5px"
+    }, {
+      duration: 2000,
+      step: function(currentHeight) {
+        google.maps.event.trigger(context.state.map, "resize");
+        context.state.map.panTo(center);
       }
     });
   },
