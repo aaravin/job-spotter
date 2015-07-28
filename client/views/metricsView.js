@@ -12,7 +12,7 @@ var Metrics = React.createClass({
       ],
       numberData: [
         {label: 'Selected Jobs', value: 0},
-        {label: 'U.S.', value: 0}
+        {label: 'U.S. Locations', value: 0}
       ]
     };
   },
@@ -54,7 +54,7 @@ var Metrics = React.createClass({
       ],
       numberData: [
         {label: 'Selected Jobs', value: jobCount},
-        {label: 'U.S.', value: avgTotalNumber}
+        {label: 'U.S. Locations', value: avgTotalNumber}
       ]
     });
   },
@@ -132,6 +132,7 @@ var Metrics = React.createClass({
       .duration(1000)
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
+      .attr("dy", ".35em");
   },
 
   renderNumberGraph: function () {
@@ -161,6 +162,7 @@ var Metrics = React.createClass({
       .duration(1000)
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
+      .attr("dy", ".35em");
   },
 
   render: function () {
