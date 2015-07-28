@@ -10,7 +10,8 @@ var Map = React.createClass({
       mapCenterLat: 39.8282,
       mapCenterLng: -98.5795, 
       markers: [],
-      markerCluster: null
+      markerCluster: null,
+      prevInfoWindow: null
     };
   },
 
@@ -58,11 +59,11 @@ var Map = React.createClass({
         //add click event to show banner on each marker
         google.maps.event.addListener(marker, "click", function() {
           //close any other window/banner if one is open
-          if(prevWindow) {
-            prevWindow.close();
+          if(context.state.prevInfoWindow) {
+            context.state.prevInfoWindow.close();
           }
           infowindow.open(context.state.map, marker);
-          prevWindow = infowindow;
+          context.state.prevInfoWindow = infowindow;
           context.props.updateClick(city.get('location'));
         });
 
@@ -75,9 +76,9 @@ var Map = React.createClass({
 
     //add click event to close all banners when map area is clicked
     google.maps.event.addListener(this.state.map, "click", function() {
-      if(prevWindow) {
-        prevWindow.close();
-        prevWindow = false;
+      if(context.state.prevInfoWindow) {
+        context.state.prevInfoWindow.close();
+        context.state.prevInfoWindow = null;
       }
     });
 
@@ -97,6 +98,29 @@ var Map = React.createClass({
     var map = new google.maps.Map(this.getDOMNode(), mapOptions);
     google.maps.event.addDomListener(map, 'idle', function() {});
     this.setState({map: map});
+  },
+
+  resetMap: function() {
+    var context = this;
+
+    if (context.state.prevInfoWindow) {
+      context.state.prevInfoWindow.close();
+      context.state.prevInfoWindow = null;
+    }
+
+    $('#map-canvas').animate({
+      height: "91vh",
+      width: "100%",
+      marginTop: "0px",
+      marginLeft: "0px"
+    }, {
+      duration: 2000,
+      step: function(currentHeight) {
+        google.maps.event.trigger(context.state.map, 'resize');
+        context.state.map.panTo(context.mapCenterLatLng());
+        context.state.map.setZoom(4);
+      }
+    })
   },
 
   shrinkMapWithZoom: function() {
@@ -137,7 +161,7 @@ var Map = React.createClass({
 
   mapCenterLatLng: function () {
     var zoomLocation;
-    if(this.props.location) {
+    if(this.props.location !== '') {
       var context = this;
       this.props.locs.forEach(function(loc) {
         if(loc.get("location").toUpperCase() === context.props.location.toUpperCase()) {
