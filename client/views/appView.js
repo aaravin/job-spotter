@@ -58,22 +58,6 @@ var AppView = React.createClass({
       this.refs.map.resetMap();
     } else {
       this.jobsUpdate(location, title, zoomFlag);
-      if(this.state.errorMessage === '') {
-
-        if(title || this.state.title)  { 
-          this.locationUpdate(location, title);
-        }
-        if (!this.state.showResults) {
-          if(!location) {
-            this.refs.map.shrinkMapWithoutZoom();
-          } else {
-            this.refs.map.shrinkMapWithZoom();
-          }
-          this.state.showResults = true;
-        }
-        //if user is searching a new title in THIS REQUEST
-        //OR if user search for a title LAST REQUEST and we need to clear it
-      }
     } 
 
   },
@@ -113,9 +97,10 @@ var AppView = React.createClass({
             title: request.title, 
             zoomFlag: zoomFlag, 
             filteredLocs: context.state.filteredLocs,
-            errorMessage: '',
-            showResults: true
+            errorMessage: ''
+            // showResults: true
           });
+          context.handleZoom(location, title);
         } else {
           // context.state.errorMessage = 'No jobs found, try another search.';
           context.setState({
@@ -125,6 +110,24 @@ var AppView = React.createClass({
         }
       }
     });
+  },
+
+  handleZoom: function(location, title) {
+    if(title || this.state.title)  { 
+      this.locationUpdate(location, title);
+    }
+    if (!this.state.showResults) {
+      if(!location) {
+        this.refs.map.shrinkMapWithoutZoom();
+      } else {
+        this.refs.map.shrinkMapWithZoom();
+      }
+      this.setState({
+        showResults: true
+      });
+    }
+    //if user is searching a new title in THIS REQUEST
+    //OR if user search for a title LAST REQUEST and we need to clear it
   },
 
   locationUpdate: function(location, title) {
