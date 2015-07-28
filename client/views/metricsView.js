@@ -38,7 +38,13 @@ var Metrics = React.createClass({
 
     var totalSal = 0;
     var totalNumber = 0;
-    var jobCount = this.props.jobs.length;
+    var jobCount;
+
+    if (this.props.location !== '') {
+      jobCount = this.props.jobs.length;
+    } else {
+      jobCount = Math.round(this.props.jobs.length / this.props.locs.length);
+    }
     this.props.locs.forEach(function (loc) {
         totalSal += loc.get('avgSalary');
         totalNumber += loc.get('jobCount');
@@ -140,7 +146,6 @@ var Metrics = React.createClass({
 
   renderNumberGraph: function () {
     var context = this;  // save the component's context to use inside d3 methods
-    console.log(this.props.locs, this.props.jobs);
     var numberData = [context.state.numberData[0].value, context.state.numberData[1].value];
     var width = 200;
     var barHeight = 20;

@@ -149,7 +149,7 @@ var AppView = React.createClass({
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
           <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
           <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
-          <Metrics jobs={this.state.jobs} locs={this.state.filteredLocs} />
+          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} />
           <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
         </div>
       );
