@@ -56,22 +56,25 @@ var AppView = React.createClass({
       }
       this.clearJobs();
     } else {
-      //reset jobs always
-      // this.setState({
-      //   showResults: true
-      // });
-      if (!this.state.showResults) {
-        this.refs.map.shrinkMapWithZoom();
-      }
-      if(this.jobsUpdate(location, title, zoomFlag)) {
-        if(title || this.state.title) { 
-          //if user is searching a new title in THIS REQUEST
-          //OR if user search for a title LAST REQUEST and we need to clear it
-          this.locationUpdate(location, title);
-        } 
-      }
+      this.jobsUpdate(location, title, zoomFlag);
+      if(this.state.errorMessage === '') {
 
-    }
+        if(title || this.state.title)  { 
+          this.locationUpdate(location, title);
+        }
+        if (!this.state.showResults) {
+          if(!location) {
+            this.refs.map.shrinkMapWithoutZoom();
+          } else {
+            this.refs.map.shrinkMapWithZoom();
+          }
+          this.state.showResults = true;
+        }
+        //if user is searching a new title in THIS REQUEST
+        //OR if user search for a title LAST REQUEST and we need to clear it
+      }
+    } 
+
   },
 
   updateClick: function(location) {
@@ -102,24 +105,23 @@ var AppView = React.createClass({
       data: request,
       success: function(jobs) {
         if(jobs.length) {
+          // context.state.errorMessage = '';
           context.setState({
             jobs: jobs, 
             location: request.location,
             title: request.title, 
             zoomFlag: zoomFlag, 
             filteredLocs: context.state.filteredLocs,
-            errorMessage: '',
-            showResults: true
+            errorMessage: ''
+            // showResults: true
           });
-          return true;
         } else {
+          // context.state.errorMessage = 'No jobs found, try another search.';
           context.setState({
             zoomFlag: false,
             errorMessage: 'No jobs found, try another search.'
           });
-          return false;
         }
-        console.log(context.state.errorMessage);
       }
     });
   },
