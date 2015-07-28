@@ -84,7 +84,6 @@ var Map = React.createClass({
   },
 
   zoomToCity: function() {
-    console.log("zooming");
     this.state.map.panTo(this.mapCenterLatLng());
     
     this.state.map.setZoom(12);
@@ -101,7 +100,6 @@ var Map = React.createClass({
   },
 
   shrinkMap: function() {
-    console.log("shrinking map");
     var context = this;
 
     $("#map-canvas").animate({

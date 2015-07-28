@@ -60,6 +60,7 @@ var AppView = React.createClass({
       this.setState({
         showResults: true
       });
+      this.refs.map.shrinkMap();
       if(this.jobsUpdate(location, title, zoomFlag)) {
         if(title || this.state.title) { 
           //if user is searching a new title in THIS REQUEST
@@ -140,10 +141,12 @@ var AppView = React.createClass({
         </div>
       );
     } else {
+      return (
         <div>
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
           <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
-        </div>      
+        </div>
+      );      
     }
   }
 
