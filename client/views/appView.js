@@ -91,15 +91,16 @@ var AppView = React.createClass({
       data: request,
       success: function(jobs) {
         if(jobs.length) {
+          context.handleZoom(location, title, clickFlag);
           context.setState({
             jobs: jobs, 
             location: request.location,
             title: request.title, 
             zoomFlag: zoomFlag, 
             zoomoutFlag: zoomoutFlag,
+            // filteredLocs: context.state.filteredLocs,
             errorMessage: ''
           });
-          context.handleZoom(location, title, clickFlag);
         } else {
           context.setState({
             zoomFlag: false,
@@ -135,7 +136,10 @@ var AppView = React.createClass({
       traditional: true,
       data: {title: title},
       success: function(newLocs) {
-        context.state.filteredLocs = newLocs;
+        context.setState({
+          filteredLocs: newLocs
+        });
+        // context.state.filteredLocs = newLocs;
         context.refs.map.setMarkers();
       }
     });
