@@ -9,7 +9,7 @@ var JobListing = React.createClass({
     return (
     <div className="job-item">
       <div className="job-location">
-        <div className="loc-icon"><img className="loc-img" src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" height="18" width="18" /></div>
+        <div className="loc-icon"><img className="loc-img" src="https://maps.google.com/mapfiles/ms/icons/red-dot.png" height="18" width="18" /></div>
         <span className="loc-text">{this.props.joblisting.get('location')}</span>
       </div>
       <div className="job-company">{this.props.joblisting.get('company')}</div>
