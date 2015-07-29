@@ -14,7 +14,7 @@ var JobsList = React.createClass({
     if (this.props.location !== '' && this.props.title === '') {
       titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found in ' + this.props.location.toUpperCase();
     } else if (this.props.location === '' && this.props.title !== '') {
-      titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found relating to ' + this.props.title.toUpperCase();
+      titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found related to ' + this.props.title.toUpperCase();
     } else if (this.props.location !== '' && this.props.title !== '') {
       titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found in ' + this.props.location.toUpperCase() + ' relating to ' + this.props.title.toUpperCase();
     }

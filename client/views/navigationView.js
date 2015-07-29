@@ -18,7 +18,8 @@ var Nav = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var zoomFlag = this.state.location ? true : false;
-    this.props.updateSearch(this.state.location, this.state.title, zoomFlag);
+    var zoomoutFlag = !this.state.location && this.state.title ? true : false;
+    this.props.updateSearch(this.state.location, this.state.title, zoomFlag, zoomoutFlag);
     this.setState({
       location: '',
       title: ''

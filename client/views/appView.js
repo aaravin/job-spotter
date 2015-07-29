@@ -15,6 +15,7 @@ var AppView = React.createClass({
     //create new Backbone collections to hold our data
     return { 
       zoomFlag: false,
+      zoomoutFlag: false,
       location: '',
       title: '',
       jobs: new Jobs(),
@@ -48,7 +49,7 @@ var AppView = React.createClass({
     });
   },
 
-  updateSearch: function(location, title, zoomFlag) {
+  updateSearch: function(location, title, zoomFlag, zoomoutFlag) {
     //no location or title passed in response - reset everything
     if(!location && !title) {
       if(this.state.title) {
@@ -57,16 +58,17 @@ var AppView = React.createClass({
       this.clearJobs();
       this.refs.map.resetMap();
     } else {
-      this.jobsUpdate(location, title, zoomFlag);
+      this.jobsUpdate(location, title, zoomFlag, zoomoutFlag, false);
     } 
 
   },
 
   updateClick: function(location) {
     //always update jobs WITH EXISTING TITLE SEARCH!
-    this.jobsUpdate(location, this.state.title);
+    this.jobsUpdate(location, this.state.title, false, false, true);
     if (!this.state.showResults) {
       this.refs.map.shrinkMapWithoutZoom();
+      this.state.showResults = true;
     }
   },
 
@@ -79,32 +81,30 @@ var AppView = React.createClass({
     });
   },
 
-  jobsUpdate: function(location, title, zoomFlag) {
+  jobsUpdate: function(location, title, zoomFlag, zoomoutFlag, clickFlag) {
     var context = this;
     var request = {};
     request.location = location || '';
     request.title = title || '';
-
     this.state.jobs.fetch({
       traditional: true,
       data: request,
       success: function(jobs) {
         if(jobs.length) {
-          // context.state.errorMessage = '';
+          context.handleZoom(location, title, clickFlag);
           context.setState({
             jobs: jobs, 
             location: request.location,
             title: request.title, 
             zoomFlag: zoomFlag, 
-            filteredLocs: context.state.filteredLocs,
+            zoomoutFlag: zoomoutFlag,
+            // filteredLocs: context.state.filteredLocs,
             errorMessage: ''
-            // showResults: true
           });
-          context.handleZoom(location, title);
         } else {
-          // context.state.errorMessage = 'No jobs found, try another search.';
           context.setState({
             zoomFlag: false,
+            zoomoutFlag: false,
             errorMessage: 'No jobs found, try another search.'
           });
         }
@@ -112,8 +112,8 @@ var AppView = React.createClass({
     });
   },
 
-  handleZoom: function(location, title) {
-    if(title || this.state.title)  { 
+  handleZoom: function(location, title, clickFlag) {
+    if(!clickFlag && (title || this.state.title))  { 
       this.locationUpdate(location, title);
     }
     if (!this.state.showResults) {
@@ -147,7 +147,7 @@ var AppView = React.createClass({
       return (
         <div>
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
-          <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} ref="map" />
+          <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} zoomoutFlag={this.state.zoomoutFlag} ref="map" />
           <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
           <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} />
           <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
