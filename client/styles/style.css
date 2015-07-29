@@ -2,6 +2,7 @@ html, body {
   height: 100%; 
   margin: 0; 
   padding: 0;
+  /*background-color: #e9eaec;*/
 }
 
 #map-canvas { 
@@ -27,8 +28,8 @@ html, body {
 }
 
 .selector {
-  border: 2px gray dashed;
-  border-radius: 5px;
+  border: 1px solid black;
+  border-radius: 2px;
   padding: 5px;
   margin: 30px auto;
   margin-bottom: 10px;
@@ -36,7 +37,7 @@ html, body {
 }
 
 .selector:hover {
-  box-shadow: 0 0 8px red;
+  box-shadow: 0 0 8px gray;
 }
 
 .nav-pills {
@@ -88,13 +89,15 @@ html, body {
 }
 
 .job-item:hover {
-  box-shadow: 0 0 8px dimgray;
+  /*box-shadow: 0 0 8px dimgray;*/
+  background-color: #f5f5f5;
 }
 
 .job-item {
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   border-radius: 5px;
-  background-color: whitesmoke;
+  border-bottom: 1px solid #EEE;
+  background-color: white;
   padding: 10px;
 }
 
@@ -113,10 +116,21 @@ html, body {
   display: inline;
 }
 
+.jobs-box {
+  background-color: white;
+  margin-top: 20px;
+}
+
 .job-title {
-  font-weight: bold;
-  font-style: italic;
-  font-size: 16px;
+  /*font-weight: bold;*/
+  /*color: gray;*/
+  /*font-style: italic;*/
+  font-size: 14px;
+}
+
+.job-skills {
+  font-size: 12px;
+  color: gray;
 }
 
 .job-sal-equity {
@@ -154,8 +168,8 @@ td {
 }
 
 .jobs-list {
-  border-style: solid;
-  border-color: gray;
+  /*border-style: solid black 1px;*/
+  border-color: black;
   margin-bottom: 25px;
   max-height: 400px;
   overflow-y: auto;
@@ -164,21 +178,22 @@ td {
 }
 
 .title-string {
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: gray;
+  font-size: 20px;
+  /*font-weight: bold;*/
+  color: black;
+  text-align: center;
+  /*background-color: #F8F8F8;*/
   border-radius: 5px 5px 0px 0px;
-  font-style: italic;
-  margin-top: 25px;
-  border-style: solid;
-  border-bottom: none;
-  border-color: gray;
+  /*font-style: italic;*/
+  /*margin-top: 25px;*/
+  /*border-style: solid;*/
+  border-bottom: 1px solid #EEE;;
+  /*border-color: gray;*/
   padding: 5px;
 }
 
 .salaryChart rect {
-  fill: steelblue;
+  fill: black;
 }
 
 .salaryChart text {
@@ -189,7 +204,7 @@ td {
 }
 
 .numberChart rect {
-  fill: steelblue;
+  fill: black;
 }
 
 .numberChart text {
