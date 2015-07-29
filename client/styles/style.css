@@ -38,6 +38,7 @@ html, body {
 
 .selector:hover {
   color: red;
+  cursor: pointer;
 }
 
 .selector:hover {
