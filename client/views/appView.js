@@ -136,10 +136,7 @@ var AppView = React.createClass({
       traditional: true,
       data: {title: title},
       success: function(newLocs) {
-        context.setState({
-          filteredLocs: newLocs
-        });
-        // context.state.filteredLocs = newLocs;
+        context.state.filteredLocs = newLocs;
         context.refs.map.setMarkers();
       }
     });
