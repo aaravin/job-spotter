@@ -168,7 +168,7 @@ var Map = React.createClass({
     if(this.props.location !== '') {
       var context = this;
       this.props.locs.forEach(function(loc) {
-        if(loc.get("location").toUpperCase() === context.props.location.toUpperCase()) {
+        if(loc.location && loc.get("location").toUpperCase() === context.props.location.toUpperCase()) {
           zoomLocation = new google.maps.LatLng(loc.get("latitude"), loc.get("longitude"));
         }
       });

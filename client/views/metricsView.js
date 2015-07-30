@@ -6,6 +6,8 @@ var Metrics = React.createClass({
 
   getInitialState: function () {
     return {
+      nationalLocsCount: 0,
+      nationalJobsCount: 0,
       salaryData: [
         {label: 'Selected Jobs', value: 0},
         {label: 'U.S.', value: 0}
@@ -32,44 +34,63 @@ var Metrics = React.createClass({
         sumSal += job.get('salary_avg');
       }
     });
+    
+    // var cityName = this.props.jobs.models[0].attributes.location; // use for adding dynamic label in D3 rendering
 
-    var cityName = this.props.jobs.models[0].attributes.location,
-          avgSal = parseInt(sumSal / this.props.jobs.length);
-
+    // Calculate Average Salary metrics
+    var jobSal = parseInt(sumSal / this.props.jobs.length);
     var totalSal = 0;
-    var totalNumber = 0;
-    var jobCount;
-
-    if (this.props.location !== '') {
-      jobCount = this.props.jobs.length;
-    } else {
-      jobCount = Math.round(this.props.jobs.length / this.props.locs.length) || this.props.jobs.length;
-    }
     this.props.locs.forEach(function (loc) {
-        totalSal += loc.get('avgSalary');
-        totalNumber += loc.get('jobCount');
+      totalSal += loc.get('avgSalary');
     });
     var avgTotalSal = parseInt(totalSal / this.props.locs.length);
-    var avgTotalNumber = parseInt(totalNumber / this.props.locs.length);
 
+    // Calculate Average Number of Jobs metrics
+    var jobCount = this.props.jobs.length;
+    if (this.props.title !== '' && this.props.location === '') {
+      jobCount = parseInt(jobCount / Object.keys(locObject).length);
+    }
+    var avgTotalNumber = avgTotalNumber = parseInt(this.state.nationalJobsCount / this.props.locs.length);
+
+    // title only
+    if (this.props.title !== '' && this.props.location === '') {
+      avgTotalNumber = parseInt(this.state.nationalJobsCount / Object.keys(locObject).length);
+    }
+    // title and city
+    if (this.props.title !== '' && this.props.location !== '') {
+      avgTotalNumber = parseInt(this.state.nationalJobsCount / this.props.locs.length);
+    }
+
+    // city only
+    if (this.props.title === '' && this.props.location !== '') {
+      avgTotalNumber = parseInt(this.state.nationalJobsCount / this.state.nationalLocsCount);
+    }
 
     this.setState({
       salaryData: [
-        {label: 'Selected Jobs', value: avgSal},
+        {label: 'Selected Jobs', value: jobSal},
         {label: 'U.S.', value: avgTotalSal}
       ],
       numberData: [
         {label: 'Selected Jobs', value: jobCount},
-        {label: 'U.S. Locations', value: avgTotalNumber}
+        {label: 'U.S.', value: avgTotalNumber}
       ]
     });
+    
   },
 
   componentWillReceiveProps: function () {
     this.updateMetrics();
   },
 
-  componentDidMount: function() {
+  componentDidMount: function() {  
+    // grab a snapshot of the total locations and the sum of their jobs
+    var context = this;
+    this.state.nationalLocsCount = this.props.locs.length;
+    this.props.locs.forEach(function (loc) {
+      context.state.nationalJobsCount += loc.get('jobCount');
+    });
+
     //set up initial conditions for salary and number charts
     var width = 200;
     var barHeight = 20;
@@ -111,7 +132,8 @@ var Metrics = React.createClass({
 
   componentDidUpdate: function () {
     this.renderSalaryGraph();
-    this.renderNumberGraph();
+    this.renderNumberGraph();     
+
   },
 
   renderSalaryGraph: function () {
@@ -142,6 +164,7 @@ var Metrics = React.createClass({
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
       .attr("dy", ".35em");
+
   },
 
   renderNumberGraph: function () {
@@ -171,48 +194,50 @@ var Metrics = React.createClass({
       .attr("x", function(d) { return x(d) - 3; })
       .attr("y", barHeight / 2)
       .attr("dy", ".35em");
+
   },
 
   render: function () {
     // if (this.state.salaryData[0].label === '') {
     //   return (<div></div>)
     // } else {
-      return (
-        <div className="metrics">
-          <table id="sal-table">
-            <tr>
-              <td className="col-label" colSpan="2">Average Salary</td>
-            </tr>
-            <tr>
-              <td>{this.state.salaryData[0].label}</td>
-              <td rowSpan="2">
-                <div>
-                  <svg className="salaryChart"></svg>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>{this.state.salaryData[1].label}</td>
-            </tr>
-          </table>
-          <table id="num-table">
-            <tr>
-              <td className="col-label" colSpan="2">Average Job Count</td>
-            </tr>
-            <tr>
-              <td>{this.state.numberData[0].label}</td>
-              <td rowSpan="2">
-                <div>
-                  <svg className="numberChart"></svg>
-                </div>            
-              </td>
-            </tr>
-            <tr>
-              <td>{this.state.numberData[1].label}</td>
-            </tr>
-          </table>
-        </div>
-      );
+    // }
+    return (
+      <div className="metrics">
+        <table id="sal-table">
+          <tr>
+            <td className="col-label" colSpan="2">Average Salary</td>
+          </tr>
+          <tr>
+            <td>{this.state.salaryData[0].label}</td>
+            <td rowSpan="2">
+              <div>
+                <svg className="salaryChart"></svg>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{this.state.salaryData[1].label}</td>
+          </tr>
+        </table>
+        <table id="num-table">
+          <tr>
+            <td className="col-label" colSpan="2">Average Job Count</td>
+          </tr>
+          <tr>
+            <td>{this.state.numberData[0].label}</td>
+            <td rowSpan="2">
+              <div>
+                <svg className="numberChart"></svg>
+              </div>            
+            </td>
+          </tr>
+          <tr>
+            <td>{this.state.numberData[1].label}</td>
+          </tr>
+        </table>
+      </div>
+    );
   }
 
 });

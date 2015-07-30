@@ -24,7 +24,7 @@ var AppView = React.createClass({
       titles: new Titles(),
       errorMessage: '',
       showResults: false
-    }
+    };
   },
 
   componentDidMount: function() {
@@ -58,6 +58,10 @@ var AppView = React.createClass({
       this.clearJobs();
       this.refs.map.resetMap();
     } else {
+      this.setState({
+        location: location,
+        title: title
+      });
       this.jobsUpdate(location, title, zoomFlag, zoomoutFlag, false);
     } 
 
@@ -65,6 +69,9 @@ var AppView = React.createClass({
 
   updateClick: function(location) {
     //always update jobs WITH EXISTING TITLE SEARCH!
+    this.setState({
+      location: location
+    });
     this.jobsUpdate(location, this.state.title, false, false, true);
     if (!this.state.showResults) {
       this.refs.map.shrinkMapWithoutZoom();
@@ -84,6 +91,10 @@ var AppView = React.createClass({
   jobsUpdate: function(location, title, zoomFlag, zoomoutFlag, clickFlag) {
     var context = this;
     var request = {};
+    this.setState({
+      location: location,
+      title: title
+    });
     request.location = location || '';
     request.title = title || '';
     this.state.jobs.fetch({
@@ -132,6 +143,10 @@ var AppView = React.createClass({
 
   locationUpdate: function(location, title) {
     var context = this;
+    // this.setState({
+    //   location: location,
+    //   title: title
+    // });
     this.state.filteredLocs.fetch({
       traditional: true,
       data: {title: title},
@@ -149,7 +164,7 @@ var AppView = React.createClass({
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
           <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} zoomoutFlag={this.state.zoomoutFlag} ref="map" />
           <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
-          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} />
+          <Metrics jobs={this.state.jobs} title={this.state.title} location={this.state.location} locs={this.state.filteredLocs} />
           <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
         </div>
       );
