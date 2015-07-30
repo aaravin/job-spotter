@@ -43,7 +43,7 @@ var Metrics = React.createClass({
     if (this.props.location !== '') {
       jobCount = this.props.jobs.length;
     } else {
-      jobCount = Math.round(this.props.jobs.length / this.props.locs.length);
+      jobCount = Math.round(this.props.jobs.length / this.props.locs.length) || this.props.jobs.length;
     }
     this.props.locs.forEach(function (loc) {
         totalSal += loc.get('avgSalary');
