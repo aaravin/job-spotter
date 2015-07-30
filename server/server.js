@@ -11,9 +11,12 @@ var db = require('../db/config');
 var latLongUtil = require('./utils/latLongUtil.js');
 var jobCountUtil = require('./utils/jobCountUtil.js');
 var locSalaryUtil = require('./utils/locSalaryUtil.js');
+var dbInitUtil = require('./utils/dbInitUtil.js');
+var dbSetupUtil = require('./utils/dbSetupUtil.js');
 
 var mainController = require('./controllers/mainController');
 var jobsController = require('./controllers/jobsController');
+var CronJob = require('cron').CronJob;
 
 var port = process.env.PORT || 8080;
 
@@ -70,23 +73,65 @@ app.get('/api/jobs', function (req, res, next) {
   }
 });
 
-// app.get('/api/jobs/title', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
-// app.get('/api/jobs/title', function (req, res, next) {
-//   console.log('in title route on server');
-//   titleController.getJobsWithTitle(req, res, next);
-// });
+var cronJob1 = new CronJob({
+  cronTime: '00 00 12 * * 1-5',
+  onTick: function() {
+    console.log("Waking up data server...");
+    request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
+      console.log("Data server awake!");
+    });
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+});
 
-// RUN ONLY ONCE TO POPULATE LATS AND LONGS
-// console.log("GETTING LAT AND LONGS");
+var cronJob2 = new CronJob({
+  cronTime: '00 40 12 * * 1-5',
+  onTick: function() {
+    console.log("Keeping data server awake...");
+    request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
+      console.log("Data server kept awake!");
+    });
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+})
+
+var cronJob3 = new CronJob({
+  cronTime: '00 13 13 * * 1-5',
+  onTick: function() {
+    console.log("Resetting database...");
+    dbInitUtil.setupSchema();
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+});
+
+var cronJob4 = new CronJob({
+  cronTime: '00 15 13 * * 1-5',
+  onTick: function() {
+    console.log("Updating db with data from data server...");
+    dbSetupUtil.setupDB();
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+});
+
+// // Update all latitudes and longitudes
+// console.log("UPDATING LATS AND LONGS");
 // latLongUtil.getAllLocs();
 
-// Update all jobCounts
+// // Update all jobCounts
 // console.log("UPDATING JOB COUNTS");
 // jobCountUtil.updateJobCounts();
 
 // // Update all locSalaries
 // console.log("UPDATING LOC SALARIES");
 // locSalaryUtil.updateLocSalaries();
+cronJob1.start();
+cronJob2.start();
+cronJob3.start();
+cronJob4.start();
 
 app.listen(port);
 console.log("Listening on PORT " + port);
