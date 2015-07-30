@@ -19,21 +19,21 @@ var Selections = React.createClass({
       return (
       <div className="selections">
         <div className="filterLabel">Search Filters</div>
-        <div className="selector" onClick={this.handleClickLoc}><span className="glyphicon glyphicon-remove-circle"></span> {this.props.location}</div>
-        <div className="selector" onClick={this.handleClickTitle}><span className="glyphicon glyphicon-remove-circle"></span> {this.props.title}</div>
+        <div className="selector" onClick={this.handleClickLoc}>{this.props.location} <span className="glyphicon glyphicon-remove-circle"></span></div>
+        <div className="selector" onClick={this.handleClickTitle}>{this.props.title} <span className="glyphicon glyphicon-remove-circle"></span></div>
       </div>)
     } else if (this.props.location !== '') {
       return (
       <div className="selections">
         <div className="filterLabel">Search Filters</div>
-        <div className="selector" onClick={this.handleClickLoc}><span className="glyphicon glyphicon-remove-circle"></span> {this.props.location}</div> 
+        <div className="selector" onClick={this.handleClickLoc}>{this.props.location} <span className="glyphicon glyphicon-remove-circle"></span></div> 
       </div>
       )
     } else {
       return (
       <div className="selections">
         <div className="filterLabel">Search Filters</div>
-        <div className="selector" onClick={this.handleClickTitle}><span className="glyphicon glyphicon-remove-circle"></span> {this.props.title}</div>
+        <div className="selector" onClick={this.handleClickTitle}>{this.props.title} <span className="glyphicon glyphicon-remove-circle"></span></div>
       </div>)
     }
   }
