@@ -73,8 +73,9 @@ app.get('/api/jobs', function (req, res, next) {
   }
 });
 
+//Wake up data server at 12am
 var cronJob1 = new CronJob({
-  cronTime: '00 00 12 * * 1-5',
+  cronTime: '00 15 15 * * 1-5',
   onTick: function() {
     console.log("Waking up data server...");
     request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
@@ -85,8 +86,9 @@ var cronJob1 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
+//Ping data server at 12:40am to ensure it stays awake
 var cronJob2 = new CronJob({
-  cronTime: '00 40 12 * * 1-5',
+  cronTime: '00 55 15 * * 1-5',
   onTick: function() {
     console.log("Keeping data server awake...");
     request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
@@ -97,8 +99,9 @@ var cronJob2 = new CronJob({
   timeZone: "America/Los_Angeles"
 })
 
+//Reset database and schema at 1:13am
 var cronJob3 = new CronJob({
-  cronTime: '00 13 13 * * 1-5',
+  cronTime: '00 28 16 * * 1-5',
   onTick: function() {
     console.log("Resetting database...");
     dbInitUtil.setupSchema();
@@ -107,8 +110,9 @@ var cronJob3 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
+//Update database with newly scraped data at 1:15am
 var cronJob4 = new CronJob({
-  cronTime: '00 15 13 * * 1-5',
+  cronTime: '00 30 16 * * 1-5',
   onTick: function() {
     console.log("Updating db with data from data server...");
     dbSetupUtil.setupDB();
@@ -117,7 +121,30 @@ var cronJob4 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
-// // Update all latitudes and longitudes
+//Call Google Maps API to populate latitudes and longitudes at 1:30am
+var cronJob5 = new CronJob({
+  cronTime: '00 45 16 * * 1-5',
+  onTick: function() {
+    console.log("Updating latitudes and longitudes...");
+    latLongUtil.getAllLocs();
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+});
+
+//Call Google Maps API to populate job counts and salaries at 1:35am
+var cronJob6 = new CronJob({
+  cronTime: '00 50 16 * * 1-5',
+  onTick: function() {
+    console.log("Updating job counts and salaries...");
+    jobCountUtil.updateJobCounts();
+    locSalaryUtil.updateLocSalaries();
+  },
+  start: false,
+  timeZone: "America/Los_Angeles"
+});
+
+// Update all latitudes and longitudes
 // console.log("UPDATING LATS AND LONGS");
 // latLongUtil.getAllLocs();
 
@@ -128,10 +155,13 @@ var cronJob4 = new CronJob({
 // // Update all locSalaries
 // console.log("UPDATING LOC SALARIES");
 // locSalaryUtil.updateLocSalaries();
+
 cronJob1.start();
 cronJob2.start();
 cronJob3.start();
 cronJob4.start();
+cronJob5.start();
+cronJob6.start();
 
 app.listen(port);
 console.log("Listening on PORT " + port);
