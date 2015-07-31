@@ -77,14 +77,19 @@ mysql.server start
 
 Heroku:
 > (Optional) For better performance, add a Google Maps API key in client/index.html by replacing "sensor=true"
+
 > (Optional) Use a local file for Google Maps Utility Marker Clusterer rather than the default svn
+
 > Remove dist/ folder from .gitignore
+
 > Run gulp to update dist/src/build.js
+
 > (Recommended) Install a utility that minifies JavaScript files
 ```sh
 npm install -g uglifyjs
 ```
 > (Recommended) Minify dist/src/build.js
+
 > (Recommended) Rename the minified file as build.js (this fill will be included in index.html)
 
 > From the root directory, make a commit from your master branch, then push to Heroku (may require force push)
