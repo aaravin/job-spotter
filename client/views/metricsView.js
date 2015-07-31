@@ -43,30 +43,24 @@ var Metrics = React.createClass({
     if (this.props.location !== '') {
       jobCount = this.props.jobs.length;
     } else {
-      jobCount = Math.round(this.props.jobs.length / this.props.locs.length) || this.props.jobs.length;
+      jobCount = Math.round(this.props.jobs.length / this.props.locs.length);
     }
     this.props.locs.forEach(function (loc) {
-        totalSal += loc.get('avgSalary');
-        totalNumber += loc.get('jobCount');
+      totalSal += loc.get('avgSalary');
+      totalNumber += loc.get('jobCount');
     });
     var avgTotalSal = parseInt(totalSal / this.props.locs.length);
     var avgTotalNumber = parseInt(totalNumber / this.props.locs.length);
+    // console.log(totalNumber, jobCount);
 
-
-    this.setState({
-      salaryData: [
-        {label: 'Selected Jobs', value: avgSal},
-        {label: 'U.S.', value: avgTotalSal}
-      ],
-      numberData: [
-        {label: 'Selected Jobs', value: jobCount},
-        {label: 'U.S. Locations', value: avgTotalNumber}
-      ]
-    });
-  },
-
-  componentWillReceiveProps: function () {
-    this.updateMetrics();
+    this.state.salaryData = [
+      {label: 'Selected Jobs', value: avgSal},
+      {label: 'U.S.', value: avgTotalSal}
+    ],
+    this.state.numberData = [
+      {label: 'Selected Jobs', value: jobCount},
+      {label: 'U.S. Locations', value: avgTotalNumber}
+    ]
   },
 
   componentDidMount: function() {
@@ -110,6 +104,7 @@ var Metrics = React.createClass({
   },
 
   componentDidUpdate: function () {
+    this.updateMetrics();
     this.renderSalaryGraph();
     this.renderNumberGraph();
   },
@@ -174,45 +169,42 @@ var Metrics = React.createClass({
   },
 
   render: function () {
-    // if (this.state.salaryData[0].label === '') {
-    //   return (<div></div>)
-    // } else {
-      return (
-        <div className="metrics">
-          <table id="sal-table">
-            <tr>
-              <td className="col-label" colSpan="2">Average Salary</td>
-            </tr>
-            <tr>
-              <td>{this.state.salaryData[0].label}</td>
-              <td rowSpan="2">
-                <div>
-                  <svg className="salaryChart"></svg>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>{this.state.salaryData[1].label}</td>
-            </tr>
-          </table>
-          <table id="num-table">
-            <tr>
-              <td className="col-label" colSpan="2">Average Job Count</td>
-            </tr>
-            <tr>
-              <td>{this.state.numberData[0].label}</td>
-              <td rowSpan="2">
-                <div>
-                  <svg className="numberChart"></svg>
-                </div>            
-              </td>
-            </tr>
-            <tr>
-              <td>{this.state.numberData[1].label}</td>
-            </tr>
-          </table>
-        </div>
-      );
+    return (
+      <div className="metrics">
+        <table id="sal-table">
+          <tr>
+            <td className="col-label" colSpan="2">Average Salary</td>
+          </tr>
+          <tr>
+            <td>{this.state.salaryData[0].label}</td>
+            <td rowSpan="2">
+              <div>
+                <svg className="salaryChart"></svg>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{this.state.salaryData[1].label}</td>
+          </tr>
+        </table>
+        <table id="num-table">
+          <tr>
+            <td className="col-label" colSpan="2">Average Job Count</td>
+          </tr>
+          <tr>
+            <td>{this.state.numberData[0].label}</td>
+            <td rowSpan="2">
+              <div>
+                <svg className="numberChart"></svg>
+              </div>            
+            </td>
+          </tr>
+          <tr>
+            <td>{this.state.numberData[1].label}</td>
+          </tr>
+        </table>
+      </div>
+    );
   }
 
 });

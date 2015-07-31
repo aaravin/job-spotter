@@ -46,8 +46,12 @@ var AppView = React.createClass({
       success: function(locs) {
         context.state.titles.fetch({
           success: function(titles) {
-            context.state.allLocs = locs;
-            context.state.titles = titles;
+            // context.state.allLocs = locs;
+            // context.state.titles = titles;
+            context.setState({
+              allLocs: locs,
+              titles: titles
+            });
             context.refs.nav.autoFill();
           }
         });
@@ -152,7 +156,9 @@ var AppView = React.createClass({
       traditional: true,
       data: {title: title},
       success: function(newLocs) {
-        context.state.filteredLocs = newLocs;
+        context.setState({
+          filteredLocs: newLocs
+        });
         context.refs.map.setMarkers();
       }
     });
@@ -165,7 +171,7 @@ var AppView = React.createClass({
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
           <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} zoomoutFlag={this.state.zoomoutFlag} ref="map" />
           <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
-          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} />
+          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} allLocs={this.state.allLocs} />
           <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
         </div>
       );
