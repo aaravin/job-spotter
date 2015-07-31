@@ -41,7 +41,10 @@ var Nav = React.createClass({
   autoFill: function() {
     var context = this;
     $(React.findDOMNode(context.refs.location)).autocomplete({ 
-      source: context.props.locs.pluck("location"),
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(context.props.locs.pluck("location"), request.term);
+        response(results.slice(0,10));
+      },
       appendTo: this,
       create: function (e) {
         $(this).prev('.ui-helper-hidden-accessible').remove();
@@ -52,7 +55,10 @@ var Nav = React.createClass({
     });
 
     $(React.findDOMNode(context.refs.title)).autocomplete({ 
-      source: context.props.titles.pluck("title"),
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(context.props.titles.pluck("title"), request.term);
+        response(results.slice(0,10));
+      },
       appendTo: this,
       create: function (e) {
         $(this).prev('.ui-helper-hidden-accessible').remove();
@@ -71,7 +77,7 @@ var Nav = React.createClass({
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
             <div className="form-group">
               <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control" id="autocomplete" />
-              <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Position" ref="title" className="form-control" id="autocomplete" />
+              <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title" ref="title" className="form-control" id="autocomplete" />
               <button id="search-button" onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
             </div>
           </form>
