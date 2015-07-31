@@ -20,21 +20,17 @@ module.exports = {
     });
 
     console.log("Dropping tables...");
-    knex.raw('SET FOREIGN_KEY_CHECKS = 0').then(function() {
-      knex.raw('DROP TABLE users').then(function() {
-        knex.raw('DROP TABLE titles').then(function() {
-          knex.raw('DROP TABLE companies').then(function() {
-            knex.raw('DROP TABLE locations').then(function() {
-              knex.raw('DROP TABLE links').then(function() {
-                knex.raw('DROP TABLE titles_companies').then(function() {
-                  knex.raw('DROP TABLE titles_locations').then(function() {
-                    knex.raw('DROP TABLE companies_locations').then(function() {
-                      knex.raw('SET FOREIGN_KEY_CHECKS = 1').then(function() {
-                        console.log("Dropped!");
-                        console.log("Setting up schema...");
-                        dbSchemaUtil.setupSchema();                        
-                      })
-                    })
+    knex.raw('DROP TABLE users').then(function() {
+      knex.raw('DROP TABLE titles').then(function() {
+        knex.raw('DROP TABLE companies').then(function() {
+          knex.raw('DROP TABLE locations').then(function() {
+            knex.raw('DROP TABLE links').then(function() {
+              knex.raw('DROP TABLE titles_companies').then(function() {
+                knex.raw('DROP TABLE titles_locations').then(function() {
+                  knex.raw('DROP TABLE companies_locations').then(function() {
+                    console.log("Dropped!");
+                    console.log("Setting up schema...");
+                    dbSchemaUtil.setupSchema();
                   })
                 })
               })
