@@ -20,9 +20,13 @@
 
 ## Usage
 
-> Install dependencies
+> [Install dependencies](#installing-dependencies)
 
 > Start MySQL server
+```sh
+mysql.server start
+mysql -u root
+```
 
 > Run gulp
 ```sh
