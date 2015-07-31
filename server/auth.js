@@ -46,6 +46,3 @@ router.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
 }));
 
 module.exports = router;
-
-
-

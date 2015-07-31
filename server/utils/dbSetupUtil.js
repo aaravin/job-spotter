@@ -16,15 +16,8 @@ module.exports = {
 
       var cleanData = [];
 
-      // jobData = JSON.stringify(jobData);
-
-      // jobData = JSON.parse(jobData);
-
-
       var testTag = jobData[0].jobsPerCompany[0].jobInfo;
       var testSalary = jobData[0].jobsPerCompany[0].jobSalary;
-
-
 
       var weirdSymbolCleanser = function(data) {
         //takes in a string, splits by the weird character, trims white space, returns array
