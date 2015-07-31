@@ -42,13 +42,6 @@ module.exports = {
           })
         })
       })
-      // console.log("Dropped!");
-      // console.log("Creating database...");
-      // knex.raw('CREATE DATABASE jobs').then(function() {
-      //   console.log("Created!");
-      //   console.log("Setting up schema...");
-      //   dbSchemaUtil.setupSchema();
-      // })
     });
   }
 };
