@@ -46,8 +46,6 @@ var AppView = React.createClass({
       success: function(locs) {
         context.state.titles.fetch({
           success: function(titles) {
-            // context.state.allLocs = locs;
-            // context.state.titles = titles;
             context.setState({
               allLocs: locs,
               titles: titles
@@ -78,10 +76,6 @@ var AppView = React.createClass({
   updateClick: function(location) {
     //always update jobs with existing title search! Do not delete the user's title selection on a click
     this.jobsUpdate(location, this.state.title, false, false, true);
-    if (!this.state.showResults) {
-      this.refs.map.shrinkMapWithoutZoom();
-      this.state.showResults = true;
-    }
   },
 
   //helper function to remove all user/title selections; map will be reset to full screen
@@ -137,7 +131,7 @@ var AppView = React.createClass({
       this.locationUpdate(location, title);
     }
     if (!this.state.showResults) { //shrink map if a selection is made for the first time
-      if(!location) { //do not zoom if no location is selected
+      if(!location || clickFlag) { //do not zoom if no location is selected
         this.refs.map.shrinkMapWithoutZoom();
       } else { //zoom to location if one is provided
         this.refs.map.shrinkMapWithZoom();
@@ -171,7 +165,7 @@ var AppView = React.createClass({
           <Nav updateSearch={this.updateSearch} locs={this.state.allLocs} titles={this.state.titles} errorMessage={this.state.errorMessage} ref="nav" />
           <Map updateClick={this.updateClick} locs={this.state.filteredLocs} location={this.state.location} zoomFlag={this.state.zoomFlag} zoomoutFlag={this.state.zoomoutFlag} ref="map" />
           <Selections updateSearch={this.updateSearch} location={this.state.location} title={this.state.title} />
-          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} allLocs={this.state.allLocs} />
+          <Metrics jobs={this.state.jobs} location={this.state.location} locs={this.state.filteredLocs} />
           <JobsList jobs={this.state.jobs} location={this.state.location} title={this.state.title} />
         </div>
       );
