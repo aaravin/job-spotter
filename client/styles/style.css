@@ -173,7 +173,6 @@ td {
 }
 
 .jobs-list {
-  /*border-style: solid black 1px;*/
   border-color: black;
   margin-bottom: 25px;
   max-height: 400px;

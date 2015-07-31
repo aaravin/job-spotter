@@ -8,11 +8,11 @@ var Metrics = React.createClass({
     return {
       salaryData: [
         {label: 'Selected Jobs', value: 0},
-        {label: 'U.S.', value: 0}
+        {label: 'All U.S. Cities', value: 0}
       ],
       numberData: [
         {label: 'Selected Jobs', value: 0},
-        {label: 'U.S. Locations', value: 0}
+        {label: 'All U.S. Cities', value: 0}
       ]
     };
   },
@@ -55,11 +55,11 @@ var Metrics = React.createClass({
 
     this.state.salaryData = [
       {label: 'Selected Jobs', value: avgSal},
-      {label: 'U.S.', value: avgTotalSal}
+      {label: 'All U.S. Cities', value: avgTotalSal}
     ],
     this.state.numberData = [
       {label: 'Selected Jobs', value: jobCount},
-      {label: 'U.S. Locations', value: avgTotalNumber}
+      {label: 'All U.S. Cities', value: avgTotalNumber}
     ]
   },
 
