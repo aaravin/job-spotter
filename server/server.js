@@ -101,7 +101,7 @@ var cronJob2 = new CronJob({
 
 //Reset database and schema at 1:13am
 var cronJob3 = new CronJob({
-  cronTime: '00 20 17 * * 1-5',
+  cronTime: '00 40 17 * * 1-5',
   onTick: function() {
     console.log("Resetting database...");
     dbInitUtil.setupSchema();
@@ -112,7 +112,7 @@ var cronJob3 = new CronJob({
 
 //Update database with newly scraped data at 1:15am
 var cronJob4 = new CronJob({
-  cronTime: '00 22 17 * * 1-5',
+  cronTime: '00 42 17 * * 1-5',
   onTick: function() {
     console.log("Updating db with data from data server...");
     dbSetupUtil.setupDB();
@@ -123,7 +123,7 @@ var cronJob4 = new CronJob({
 
 //Call Google Maps API to populate latitudes and longitudes at 1:30am
 var cronJob5 = new CronJob({
-  cronTime: '00 37 17 * * 1-5',
+  cronTime: '00 57 17 * * 1-5',
   onTick: function() {
     console.log("Updating latitudes and longitudes...");
     latLongUtil.getAllLocs();
@@ -134,7 +134,7 @@ var cronJob5 = new CronJob({
 
 //Call Google Maps API to populate job counts and salaries at 1:35am
 var cronJob6 = new CronJob({
-  cronTime: '00 42 17 * * 1-5',
+  cronTime: '00 02 18 * * 1-5',
   onTick: function() {
     console.log("Updating job counts and salaries...");
     jobCountUtil.updateJobCounts();
