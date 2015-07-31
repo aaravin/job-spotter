@@ -156,12 +156,12 @@ var cronJob6 = new CronJob({
 // console.log("UPDATING LOC SALARIES");
 // locSalaryUtil.updateLocSalaries();
 
-cronJob1.start();
-cronJob2.start();
-cronJob3.start();
-cronJob4.start();
-cronJob5.start();
-cronJob6.start();
+// cronJob1.start();
+// cronJob2.start();
+// cronJob3.start();
+// cronJob4.start();
+// cronJob5.start();
+// cronJob6.start();
 
 app.listen(port);
 console.log("Listening on PORT " + port);

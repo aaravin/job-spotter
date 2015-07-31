@@ -27,15 +27,21 @@ var AppView = React.createClass({
     }
   },
 
+  //make initial AJAX requests once element is mounted on the DOM
   componentDidMount: function() {
     var context = this;
-    this.state.filteredLocs.fetch({
+    this.state.filteredLocs.fetch({ //filtered locs holds locations that will be shown on the map
       success: function(locs) {
         context.state.filteredLocs = locs;
         context.refs.map.setMarkers();
       }
     });
 
+    /*allLocs and titles must be fetched separately; they will be used to populate
+    the autofill feature in the search boxes.
+    React does NOT allow filteredLocs and allLocs to be set to the same collection
+    at the same time, otherwise these calls would be executed above in order to 
+    avoid data/"source of truth" duplication.*/
     this.state.allLocs.fetch({
       success: function(locs) {
         context.state.titles.fetch({
@@ -49,6 +55,8 @@ var AppView = React.createClass({
     });
   },
 
+
+  //any user submission from the navigation input form is routed here
   updateSearch: function(location, title, zoomFlag, zoomoutFlag) {
     //no location or title passed in response - reset everything
     if(!location && !title) {
@@ -57,14 +65,14 @@ var AppView = React.createClass({
       }
       this.clearJobs();
       this.refs.map.resetMap();
-    } else {
+    } else {  //if a title or location is provided, attempt to update jobs
       this.jobsUpdate(location, title, zoomFlag, zoomoutFlag, false);
     } 
-
   },
 
+  //any user click to a map marker is routed here
   updateClick: function(location) {
-    //always update jobs WITH EXISTING TITLE SEARCH!
+    //always update jobs with existing title search! Do not delete the user's title selection on a click
     this.jobsUpdate(location, this.state.title, false, false, true);
     if (!this.state.showResults) {
       this.refs.map.shrinkMapWithoutZoom();
@@ -72,6 +80,7 @@ var AppView = React.createClass({
     }
   },
 
+  //helper function to remove all user/title selections; map will be reset to full screen
   clearJobs: function() {
     this.setState({
       jobs: new Jobs(),
@@ -81,16 +90,17 @@ var AppView = React.createClass({
     });
   },
 
+  //jobsUpdate is called after each user map click or navigation form submission
   jobsUpdate: function(location, title, zoomFlag, zoomoutFlag, clickFlag) {
     var context = this;
     var request = {};
     request.location = location || '';
     request.title = title || '';
-    this.state.jobs.fetch({
+    this.state.jobs.fetch({ //fetch new jobs with user title and location input (or '' if empty)
       traditional: true,
       data: request,
       success: function(jobs) {
-        if(jobs.length) {
+        if(jobs.length) { //set state when new jobs are received
           context.handleZoom(location, title, clickFlag);
           context.setState({
             jobs: jobs, 
@@ -101,7 +111,7 @@ var AppView = React.createClass({
             // filteredLocs: context.state.filteredLocs,
             errorMessage: ''
           });
-        } else {
+        } else { //handle empty responses with a message to the user
           context.setState({
             zoomFlag: false,
             zoomoutFlag: false,
@@ -112,24 +122,30 @@ var AppView = React.createClass({
     });
   },
 
+  /*check whether app should zoom in or out (or neither),
+  and whether map markers should be updated*/
   handleZoom: function(location, title, clickFlag) {
+    //update displayed locations if user did NOT click
+    //and there was a title requested this search OR last search
+    //(if a title was requested this search, restrict locations,
+    // if a title was requested last search, exapnd locations back to full)
     if(!clickFlag && (title || this.state.title))  { 
       this.locationUpdate(location, title);
     }
-    if (!this.state.showResults) {
-      if(!location) {
+    if (!this.state.showResults) { //shrink map if a selection is made for the first time
+      if(!location) { //do not zoom if no location is selected
         this.refs.map.shrinkMapWithoutZoom();
-      } else {
+      } else { //zoom to location if one is provided
         this.refs.map.shrinkMapWithZoom();
       }
-      this.setState({
+      this.setState({ //set flag so that shrinkMap is not called again until all selections are cleared
         showResults: true
       });
     }
-    //if user is searching a new title in THIS REQUEST
-    //OR if user search for a title LAST REQUEST and we need to clear it
   },
 
+  //helper function to get new locations when a title is requested 
+  //(only show locations with selected title)
   locationUpdate: function(location, title) {
     var context = this;
     this.state.filteredLocs.fetch({
