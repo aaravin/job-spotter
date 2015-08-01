@@ -1,12 +1,17 @@
 # JobSpotter
 
-> Find, compare, and analyze new jobs
+Search, Compare, Apply
+
+> Search for open positions in your desired geographical locations and industries. Simply click on a map marker, or make specific location and title searches, to view the jobs list.
+
+> Review the available postings to find the role that's best suited to you. Compare average salaries and openings by city and title.
+
+> Click on the provided job link to view the source of the posting and apply to the position. Check back in regularly to see the newest postings - jobs are updated daily.
 
 ## Team
 
   - __Product Owner__: Paul Sokolik
-  - __Scrum Master__: Timmy Luong
-  - __Development Team Members__: Ashwin Aravindan, Chris Staton
+  - __Development Team Members__: Ashwin Aravindan, Chris Staton, Timmy Luong
 
 ## Table of Contents
 
@@ -86,7 +91,7 @@ mysql.server start
 npm install mocha@2.0.1
 ```
 
-> Do not remove or rename complier.js
+> Do not remove or rename compiler.js
 
 > Do not remove or rename testdom.js
 
@@ -98,6 +103,8 @@ npm install mocha@2.0.1
 ## Deployment
 
 Heroku:
+The deployment process will depend upon your source of data and may require additional steps specific to your own implemention.
+
 > (Optional) For better performance, add a Google Maps API key in client/index.html by replacing "sensor=true"
 
 > (Optional) Use a local file for Google Maps Utility Marker Clusterer rather than the default svn
