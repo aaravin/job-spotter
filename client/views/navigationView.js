@@ -79,6 +79,7 @@ var Nav = React.createClass({
               <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control" id="autocomplete" />
               <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title" ref="title" className="form-control" id="autocomplete" />
               <button id="search-button" onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
+              <a id="splash" href="/splash">About</a>
             </div>
           </form>
           <div className="error-message pull-right"> {this.props.errorMessage}</div>

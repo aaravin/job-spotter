@@ -39,6 +39,7 @@ require('./lib/middleware.js')(app, express); // load up all middlewares
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/../dist"));
+app.use("/splash", express.static(__dirname + "/../landingpage"));
 
 // app.get('/api/locations/all', ensureAuthenticated, function (req, res, next) {  // <---- When Authentication is desired
 app.get('/api/locations/all', function (req, res, next) {
@@ -67,6 +68,10 @@ app.get('/api/jobs', function (req, res, next) {
     res.status(200).send(null);
   }
 });
+
+// app.get('/splash', function(req, res) {
+//   express.static(__dirname + "../landingpage/index.html")
+// })
 
 //Wake up data server at 12am
 var cronJob1 = new CronJob({
