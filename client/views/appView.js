@@ -2,7 +2,6 @@ var React = require('react');
 var Nav = require('./navigationView');
 var JobsList = require('./jobsView');
 var Map = require('./mapView');
-var Input = require('./inputView');
 var Selections = require('./selectionsView');
 var Metrics = require('./metricsView');
 var Locs = require('./../collections/locations');
@@ -101,7 +100,6 @@ var AppView = React.createClass({
         if(jobs.length) { //set state when new jobs are received
           context.handleZoom(location, title, clickFlag);
           context.setState({
-            jobs: jobs, 
             location: request.location,
             title: request.title, 
             zoomFlag: zoomFlag, 

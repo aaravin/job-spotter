@@ -12,7 +12,7 @@ var JobsList = React.createClass({
     });
 
     if (this.props.jobs.length === 0) {
-      titleString = 'Zero jobs found';
+      titleString = 'No jobs found';
     } else if (this.props.location !== '' && this.props.title === '') {
       titleString = '' + count.toLocaleString() + (count===1 ? ' job ' : ' jobs ') + 'found in ' + this.props.location.toUpperCase();
     } else if (this.props.location === '' && this.props.title !== '') {

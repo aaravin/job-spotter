@@ -62,6 +62,7 @@ var Map = React.createClass({
           if(context.state.prevInfoWindow) {
             context.state.prevInfoWindow.close();
           }
+          marker.setOpacity(0.7);
           infowindow.open(context.state.map, marker);
           context.state.prevInfoWindow = infowindow;
           context.props.updateClick(city.get('location'));
