@@ -176,7 +176,7 @@ var Metrics = React.createClass({
             <td className="col-label" colSpan="2">Average Salary</td>
           </tr>
           <tr>
-            <td>{this.state.salaryData[0].label}</td>
+            <td className="chart-label">{this.state.salaryData[0].label}</td>
             <td rowSpan="2">
               <div>
                 <svg className="salaryChart"></svg>
@@ -184,7 +184,7 @@ var Metrics = React.createClass({
             </td>
           </tr>
           <tr>
-            <td>{this.state.salaryData[1].label}</td>
+            <td className="chart-label">{this.state.salaryData[1].label}</td>
           </tr>
         </table>
         <table id="num-table">
@@ -192,7 +192,7 @@ var Metrics = React.createClass({
             <td className="col-label" colSpan="2">Average Job Count</td>
           </tr>
           <tr>
-            <td>{this.state.numberData[0].label}</td>
+            <td className="chart-label">{this.state.numberData[0].label}</td>
             <td rowSpan="2">
               <div>
                 <svg className="numberChart"></svg>
@@ -200,7 +200,7 @@ var Metrics = React.createClass({
             </td>
           </tr>
           <tr>
-            <td>{this.state.numberData[1].label}</td>
+            <td className="chart-label">{this.state.numberData[1].label}</td>
           </tr>
         </table>
       </div>
