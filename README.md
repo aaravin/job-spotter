@@ -15,6 +15,8 @@
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
+1. [Testing](#testing)
+1. [Deployment](#deployment)
 1. [Team](#team)
 1. [Contributing](#contributing)
 
@@ -51,7 +53,7 @@ gulp
 - jquery: 2.1.4
 - jquery-ui-browserify: 1.11.0-pre-seelio
 - knex: 0.8.6
-- mocha: 1.17.1
+- mocha: 2.0.1
 - morgan: 1.6.0
 - mysql: 2.7.0
 - node: 0.0.0
@@ -77,7 +79,23 @@ bower install
 mysql.server start
 ```
 
-### Deployment
+## Testing
+
+> Must use mocha version 2.0.1 for React testing
+```
+npm install mocha@2.0.1
+```
+
+> Do not remove or rename complier.js
+
+> Do not remove or rename testdom.js
+
+> Avoid adding any new files to folder test/
+
+> Additional tests should be added in shallowRenderSpec.js or serverSpec.js
+
+
+## Deployment
 
 Heroku:
 > (Optional) For better performance, add a Google Maps API key in client/index.html by replacing "sensor=true"
