@@ -370,6 +370,19 @@ section h3.section-subheading {
     height: 200px;
 }
 
+#bookshelf {
+    margin-top: 50px;
+    height: 85px;
+}
+
+#travis {
+    margin-top: 40px;
+}
+
+#gulp {
+    height: 200px;
+}
+
 .timeline {
     position: relative;
     padding: 0;
