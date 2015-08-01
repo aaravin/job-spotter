@@ -77,7 +77,7 @@ var Nav = React.createClass({
           <form type="submit" onSubmit={this.handleSubmit} className="navbar-form navbar-middle" id="search-form">
             <div className="form-group">
               <input type="text" value={this.state.location} onChange={this.searchLocation} placeholder="Enter a Location" ref="location" className="form-control" id="autocomplete" />
-              <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title" ref="title" className="form-control" id="autocomplete" />
+              <input type="text" value={this.state.title} onChange={this.searchTitle} placeholder="Enter a Job Title/Skill" ref="title" className="form-control" id="autocomplete" />
               <button id="search-button" onClick={this.handleSubmit} className="btn btn-default navbar-btn form-control">Search Jobs</button>
               <a id="splash" href="/splash">About</a>
             </div>
