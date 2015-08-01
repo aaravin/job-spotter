@@ -80,7 +80,6 @@ var AppView = React.createClass({
 
   //helper function to remove all user/title selections; map will be reset to full screen
   clearJobs: function() {
-    console.log('clearing jobs');
     this.setState({
       jobs: new Jobs(),
       location: '',
