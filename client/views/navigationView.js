@@ -1,5 +1,4 @@
 var React = require('react');
-var Login = require('./loginView');
 var $ = require('jquery');
 require('jquery-ui-browserify');
 var Locs = require('./../collections/locations');
