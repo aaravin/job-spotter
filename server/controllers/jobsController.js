@@ -50,11 +50,12 @@ module.exports = {
                    'Links.salary_min as salary_min', 'Links.salary_max as salary_max',
                    'Links.salary_avg as salary_avg', 'Links.equity as equity', 'Locations.city as city',
                    'Titles.title as title', 'Companies.name as company')
-    .from('Titles')
-    .leftJoin('Links', 'Links.title_id', 'Titles.id')
+    .from('Links')
+    .leftJoin('Titles', 'Titles.id', 'Links.title_id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
     .where('Titles.title', 'like', '%' + req.query.title + '%')
+    .orWhere('Links.skills', 'like', '%' + req.query.title + '%')
     .then(function(jobs) {
       var jobsData = module.exports.buildJobs(jobs);
       res.status(200).send(jobsData);
@@ -72,8 +73,9 @@ module.exports = {
     .leftJoin('Links', 'Links.title_id', 'Titles.id')
     .leftJoin('Locations', 'Locations.id', 'Links.location_id')
     .leftJoin('Companies', 'Companies.id', 'Links.company_id')
-    .where('Titles.title', 'like', '%' + req.query.title + '%')
-    .andWhere('Locations.city', req.query.location)
+    .where(function() {
+      this.where('Titles.title', 'like', '%' + req.query.title + '%').orWhere('Links.skills', 'like', '%' + req.query.title + '%')
+    }).andWhere('Locations.city', req.query.location)
     .then(function(jobs) {
       var jobsData = module.exports.buildJobs(jobs);
       res.status(200).send(jobsData);
