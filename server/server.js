@@ -69,10 +69,6 @@ app.get('/api/jobs', function (req, res, next) {
   }
 });
 
-// app.get('/splash', function(req, res) {
-//   express.static(__dirname + "../landingpage/index.html")
-// })
-
 //Wake up data server at 12am
 var cronJob1 = new CronJob({
   cronTime: '00 15 15 * * 1-5',
@@ -143,18 +139,6 @@ var cronJob6 = new CronJob({
   start: false,
   timeZone: "America/Los_Angeles"
 });
-
-// Update all latitudes and longitudes
-// console.log("UPDATING LATS AND LONGS");
-// latLongUtil.getAllLocs();
-
-// // Update all jobCounts
-// console.log("UPDATING JOB COUNTS");
-// jobCountUtil.updateJobCounts();
-
-// // Update all locSalaries
-// console.log("UPDATING LOC SALARIES");
-// locSalaryUtil.updateLocSalaries();
 
 // cronJob1.start();
 // cronJob2.start();
