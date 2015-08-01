@@ -80,6 +80,7 @@ var AppView = React.createClass({
 
   //helper function to remove all user/title selections; map will be reset to full screen
   clearJobs: function() {
+    console.log('clearing jobs');
     this.setState({
       jobs: new Jobs(),
       location: '',
@@ -106,7 +107,6 @@ var AppView = React.createClass({
             title: request.title, 
             zoomFlag: zoomFlag, 
             zoomoutFlag: zoomoutFlag,
-            // filteredLocs: context.state.filteredLocs,
             errorMessage: ''
           });
         } else { //handle empty responses with a message to the user
