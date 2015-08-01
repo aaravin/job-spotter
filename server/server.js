@@ -69,9 +69,9 @@ app.get('/api/jobs', function (req, res, next) {
   }
 });
 
-//Wake up data server at 12am
+// Wake up data server at 11pm
 var cronJob1 = new CronJob({
-  cronTime: '00 15 15 * * 1-5',
+  cronTime: '00 00 23 * * 0-6',
   onTick: function() {
     console.log("Waking up data server...");
     request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
@@ -82,9 +82,10 @@ var cronJob1 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
-//Ping data server at 12:40am to ensure it stays awake
+// Ping data server to ensure it stays awake:
+//   +40 minutes from start of previous cronJob
 var cronJob2 = new CronJob({
-  cronTime: '00 55 15 * * 1-5',
+  cronTime: '00 40 23 * * 0-6',
   onTick: function() {
     console.log("Keeping data server awake...");
     request('https://glacial-waters-2127.herokuapp.com/', function(error, response, body) {
@@ -95,9 +96,10 @@ var cronJob2 = new CronJob({
   timeZone: "America/Los_Angeles"
 })
 
-//Reset database and schema at 1:13am
+// Reset database and schema:
+//   +33 minutes from start of previous cronJob
 var cronJob3 = new CronJob({
-  cronTime: '00 40 17 * * 1-5',
+  cronTime: '00 13 00 * * 0-6',
   onTick: function() {
     console.log("Resetting database...");
     dbInitUtil.setupSchema();
@@ -106,9 +108,10 @@ var cronJob3 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
-//Update database with newly scraped data at 1:15am
+// Update database with newly scraped data:
+//   +2 minutes from start of previous cronJob
 var cronJob4 = new CronJob({
-  cronTime: '00 42 17 * * 1-5',
+  cronTime: '00 15 00 * * 0-6',
   onTick: function() {
     console.log("Updating db with data from data server...");
     dbSetupUtil.setupDB();
@@ -117,9 +120,10 @@ var cronJob4 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
-//Call Google Maps API to populate latitudes and longitudes at 1:30am
+// Call Google Maps API to populate latitudes and longitudes:
+//   +15 minutes from start of previous cronJob
 var cronJob5 = new CronJob({
-  cronTime: '00 57 17 * * 1-5',
+  cronTime: '00 30 00 * * 0-6',
   onTick: function() {
     console.log("Updating latitudes and longitudes...");
     latLongUtil.getAllLocs();
@@ -128,9 +132,10 @@ var cronJob5 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
-//Call Google Maps API to populate job counts and salaries at 1:35am
+// Call Google Maps API to populate job counts and salaries:
+//   +5 minutes from start of previous cronJob
 var cronJob6 = new CronJob({
-  cronTime: '00 02 18 * * 1-5',
+  cronTime: '00 35 00 * * 0-6',
   onTick: function() {
     console.log("Updating job counts and salaries...");
     jobCountUtil.updateJobCounts();
@@ -140,6 +145,10 @@ var cronJob6 = new CronJob({
   timeZone: "America/Los_Angeles"
 });
 
+/********************************************************
+ * WARNING: cronJobs will run on local host if active
+ *          - database will drop tables and attempt reset
+ ********************************************************/
 // cronJob1.start();
 // cronJob2.start();
 // cronJob3.start();
