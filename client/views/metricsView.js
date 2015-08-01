@@ -161,7 +161,7 @@ var Metrics = React.createClass({
     d3.select(".numberChart").selectAll("text")
       .data(numberData)
       .text(function(d) {
-        return d;
+        return d.toLocaleString();
       })
       .transition()
       .duration(1000)
