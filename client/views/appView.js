@@ -106,7 +106,6 @@ var AppView = React.createClass({
             title: request.title, 
             zoomFlag: zoomFlag, 
             zoomoutFlag: zoomoutFlag,
-            // filteredLocs: context.state.filteredLocs,
             errorMessage: ''
           });
         } else { //handle empty responses with a message to the user

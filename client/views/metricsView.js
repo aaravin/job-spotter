@@ -34,7 +34,7 @@ var Metrics = React.createClass({
     });
 
     var cityName = this.props.jobs.models[0].attributes.location,
-          avgSal = parseInt(sumSal / this.props.jobs.length);
+        avgSal = parseInt(sumSal / this.props.jobs.length);
 
     var totalSal = 0;
     var totalNumber = 0;
@@ -104,9 +104,11 @@ var Metrics = React.createClass({
   },
 
   componentDidUpdate: function () {
-    this.updateMetrics();
-    this.renderSalaryGraph();
-    this.renderNumberGraph();
+    if(this.props.jobs.length) {
+      this.updateMetrics();
+      this.renderSalaryGraph();
+      this.renderNumberGraph();
+    }
   },
 
   renderSalaryGraph: function () {
